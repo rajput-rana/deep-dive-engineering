@@ -47,7 +47,7 @@ Secrets management is critical for protecting sensitive information like API key
 - **GCP:** Secret Manager, Cloud KMS
 
 ### Open Source
-- **HashiCorp Vault** - Comprehensive secrets management
+- **[HashiCorp Vault](./01-vault.md)** ⭐ - Comprehensive secrets management (see detailed guide)
 - **Sealed Secrets** - Kubernetes-native secrets
 - **SOPS** - Secrets OPerationS (encrypted files)
 
@@ -150,6 +150,10 @@ If secrets are exposed:
 3. **Investigate** - Determine scope of exposure
 4. **Notify** - Inform affected parties
 5. **Document** - Record incident and remediation
+
+## Detailed Guides
+
+- **[HashiCorp Vault](./01-vault.md)** - Comprehensive guide to Vault: secrets engines, dynamic credentials, encryption, and best practices
 
 ## Related Topics
 

@@ -29,6 +29,9 @@ IAM answers two critical questions:
 - **[02. SPIFFE / SPIRE](./03-service-identity/02-spiffe-spire.md)** - Secure Production Identity Framework
 - **[03. Service Accounts](./03-service-identity/03-service-accounts.md)** - Service-to-service authentication
 
+### 🔄 04. User Provisioning
+- **[01. SCIM](./04-user-provisioning/01-scim.md)** - System for Cross-domain Identity Management
+
 ## Authentication vs Authorization
 
 **Authentication (AuthN):**
