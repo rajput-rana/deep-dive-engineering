@@ -4,61 +4,64 @@ Comprehensive system design documentation and case studies for building scalable
 
 ## 📚 Structure
 
-### Core Fundamentals
-- **[Fundamentals](./fundamentals/)** - Core system design principles, scalability, reliability, API design, and more
-  - Introduction to system design
-  - Scalability & Performance
-  - Reliability & Availability
-  - API Design
-  - Distributed Systems concepts
-  - Data Management
+### 01. Core Fundamentals
+- **[01. Fundamentals](./01-fundamentals/)** - Core system design principles, scalability, reliability, API design, and more
+  - 01. Introduction to system design
+  - 02. Scalability & Performance
+  - 03. Reliability & Availability
+  - 04. API Design
+  - 08. Distributed Systems concepts
+  - 09. Data Management
 
-### Data & Storage
-- **[Data Storage](./data-storage/)** - Database fundamentals, replication, indexing, sharding, ACID, SQL vs NoSQL
+### 02. Data & Storage
+- **[02. Data Storage](./02-data-storage/)** - Database fundamentals, replication, indexing, sharding, ACID, SQL vs NoSQL
   - Comprehensive database fundamentals guide
   - Replication strategies
   - Indexing and sharding techniques
 
-### Distributed Systems
-- **[Distributed Systems](./distributed-systems/)** - Consensus algorithms, consistent hashing, service discovery, distributed transactions
+### 03. Distributed Systems
+- **[03. Distributed Systems](./03-distributed-systems/)** - Consensus algorithms, consistent hashing, service discovery, distributed transactions
   - CAP Theorem
   - Consensus algorithms (Raft, Paxos)
   - Consistent hashing
   - Service discovery patterns
 
-### Networking & Protocols
-- **[Networking Protocols](./networking-protocols/)** - HTTP/HTTPS, WebSockets, API Gateways, Webhooks, OSI model
+### 04. Networking & Protocols
+- **[04. Networking Protocols](./04-networking-protocols/)** - HTTP/HTTPS, WebSockets, API Gateways, Webhooks, OSI model
   - Communication protocols
   - API Gateway patterns
   - Real-time communication (WebSockets)
 
-### Scaling & Performance
-- **[Scaling Patterns](./scaling-patterns/)** - Horizontal scaling, rate limiting, load balancing algorithms
+### 05. Scaling & Performance
+- **[05. Scaling Patterns](./05-scaling-patterns/)** - Horizontal scaling, rate limiting, load balancing algorithms
   - Auto-scaling strategies
   - Rate limiting techniques
   - Load balancing algorithms
 
-### Architecture Patterns
-- **[Design Patterns](./design-patterns/)** - Common architectural patterns
+### 06. Architecture Patterns
+- **[06. Design Patterns](./06-design-patterns/)** - Common architectural patterns
   - Microservices architecture
   - Monolithic architecture
   - Event-driven architecture
   - Serverless architecture
 
-### Security & Authentication
-- **[Authentication](./authentication/)** - JWT, OAuth, SSO, security patterns
+### 07. Security & Authentication
+- **[07. Authentication](./07-authentication/)** - JWT, OAuth, SSO, security patterns
   - Authentication mechanisms
   - Authorization patterns
   - Security best practices
 
-### Real-World Systems
-- **[Real-World Systems](./real-world/)** - Case studies and design examples
+### 08. Real-World Systems
+- **[08. Real-World Systems](./08-real-world/)** - Case studies and design examples
   - URL shortener design
   - Search autocomplete system
   - Production system deep dives
 
-### Tradeoffs & Analysis
-- **[Tradeoffs](./tradeoffs/)** - Analysis of design decisions and their implications
+### 09. Case Studies
+- **[09. Case Studies](./09-case-studies/)** - Detailed system design case studies
+
+### 10. Tradeoffs & Analysis
+- **[10. Tradeoffs](./10-tradeoffs/)** - Analysis of design decisions and their implications
 
 ## 🎯 Design Process
 
@@ -144,19 +147,19 @@ Follow this systematic approach when designing systems:
 ## 📖 Learning Path
 
 ### Beginner
-1. Start with **[Fundamentals](./fundamentals/)** - Read "What is System Design?"
+1. Start with **[01. Fundamentals](./01-fundamentals/)** - Read "01. What is System Design?"
 2. Understand core concepts - Scalability, Performance, Reliability
 3. Learn basic patterns - Load balancing, Caching
 
 ### Intermediate
-1. Study **[Distributed Systems](./distributed-systems/)** - CAP Theorem, Consensus
-2. Deep dive into **[Data Storage](./data-storage/)** - Database fundamentals
-3. Explore **[Networking Protocols](./networking-protocols/)** - HTTP, WebSockets, API Gateways
+1. Study **[03. Distributed Systems](./03-distributed-systems/)** - CAP Theorem, Consensus
+2. Deep dive into **[02. Data Storage](./02-data-storage/)** - Database fundamentals
+3. Explore **[04. Networking Protocols](./04-networking-protocols/)** - HTTP, WebSockets, API Gateways
 
 ### Advanced
-1. Master **[Design Patterns](./design-patterns/)** - Microservices, Event-driven
-2. Study **[Real-World Systems](./real-world/)** - Case studies
-3. Understand **[Tradeoffs](./tradeoffs/)** - Design decision analysis
+1. Master **[06. Design Patterns](./06-design-patterns/)** - Microservices, Event-driven
+2. Study **[08. Real-World Systems](./08-real-world/)** - Case studies
+3. Understand **[10. Tradeoffs](./10-tradeoffs/)** - Design decision analysis
 
 ## 🎓 Interview Preparation
 
@@ -187,11 +190,11 @@ Follow this systematic approach when designing systems:
 
 - **[References](./references.md)** - Complete index of all topics
 - **[Templates](../templates/)** - DSA and System Design templates
-- **[Case Studies](./real-world/)** - Real-world system designs
+- **[Case Studies](./08-real-world/)** - Real-world system designs
 
 ## 🔗 Quick Links
 
-- [Fundamentals Overview](./fundamentals/README.md)
-- [Database Fundamentals](./data-storage/database-fundamentals.md)
-- [CAP Theorem](./fundamentals/distributed-systems/cap-theorem.md)
+- [01. Fundamentals Overview](./01-fundamentals/README.md)
+- [02. Database Fundamentals](./02-data-storage/01-database-fundamentals.md)
+- [08. CAP Theorem](./01-fundamentals/08-distributed-systems/cap-theorem.md)
 - [System Design Template](../templates/system-design-template.md)
