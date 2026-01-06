@@ -1,120 +1,195 @@
-# Security & Compliance
+# 🔐 Security & Compliance
 
-Comprehensive security and compliance documentation covering the full security landscape: Identity → Secrets → Data → App → Infra → Logs → Incidents → Compliance.
+<div align="center">
 
-## Security Landscape Overview
+**Comprehensive security and compliance documentation**
+
+[![Topics](https://img.shields.io/badge/Topics-50%2B-blue?style=for-the-badge)](./)
+[![Security](https://img.shields.io/badge/Security-First-red?style=for-the-badge)](./)
+
+*Most breaches start with Identity, not crypto.*
+
+</div>
+
+---
+
+## 🎯 Security Landscape Overview
+
+<div align="center">
 
 ```
 Identity → Secrets → Data → App → Infra → Logs → Incidents → Compliance
 ```
 
-**Most breaches start with Identity, not crypto.**
+**🔑 Key Principle:** Most breaches start with Identity, not cryptography.
 
-## Table of Contents
+</div>
 
-### 🔐 01. Identity, Authentication & Authorization (IAM)
-- **[01. Authentication](./01-iam/01-authentication/)** - Who are you? Passwords, MFA, SSO, OAuth2, Passwordless
-- **[02. Authorization](./01-iam/02-authorization/)** - What can you do? RBAC, ABAC, Least privilege
-- **[03. Service Identity](./01-iam/03-service-identity/)** - mTLS, SPIFFE/SPIRE, Service accounts
+---
 
-### 🔑 02. Secrets Management
-- **[02. Secrets Management](./02-secrets-management/)** - API keys, DB passwords, Certificates, Encryption keys
+## 📚 Table of Contents
 
-### 🛡️ 03. Data Security & Privacy
-- **[03. Data Security & Privacy](./03-data-security-privacy/)** - Data lifecycle, Encryption, Tokenization, Privacy (GDPR)
+<div align="center">
 
-### 🔒 04. Application Security (AppSec)
-- **[04. Application Security](./04-application-security/)** - Secure coding, OWASP Top 10, Dependency security
+| Section | Topics | Description | Link |
+|:---:|:---:|:---:|:---:|
+| **🔐 01. IAM** | 25+ Topics | Identity, Authentication & Authorization | [Explore →](./01-iam/) |
+| **🔑 02. Secrets Management** | - | API keys, DB passwords, Certificates | [Explore →](./02-secrets-management/) |
+| **🛡️ 03. Data Security & Privacy** | 5 Topics | Encryption, Tokenization, GDPR | [Explore →](./03-data-security-privacy/) |
+| **🔒 04. Application Security** | - | OWASP Top 10, Secure coding | [Explore →](./04-application-security/) |
+| **🌐 05. Infrastructure & Network** | - | VPCs, Firewalls, Zero Trust | [Explore →](./05-infrastructure-network-security/) |
+| **📊 06. Monitoring & Incident Response** | - | SIEM, IDS/IPS, Audit logs | [Explore →](./06-monitoring-logging-incident-response/) |
+| **✅ 07. Compliance & Governance** | - | SOC 2, ISO 27001, PCI DSS, HIPAA | [Explore →](./07-compliance-governance-risk/) |
+| **🚀 08. Secure SDLC** | - | DevSecOps, Threat modeling | [Explore →](./08-secure-sdlc/) |
 
-### 🌐 05. Infrastructure & Network Security
-- **[05. Infrastructure & Network Security](./05-infrastructure-network-security/)** - Network security, Host security, Container/K8s security
+</div>
 
-### 📊 06. Monitoring, Logging & Incident Response
-- **[06. Monitoring, Logging & Incident Response](./06-monitoring-logging-incident-response/)** - Detection, Logging, Incident response
+---
 
-### ✅ 07. Compliance, Governance & Risk (GRC)
-- **[07. Compliance, Governance & Risk](./07-compliance-governance-risk/)** - SOC 2, ISO 27001, PCI DSS, HIPAA, GDPR
+## 🛡️ Security Principles
 
-### 🚀 08. Secure SDLC (Shift Left)
-- **[08. Secure SDLC](./08-secure-sdlc/)** - DevSecOps, Threat modeling, Secure CI/CD
+<div align="center">
 
-## Security Principles
+| Principle | Description |
+|:---:|:---:|
+| **🛡️ Defense in Depth** | Multiple layers of security controls |
+| **🔐 Least Privilege** | Grant minimum permissions necessary |
+| **🚫 Zero Trust** | Never trust, always verify |
+| **🔒 Fail Secure** | System defaults to secure state on failure |
+| **🏗️ Security by Design** | Security built in from the start |
 
-### Defense in Depth
-Multiple layers of security controls to protect against threats.
+</div>
 
-### Least Privilege
-Grant minimum permissions necessary for users and services.
+---
 
-### Zero Trust
-Never trust, always verify—verify every request.
+## 🎯 Common Attack Vectors
 
-### Fail Secure
-System defaults to secure state on failure.
+<div align="center">
 
-### Security by Design
-Security built into the system from the start, not bolted on.
+| # | Attack Vector | Description |
+|:---:|:---:|:---:|
+| **1** | **Broken Authentication** | Weak passwords, session hijacking |
+| **2** | **Injection Attacks** | SQL injection, NoSQL injection, XSS |
+| **3** | **Broken Access Control** | Unauthorized access to resources |
+| **4** | **Security Misconfiguration** | Default credentials, exposed configs |
+| **5** | **Vulnerable Components** | Outdated libraries with known vulnerabilities |
 
-## Common Attack Vectors
+</div>
 
-1. **Broken Authentication** - Weak passwords, session hijacking
-2. **Injection Attacks** - SQL injection, NoSQL injection, XSS
-3. **Broken Access Control** - Unauthorized access to resources
-4. **Security Misconfiguration** - Default credentials, exposed configs
-5. **Vulnerable Components** - Outdated libraries with known vulnerabilities
+---
 
-## Quick Reference
+## 📖 Quick Reference
+
+<div align="center">
 
 ### Authentication Methods
-- Passwords & hashing (bcrypt, argon2)
-- MFA (TOTP, SMS, hardware keys)
-- SSO (SAML, OIDC)
-- OAuth2 flows
-- Passwordless (WebAuthn, passkeys)
+
+| Method | Description | Use Case |
+|:---:|:---:|:---:|
+| **Passwords & Hashing** | bcrypt, argon2 | User authentication |
+| **MFA** | TOTP, SMS, hardware keys | Enhanced security |
+| **SSO** | SAML, OIDC | Enterprise authentication |
+| **OAuth2** | OAuth2 flows | Third-party access |
+| **Passwordless** | WebAuthn, passkeys | Modern authentication |
 
 ### Authorization Models
-- RBAC (Role-Based Access Control)
-- ABAC (Attribute-Based Access Control)
-- Least privilege principle
-- Fine-grained permissions
+
+| Model | Description | Use Case |
+|:---:|:---:|:---:|
+| **RBAC** | Role-Based Access Control | Role-based permissions |
+| **ABAC** | Attribute-Based Access Control | Fine-grained permissions |
+| **Least Privilege** | Minimum necessary access | Security best practice |
+| **Fine-grained** | Granular permissions | Resource-level control |
 
 ### Secrets Best Practices
-- ✅ Never hardcode secrets
-- ✅ Use central vault (KMS, Vault)
-- ✅ Short-lived secrets
-- ✅ Automatic rotation
-- ❌ Never commit secrets to Git
 
-### OWASP Top 10 (2021)
-1. Broken Access Control
-2. Cryptographic Failures
-3. Injection
-4. Insecure Design
-5. Security Misconfiguration
-6. Vulnerable & Outdated Components
-7. Identification & Authentication Failures
-8. Software & Data Integrity Failures
-9. Logging & Monitoring Failures
-10. Server-Side Request Forgery (SSRF)
+<div align="center">
 
-## Compliance Frameworks
+| ✅ Do | ❌ Don't |
+|:---:|:---:|
+| Never hardcode secrets | Commit secrets to Git |
+| Use central vault (KMS, Vault) | Share secrets via email/chat |
+| Short-lived secrets | Use default secrets |
+| Automatic rotation | Store in environment variables |
+| Encrypt at rest | Log secrets |
 
-- **SOC 2** - Service Organization Control 2
-- **ISO 27001** - Information Security Management
-- **PCI DSS** - Payment Card Industry Data Security Standard
-- **HIPAA** - Health Insurance Portability and Accountability Act
-- **GDPR** - General Data Protection Regulation
+</div>
 
-## Related Sections
+</div>
 
-- **[01. Fundamentals](../01-fundamentals/)** - System design basics
-- **[04. Networking Protocols](../04-networking-protocols/)** - HTTPS, TLS
-- **[06. Design Patterns](../06-architectures/)** - Secure architecture patterns
+---
 
-## Learning Path
+## 📋 OWASP Top 10 (2021)
 
-1. **Start with IAM:** Understand authentication and authorization
-2. **Secrets Management:** Learn to protect sensitive data
-3. **Application Security:** Secure your code (OWASP Top 10)
-4. **Infrastructure Security:** Secure your infrastructure
-5. **Monitoring & Compliance:** Detect and respond to threats
+<div align="center">
+
+| # | Vulnerability | Description |
+|:---:|:---:|:---:|
+| **1** | Broken Access Control | Unauthorized access |
+| **2** | Cryptographic Failures | Weak encryption |
+| **3** | Injection | SQL, NoSQL, XSS injection |
+| **4** | Insecure Design | Design flaws |
+| **5** | Security Misconfiguration | Default configs |
+| **6** | Vulnerable Components | Outdated libraries |
+| **7** | Authentication Failures | Weak authentication |
+| **8** | Data Integrity Failures | Untrusted data |
+| **9** | Logging Failures | Insufficient logging |
+| **10** | SSRF | Server-Side Request Forgery |
+
+</div>
+
+---
+
+## ✅ Compliance Frameworks
+
+<div align="center">
+
+| Framework | Description | Industry |
+|:---:|:---:|:---:|
+| **SOC 2** | Service Organization Control 2 | Cloud services |
+| **ISO 27001** | Information Security Management | International |
+| **PCI DSS** | Payment Card Industry Standard | Payments |
+| **HIPAA** | Health Insurance Portability Act | Healthcare |
+| **GDPR** | General Data Protection Regulation | EU data protection |
+
+</div>
+
+---
+
+## 🎓 Learning Path
+
+<div align="center">
+
+### Recommended Study Order
+
+| Step | Topic | Why |
+|:---:|:---:|:---:|
+| **1️⃣** | [IAM](./01-iam/) | Foundation of security |
+| **2️⃣** | [Secrets Management](./02-secrets-management/) | Protect sensitive data |
+| **3️⃣** | [Application Security](./04-application-security/) | Secure your code |
+| **4️⃣** | [Infrastructure Security](./05-infrastructure-network-security/) | Secure infrastructure |
+| **5️⃣** | [Monitoring & Compliance](./06-monitoring-logging-incident-response/) | Detect & respond |
+
+</div>
+
+---
+
+## 🔗 Related Sections
+
+<div align="center">
+
+| Section | Description | Link |
+|:---:|:---:|:---:|
+| **Fundamentals** | System design basics | [01. Fundamentals](../01-fundamentals/) |
+| **Networking** | HTTPS, TLS | [04. Networking](../04-networking-protocols/) |
+| **Architectures** | Secure architecture patterns | [06. Architectures](../06-architectures/) |
+
+</div>
+
+---
+
+<div align="center">
+
+**Build secure systems from the ground up! 🔐**
+
+</div>

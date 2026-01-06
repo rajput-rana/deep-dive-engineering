@@ -1,189 +1,131 @@
-# System Design
+# 🏗️ System Design
 
-Comprehensive system design documentation and case studies for building scalable, reliable, and performant systems.
+<div align="center">
+
+**Master the art of designing scalable, reliable, and performant systems**
+
+[![Topics](https://img.shields.io/badge/Topics-180%2B-blue?style=for-the-badge)](./)
+[![Sections](https://img.shields.io/badge/Sections-10-green?style=for-the-badge)](./)
+[![Real-World](https://img.shields.io/badge/Real--World-Case%20Studies-orange?style=for-the-badge)](./08-real-world/)
+
+*Comprehensive documentation and case studies for building production-grade systems*
+
+</div>
+
+---
+
+## 🎯 What You'll Learn
+
+<div align="center">
+
+| 🎓 **Fundamentals** | 🗄️ **Data Storage** | 🌐 **Distributed Systems** |
+|:---:|:---:|:---:|
+| Core principles & patterns | Database design & optimization | Consensus & consistency |
+| Scalability & performance | Sharding & replication | Service discovery |
+| Reliability & availability | Indexing strategies | CRDTs & hashing |
+
+| 🔐 **Security** | 📈 **Scaling** | 🏛️ **Architectures** |
+|:---:|:---:|:---:|
+| IAM & compliance | Load balancing & rate limiting | Microservices & monoliths |
+| Secrets management | Auto-scaling patterns | Event-driven systems |
+| Data protection | Performance optimization | Peer-to-peer networks |
+
+</div>
+
+---
 
 ## 📚 Structure
 
-### 01. Core Fundamentals
-- **[01. Fundamentals](./01-fundamentals/)** - Core system design principles, scalability, reliability, API design, and more
-  - 01. Introduction to system design
-  - 02. Scalability & Performance
-  - 03. Reliability & Availability
-  - 04. API Design
-  - 08. Distributed Systems concepts
-  - 09. Data Management
+<div align="center">
 
-### 02. Data & Storage
-- **[02. Data Storage](./02-data-storage/)** - Database fundamentals, replication, indexing, sharding, ACID, SQL vs NoSQL
-  - Comprehensive database fundamentals guide
-  - Replication strategies
-  - Indexing and sharding techniques
+| Section | Topics | Description | Link |
+|:---:|:---:|:---:|:---:|
+| **01. Fundamentals** | 9 Topics | Core concepts, scalability, reliability, API design | [Explore →](./01-fundamentals/) |
+| **02. Data Storage** | 4 Topics | Database fundamentals, indexing, sharding, replication | [Explore →](./02-data-storage/) |
+| **03. Distributed Systems** | 4 Topics | Consistent hashing, service discovery, consensus | [Explore →](./03-distributed-systems/) |
+| **04. Networking Protocols** | 5 Topics | HTTP/HTTPS, WebSockets, API Gateways, Webhooks | [Explore →](./04-networking-protocols/) |
+| **05. Scaling Patterns** | 3 Topics | Horizontal scaling, rate limiting, load balancing | [Explore →](./05-scaling-patterns/) |
+| **06. Architectures** | 3 Topics | Microservices, monolithic, peer-to-peer | [Explore →](./06-architectures/) |
+| **07. Security & Compliance** | 50+ Topics | IAM, secrets, data security, compliance | [Explore →](./07-security-compliance/) |
+| **08. Real-World Systems** | 2+ Topics | Case studies and real-world designs | [Explore →](./08-real-world/) |
+| **09. Case Studies** | - | Detailed system design case studies | [Explore →](./09-case-studies/) |
+| **10. Tradeoffs** | - | Design decision analysis | [Explore →](./10-tradeoffs/) |
 
-### 03. Distributed Systems
-- **[03. Distributed Systems](./03-distributed-systems/)** - Consensus algorithms, consistent hashing, service discovery, distributed transactions
-  - CAP Theorem
-  - Consensus algorithms (Raft, Paxos)
-  - Consistent hashing
-  - Service discovery patterns
+</div>
 
-### 04. Networking & Protocols
-- **[04. Networking Protocols](./04-networking-protocols/)** - HTTP/HTTPS, WebSockets, API Gateways, Webhooks, OSI model
-  - Communication protocols
-  - API Gateway patterns
-  - Real-time communication (WebSockets)
-
-### 05. Scaling & Performance
-- **[05. Scaling Patterns](./05-scaling-patterns/)** - Horizontal scaling, rate limiting, load balancing algorithms
-  - Auto-scaling strategies
-  - Rate limiting techniques
-  - Load balancing algorithms
-
-### 06. Architectures
-- **[06. Architectures](./06-architectures/)** - Common architectural patterns
-  - Microservices architecture
-  - Monolithic architecture
-  - Event-driven architecture
-  - Serverless architecture
-
-### 07. Security & Compliance
-- **[07. Security & Compliance](./07-security-compliance/)** - Comprehensive security landscape
-  - **01. IAM** - Identity, Authentication & Authorization (JWT, MFA, SSO, OAuth2, RBAC, ABAC)
-  - **02. Secrets Management** - API keys, DB passwords, Certificates, Encryption keys
-  - **03. Data Security & Privacy** - Data classification, Encryption, Tokenization, GDPR
-  - **04. Application Security** - OWASP Top 10, Secure coding, SAST/DAST
-  - **05. Infrastructure & Network Security** - VPCs, Firewalls, Zero Trust, Container security
-  - **06. Monitoring & Incident Response** - SIEM, IDS/IPS, Audit logs, Breach handling
-  - **07. Compliance & Governance** - SOC 2, ISO 27001, PCI DSS, HIPAA, GDPR
-  - **08. Secure SDLC** - DevSecOps, Threat modeling, Secure CI/CD
-  - 01. IAM (Identity, Authentication & Authorization)
-  - 02. Secrets Management
-  - 03. Data Security & Privacy
-  - 04. Application Security (AppSec)
-  - 05. Infrastructure & Network Security
-  - 06. Monitoring, Logging & Incident Response
-  - 07. Compliance, Governance & Risk (GRC)
-  - 08. Secure SDLC (Shift Left)
-
-### 08. Real-World Systems
-- **[08. Real-World Systems](./08-real-world/)** - Case studies and design examples
-  - URL shortener design
-  - Search autocomplete system
-  - Production system deep dives
-
-### 09. Case Studies
-- **[09. Case Studies](./09-case-studies/)** - Detailed system design case studies
-
-### 10. Tradeoffs & Analysis
-- **[10. Tradeoffs](./10-tradeoffs/)** - Analysis of design decisions and their implications
+---
 
 ## 🎯 Design Process
 
-Follow this systematic approach when designing systems:
+<div align="center">
 
-1. **Requirements Gathering**
-   - Functional requirements (what the system should do)
-   - Non-functional requirements (scalability, availability, latency, consistency)
+### Follow this systematic approach when designing systems:
 
-2. **Capacity Estimation**
-   - Users, requests per second (RPS)
-   - Data storage requirements
-   - Bandwidth needs
-   - Number of servers required
+| Step | Focus | Key Activities |
+|:---:|:---:|:---:|
+| **1️⃣ Requirements** | What & Why | Functional & non-functional requirements |
+| **2️⃣ Capacity** | How Much | Users, RPS, storage, bandwidth, servers |
+| **3️⃣ High-Level Design** | Architecture | Components, data flow, dependencies |
+| **4️⃣ Data Model** | Structure | Database selection, schema, API contracts |
+| **5️⃣ Detailed Design** | Deep Dive | Caching, scaling, fault tolerance |
+| **6️⃣ Trade-offs** | Analysis | SPOFs, consistency vs availability, cost |
+| **7️⃣ Review** | Iterate | Justify decisions, refine, evolve |
 
-3. **High-Level Design (HLD)**
-   - Main components and services
-   - Data flow between components
-   - External dependencies
-   - Architecture blueprint
+**📝 Template:** See [`system-design-template.md`](./system-design-template.md) for a detailed template.
 
-4. **Data Model / API Design**
-   - Database type selection (SQL/NoSQL)
-   - Schema design
-   - API endpoints and contracts
+</div>
 
-5. **Detailed Design**
-   - Component deep dives
-   - Caching strategies
-   - Scaling approaches
-   - Fault tolerance mechanisms
-
-6. **Identify Bottlenecks and Trade-offs**
-   - Single points of failure (SPOFs)
-   - Consistency vs availability trade-offs
-   - Cost vs performance considerations
-
-7. **Review, Explain, and Iterate**
-   - Justify design decisions
-   - Address feedback
-   - Refine and evolve
-
-**Template:** See [`system-design-template.md`](./system-design-template.md) for a detailed template.
+---
 
 ## 🔑 Key Focus Areas
 
-### Scalability
-- Horizontal vs vertical scaling
-- Load balancing strategies
-- Database sharding and partitioning
-- Caching at multiple levels
+<div align="center">
 
-### Performance
-- Latency optimization
-- Throughput maximization
-- Database query optimization
-- CDN utilization
+| Area | Key Concepts |
+|:---:|:---:|
+| **📈 Scalability** | Horizontal vs vertical scaling<br>Load balancing strategies<br>Database sharding & partitioning<br>Multi-level caching |
+| **⚡ Performance** | Latency optimization<br>Throughput maximization<br>Query optimization<br>CDN utilization |
+| **🛡️ Reliability** | Fault tolerance patterns<br>Redundancy strategies<br>Disaster recovery<br>99.9%+ uptime |
+| **🔄 Consistency** | CAP Theorem<br>Strong vs eventual consistency<br>ACID vs BASE<br>Quorum-based approaches |
+| **💰 Cost** | Right-sizing infrastructure<br>Storage tier selection<br>Resource utilization<br>Auto-scaling policies |
+| **🔧 Operations** | Monitoring & observability<br>Logging strategies<br>Health checks & alerting<br>Deployment strategies |
 
-### Reliability & Availability
-- Fault tolerance patterns
-- Redundancy strategies
-- Disaster recovery
-- High availability design (99.9%+ uptime)
+</div>
 
-### Consistency & Availability Trade-offs
-- CAP Theorem understanding
-- Strong vs eventual consistency
-- ACID vs BASE properties
-- Quorum-based approaches
-
-### Cost Optimization
-- Right-sizing infrastructure
-- Storage tier selection
-- Efficient resource utilization
-- Auto-scaling policies
-
-### Operational Simplicity
-- Monitoring and observability
-- Logging strategies
-- Health checks and alerting
-- Deployment strategies
+---
 
 ## 📖 Learning Path
 
-### Beginner
-1. Start with **[01. Fundamentals](./01-fundamentals/)** - Read "01. What is System Design?"
-2. Understand core concepts - Scalability, Performance, Reliability
-3. Learn basic patterns - Load balancing, Caching
+<div align="center">
 
-### Intermediate
-1. Study **[03. Distributed Systems](./03-distributed-systems/)** - CAP Theorem, Consensus
-2. Deep dive into **[02. Data Storage](./02-data-storage/)** - Database fundamentals
-3. Explore **[04. Networking Protocols](./04-networking-protocols/)** - HTTP, WebSockets, API Gateways
+### 🎓 Your Journey from Beginner to Expert
 
-### Advanced
-1. Master **[06. Architectures](./06-architectures/)** - Microservices, Event-driven
-2. Study **[08. Real-World Systems](./08-real-world/)** - Case studies
-3. Understand **[10. Tradeoffs](./10-tradeoffs/)** - Design decision analysis
+| Level | Focus | Key Topics |
+|:---:|:---:|:---:|
+| **🌱 Beginner** | Foundations | [Fundamentals](./01-fundamentals/)<br>Core concepts & patterns<br>Basic scalability |
+| **🌿 Intermediate** | Advanced Concepts | [Distributed Systems](./03-distributed-systems/)<br>[Data Storage](./02-data-storage/)<br>[Networking](./04-networking-protocols/) |
+| **🌳 Advanced** | Mastery | [Architectures](./06-architectures/)<br>[Real-World Systems](./08-real-world/)<br>[Tradeoffs](./10-tradeoffs/) |
+
+</div>
+
+---
 
 ## 🎓 Interview Preparation
 
-### Key Topics to Master
-- **Fundamentals:** Scalability, Performance, Reliability, Availability
-- **Distributed Systems:** CAP Theorem, Consistency models, Consensus algorithms
-- **Data Management:** Database design, Sharding, Replication, Indexing
-- **Architecture:** Microservices, Event-driven, API Gateway patterns
-- **Performance:** Caching, Load balancing, Rate limiting
+<div align="center">
 
-### Common Interview Questions
+### 🏆 Ace Your System Design Interviews
+
+| Topic | What to Master | Resources |
+|:---:|:---:|:---:|
+| **Fundamentals** | Scalability, Performance, Reliability | [01. Fundamentals](./01-fundamentals/) |
+| **Distributed Systems** | CAP Theorem, Consensus, Consistency | [03. Distributed Systems](./03-distributed-systems/) |
+| **Data Management** | Database design, Sharding, Replication | [02. Data Storage](./02-data-storage/) |
+| **Architecture** | Microservices, Event-driven, API Gateway | [06. Architectures](./06-architectures/) |
+| **Performance** | Caching, Load balancing, Rate limiting | [05. Scaling Patterns](./05-scaling-patterns/) |
+
+### 💡 Common Interview Questions
+
 - Design a URL shortener
 - Design a chat system
 - Design a news feed
@@ -191,23 +133,50 @@ Follow this systematic approach when designing systems:
 - Design a distributed cache
 - Design a notification system
 
-### Tips
-- Start with requirements and constraints
-- Estimate capacity (users, QPS, storage)
-- Draw high-level architecture diagrams
-- Discuss trade-offs explicitly
-- Consider scalability, reliability, and cost
-- Be ready to deep dive into any component
+### ✅ Interview Tips
+
+- ✅ Start with requirements and constraints
+- ✅ Estimate capacity (users, QPS, storage)
+- ✅ Draw high-level architecture diagrams
+- ✅ Discuss trade-offs explicitly
+- ✅ Consider scalability, reliability, and cost
+- ✅ Be ready to deep dive into any component
+
+</div>
+
+---
 
 ## 📚 Additional Resources
 
-- **[References](./references.md)** - Complete index of all topics
-- **[System Design Template](./system-design-template.md)** - Template for system design interviews
-- **[Case Studies](./08-real-world/)** - Real-world system designs
+<div align="center">
+
+| Resource | Description |
+|:---:|:---:|
+| **[References](./references.md)** | Complete index of all topics |
+| **[System Design Template](./system-design-template.md)** | Template for system design interviews |
+| **[Case Studies](./08-real-world/)** | Real-world system designs |
+
+</div>
+
+---
 
 ## 🔗 Quick Links
 
-- [01. Fundamentals Overview](./01-fundamentals/README.md)
-- [02. Database Fundamentals](./02-data-storage/01-database-fundamentals.md)
-- [08. CAP Theorem](./01-fundamentals/08-distributed-systems/01-cap-theorem.md)
-- [System Design Template](./system-design-template.md)
+<div align="center">
+
+| Quick Access | Link |
+|:---:|:---:|
+| **Fundamentals Overview** | [01. Fundamentals](./01-fundamentals/README.md) |
+| **Database Fundamentals** | [02. Database Fundamentals](./02-data-storage/01-database-fundamentals.md) |
+| **CAP Theorem** | [08. CAP Theorem](./01-fundamentals/08-distributed-systems/01-cap-theorem.md) |
+| **System Design Template** | [Template](./system-design-template.md) |
+
+</div>
+
+---
+
+<div align="center">
+
+**Made with ❤️ for engineers building the future**
+
+</div>
