@@ -1,153 +1,149 @@
-# JSON Web Tokens (JWT)
+# JWT (JSON Web Token) ⭐ MOST IMPORTANT
 
-// (// 
+**What it is:** A self-contained, signed token that contains identity + permissions.
 
-## Summary
+## JWT Structure
 
-JWT is a compact, URL-safe token format for securely transmitting information between parties. It's commonly used for authentication and authorization in stateless systems, eliminating the need for server-side session storage.
-
-## Key Concepts
-
-### JWT Structure
-
-A JWT has three parts separated by dots:
+A JWT has **3 parts** separated by dots:
 
 ```
-header.payload.signature
+xxxxx.yyyyy.zzzzz
 ```
 
-1. **Header:** Algorithm and token type
-   ```json
-   {
-     "alg": "HS256",
-     "typ": "JWT"
-   }
-   ```
+### 1️⃣ Header
+```json
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+- Algorithm used for signing
+- Token type
 
-2. **Payload:** Claims (data)
-   ```json
-   {
-     "sub": "user123",
-     "name": "John Doe",
-     "exp": 1609459200
-   }
-   ```
+### 2️⃣ Payload (Claims)
+```json
+{
+  "sub": "user123",
+  "role": "admin",
+  "exp": 1710000000,
+  "iat": 1709913600
+}
+```
+- **sub** (subject) - User ID
+- **role** - User role
+- **exp** - Expiration time
+- **iat** - Issued at time
 
-3. **Signature:** Verifies token integrity
-   ```
-   HMACSHA256(
-     base64UrlEncode(header) + "." + base64UrlEncode(payload),
-     secret
-   )
-   ```
+### 3️⃣ Signature
+- Used to verify token wasn't modified
+- Signed with secret key or private key
 
-### JWT Flow
+## How JWT Authentication Works
 
 ```
-1. User logs in → Server validates credentials
-2. Server creates JWT → Signs with secret
-3. Server returns JWT → Client stores (localStorage/cookie)
-4. Client sends JWT → In Authorization header
-5. Server validates signature → Grants access
+1. User logs in
+   ↓
+2. Auth service issues JWT
+   ↓
+3. Client sends JWT with requests
+   ↓
+4. API verifies signature
+   ↓
+5. API reads claims (role, userId)
 ```
 
-## Why It Matters
+## Does API Call DB Every Time?
 
-**Stateless:** No server-side session storage needed. Perfect for microservices and distributed systems.
+❌ **No** - JWT is **stateless**
 
-**Scalability:** Any server can validate tokens without shared state.
+- No session storage needed
+- Token contains all necessary information
+- Signature verification is enough
 
-**Portable:** Token contains user info, reducing database lookups.
+## Why JWT is Popular
 
-**Standard:** Widely supported across languages and frameworks.
+- ✅ **Stateless** - No session storage
+- ✅ **Fast** - No DB lookup
+- ✅ **Scalable** - Works great for microservices
+- ✅ **Portable** - Token works across services
 
-## Real-World Examples
+## JWT Downsides
 
-**Auth0:** Uses JWT for authentication tokens.
+- ❌ **Hard to revoke** before expiry
+- ❌ **Token size** is larger than opaque tokens
+- ❌ **Must manage expiry** carefully
+- ❌ **Claims can't change** until token expires
 
-**Google OAuth:** Returns JWT tokens for API access.
+## Configuration Requirements
 
-**AWS Cognito:** Issues JWTs for authenticated users.
+| Field | Why |
+|-------|-----|
+| Base URL | API endpoint |
+| JWT Token | Signed identity token |
+| Signing Algorithm | HS256 / RS256 |
+| Public Key / Secret | For verification |
+| Token Expiry | Security |
+| Issuer (iss) | Trust check |
+| Audience (aud) | Target validation |
 
-**Spring Security:** JWT support for stateless authentication.
+**Note:** JWT is usually obtained via OAuth, not manually configured.
 
-## Tradeoffs
+## Request Example
 
-### Advantages
-- ✅ Stateless (no server storage)
-- ✅ Scalable (no shared session store)
-- ✅ Portable (works across services)
-- ✅ Self-contained (user info in token)
+```http
+GET /api/orders
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+```
 
-### Disadvantages
-- ❌ Can't revoke easily (until expiration)
-- ❌ Size limit (can't store too much data)
-- ❌ Security risk if secret leaked
-- ❌ No built-in refresh mechanism
+## JWT vs Sessions
 
-## Security Considerations
+| Aspect | JWT | Sessions |
+|--------|-----|----------|
+| Storage | Client-side | Server-side |
+| Scalability | ✅ Horizontal scaling easy | ❌ Needs shared storage |
+| Performance | ✅ No DB lookup | ❌ DB lookup per request |
+| Revocation | ❌ Hard | ✅ Easy |
+| Token Size | ❌ Larger | ✅ Smaller |
 
-### Best Practices
+## Best Practices
 
-1. **Use HTTPS:** Always transmit JWTs over HTTPS
-2. **Short Expiration:** Set reasonable expiration times
-3. **Secure Storage:** Don't store in localStorage (XSS risk)
-4. **Secret Management:** Use strong, rotated secrets
-5. **Validate Signature:** Always verify signature
+- ✅ Use short expiration times
+- ✅ Implement refresh tokens
+- ✅ Use RS256 for public APIs
+- ✅ Validate signature and claims
+- ✅ Check expiration (exp claim)
+- ✅ Verify issuer (iss) and audience (aud)
+- ❌ Don't store sensitive data in JWT
+- ❌ Don't use JWT for session management if revocation needed
 
-### Common Vulnerabilities
+## When to Use
 
-1. **Algorithm Confusion:** Attacker uses "none" algorithm
-   - Solution: Explicitly verify algorithm
+- ✅ Microservices
+- ✅ Internal APIs
+- ✅ Modern backends
+- ✅ Stateless architectures
+- ❌ When frequent revocation needed
+- ❌ When token size matters (mobile)
 
-2. **Weak Secrets:** Predictable signing keys
-   - Solution: Use strong, random secrets
+## Common Interview Questions
 
-3. **XSS Attacks:** Stealing tokens from localStorage
-   - Solution: Use httpOnly cookies
+**Q: Why JWT over sessions?**
+- Stateless → horizontal scaling
+- No shared session storage needed
+- Works across microservices
 
-4. **Token Replay:** Using expired tokens
-   - Solution: Check expiration, use refresh tokens
+**Q: How to revoke JWT?**
+- Use short expiration + refresh tokens
+- Maintain token blacklist (defeats statelessness)
+- Use reference tokens instead
 
-## Design Considerations
+**Q: JWT vs OAuth?**
+- JWT = token format
+- OAuth = token issuing framework
+- OAuth often issues JWT tokens
 
-### When to Use JWT
+## Related Topics
 
-**Good for:**
-- Stateless APIs
-- Microservices
-- Mobile apps
-- Single-page applications
-- Cross-domain authentication
-
-**Not ideal for:**
-- Systems requiring immediate revocation
-- Large payloads
-- Highly sensitive data in token
-
-### Token Storage
-
-**Options:**
-1. **localStorage:** Easy, but XSS vulnerable
-2. **httpOnly Cookies:** More secure, CSRF risk
-3. **Memory:** Most secure, lost on refresh
-
-**Recommendation:** httpOnly cookies for web, memory for mobile.
-
-### Refresh Tokens
-
-Use refresh tokens for long-lived sessions:
-- Short-lived access token (15 min)
-- Long-lived refresh token (7 days)
-- Refresh endpoint to get new access token
-
-## Interview Hints
-
-When discussing JWT:
-1. Explain structure (header, payload, signature)
-2. Describe stateless authentication flow
-3. Discuss security considerations
-4. Address revocation challenges
-5. Compare with session-based auth
-// (// 
-
+- **[OAuth 2.0](./06-oauth2.md)** - Often issues JWT tokens
+- **[Bearer Tokens](./04-bearer-tokens.md)** - Transport mechanism for JWT
+- **[Authorization](../02-authorization/)** - Using JWT claims for authorization

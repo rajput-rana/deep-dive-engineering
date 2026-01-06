@@ -4,12 +4,34 @@
 
 Authorization determines what actions a user or service can perform after authentication. It's about permissions and access control.
 
+## Auth vs Authorization (1-Line Clarity)
+
+- **Authentication** → Who are you?
+- **Authorization** → What are you allowed to do?
+
+**You must authenticate first, then authorize.**
+
 ## Table of Contents
 
-- **[01. RBAC (Role-Based Access Control)](./01-rbac.md)** - Role-based permissions
-- **[02. ABAC (Attribute-Based Access Control)](./02-abac.md)** - Attribute-based permissions
+- **[01. RBAC (Role-Based Access Control)](./01-rbac.md)** ⭐ - Role-based permissions (most common)
+- **[02. ABAC (Attribute-Based Access Control)](./02-abac.md)** ⭐ - Attribute-based permissions (powerful)
 - **[03. Least Privilege](./03-least-privilege.md)** - Principle of least privilege
 - **[04. Fine-Grained Permissions](./04-fine-grained-permissions.md)** - Granular access control
+- **[05. Policy-Based Authorization](./05-policy-based-authorization.md)** - Centralized policy evaluation
+- **[06. OAuth Scopes](./06-oauth-scopes.md)** - Scope-based permissions
+- **[07. Resource Ownership](./07-resource-ownership.md)** - Ownership-based access
+- **[08. Authorization Comparison](./08-authorization-comparison.md)** - Comparison of all methods
+
+## How Authorization Works
+
+Once the API knows who you are (via JWT, OAuth, etc.), it checks:
+
+- **Role** - User's role
+- **Permission** - Explicit permissions
+- **Resource ownership** - Who owns the resource
+- **Policy rules** - Policy engine evaluation
+
+**Authorization answers:** Can this identity perform THIS action on THIS resource?
 
 ## Authorization Models
 
@@ -42,6 +64,23 @@ Authorization determines what actions a user or service can perform after authen
 - Check permissions directly
 - **Examples:** Database permissions, API permissions
 
+## Real-World Combinations
+
+Most systems combine methods:
+
+**Example:**
+```
+OAuth → authenticate
+  ↓
+JWT → carry identity
+  ↓
+RBAC → baseline access
+  ↓
+Ownership → resource check
+  ↓
+ABAC → edge cases
+```
+
 ## Best Practices
 
 - ✅ Follow least privilege principle
@@ -55,4 +94,3 @@ Authorization determines what actions a user or service can perform after authen
 - **[Authentication](../01-authentication/)** - Identity verification
 - **[Service Identity](../03-service-identity/)** - Service authorization
 - **[Data Security](../../03-data-security-privacy/)** - Data access control
-
