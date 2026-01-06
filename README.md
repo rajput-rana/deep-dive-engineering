@@ -6,6 +6,7 @@
 
 [![System Design](https://img.shields.io/badge/System%20Design-Comprehensive-blue?style=for-the-badge)](./system-design/)
 [![DSA](https://img.shields.io/badge/DSA-11%20Topics-green?style=for-the-badge)](./dsa/)
+[![AI](https://img.shields.io/badge/AI-Engineering-purple?style=for-the-badge)](./ai/)
 [![Security](https://img.shields.io/badge/Security-Deep%20Dive-red?style=for-the-badge)](./system-design/06-security-compliance/)
 
 *A curated knowledge base for engineers who want to go beyond the basics*
@@ -49,11 +50,28 @@
 </td>
 <td width="33%">
 
+### 🤖 AI Engineering
+- **LLMs & RAG**
+- **Prompt Engineering**
+- **Vector Embeddings**
+- **AI System Design**
+
+</td>
+</tr>
+<tr>
+<td width="33%">
+
 ### 🔐 Security & Compliance
 - **IAM** (Authentication & Authorization)
 - **Secrets Management**
 - **Data Security & Privacy**
 - **Secure SDLC**
+
+</td>
+<td width="33%">
+
+</td>
+<td width="33%">
 
 </td>
 </tr>
@@ -63,11 +81,11 @@
 
 <div align="center">
 
-| 📊 **System Design** | 💻 **DSA** | 🔧 **Tech Concepts** |
+| 📊 **System Design** | 💻 **DSA** | 🤖 **AI Engineering** |
 |:---:|:---:|:---:|
-| Complete knowledge base | 11 Topics × 3 Levels | Core engineering concepts |
-| 180+ Topics | Easy → Medium → Hard | Concurrency, Databases, etc. |
-| [Explore →](./system-design/) | [Explore →](./dsa/) | [Explore →](./tech-concepts/) |
+| Complete knowledge base | 11 Topics × 3 Levels | LLMs, RAG, Prompting |
+| 180+ Topics | Easy → Medium → Hard | Vector DBs, Embeddings |
+| [Explore →](./system-design/) | [Explore →](./dsa/) | [Explore →](./ai/) |
 
 </div>
 
@@ -111,6 +129,25 @@
 | [Backtracking](./dsa/backtracking/) | ✅ | ✅ | ✅ |
 | [Bit Manipulation](./dsa/bit-manipulation/) | ✅ | ✅ | ✅ |
 | [Math](./dsa/math/) | ✅ | ✅ | ✅ |
+
+</div>
+
+### 🤖 [AI Engineering](./ai/)
+
+> *Essential knowledge for engineers building AI-powered applications*
+
+<div align="center">
+
+| Topic | Description | Key Concepts |
+|:---:|:---:|:---:|
+| **[LLMs Fundamentals](./ai/01-llms-fundamentals.md)** | Large language models architecture and capabilities | Transformers, attention, tokenization |
+| **[RAG Systems](./ai/02-rag-retrieval-augmented-generation.md)** | Retrieval-augmented generation patterns | Vector databases, embeddings, retrieval |
+| **[Prompt Engineering](./ai/03-prompt-engineering.md)** | Effective prompting techniques | Few-shot, chain-of-thought, role-playing |
+| **[Vector Embeddings](./ai/04-vector-embeddings.md)** | Embeddings and similarity search | Semantic search, cosine similarity |
+| **[AI System Design](./ai/05-ai-system-design.md)** | Production AI architecture | Scalability, latency, cost optimization |
+| **[Fine-Tuning vs Prompting](./ai/06-fine-tuning-vs-prompting.md)** | When to fine-tune vs prompt | Cost, performance, use cases |
+| **[AI Evaluation](./ai/07-ai-evaluation.md)** | Measuring AI system performance | Metrics, testing, monitoring |
+| **[Cost Optimization](./ai/08-cost-optimization.md)** | Token management, caching, efficiency | Reducing AI costs |
 
 </div>
 
@@ -291,9 +328,9 @@ Case studies and designs for:
 
 | Level | Focus Areas | Key Topics |
 |:---:|:---:|:---:|
-| **🌱 Beginner** | Foundations | [System Design Fundamentals](./system-design/01-fundamentals/)<br>[DSA Easy Problems](./dsa/)<br>Core Tech Concepts |
-| **🌿 Intermediate** | Advanced Concepts | [Distributed Systems](./system-design/07-distributed-systems/)<br>[Security Basics](./system-design/06-security-compliance/)<br>[Architecture Patterns](./system-design/02-architectures/) |
-| **🌳 Advanced** | Mastery | [CRDTs](./system-design/07-distributed-systems/06-crdts.md) & [Consensus](./system-design/07-distributed-systems/05-consensus-algorithms.md)<br>[Security Deep Dives](./system-design/06-security-compliance/)<br>[Real-World Systems](./system-design/08-real-world/) |
+| **🌱 Beginner** | Foundations | [System Design Fundamentals](./system-design/01-fundamentals/)<br>[DSA Easy Problems](./dsa/)<br>[LLMs Fundamentals](./ai/01-llms-fundamentals.md) |
+| **🌿 Intermediate** | Advanced Concepts | [Distributed Systems](./system-design/07-distributed-systems/)<br>[RAG Systems](./ai/02-rag-retrieval-augmented-generation.md)<br>[Architecture Patterns](./system-design/02-architectures/) |
+| **🌳 Advanced** | Mastery | [CRDTs](./system-design/07-distributed-systems/06-crdts.md) & [Consensus](./system-design/07-distributed-systems/05-consensus-algorithms.md)<br>[AI System Design](./ai/05-ai-system-design.md)<br>[Real-World Systems](./system-design/08-real-world/) |
 
 </div>
 
