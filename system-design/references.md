@@ -49,7 +49,7 @@ Complete reference of all system design topics (117+ chapters), organized by cat
 | Lamport Timestamps | 🔒 Paywalled | [`distributed-systems/lamport-timestamps.md`](./distributed-systems/lamport-timestamps.md) |
 | Gossip Protocol | 🔒 Paywalled | [`distributed-systems/gossip-protocol.md`](./distributed-systems/gossip-protocol.md) |
 | Merkle Trees | 🔒 Paywalled | [`distributed-systems/merkle-trees.md`](./distributed-systems/merkle-trees.md) |
-| Consistent Hashing | 🔒 Paywalled | [`distributed-systems/consistent-hashing.md`](./distributed-systems/consistent-hashing.md) |
+| Consistent Hashing | ✅ Public | [`distributed-systems/consistent-hashing.md`](./distributed-systems/consistent-hashing.md) |
 | Quorum | 🔒 Paywalled | [`distributed-systems/quorum.md`](./distributed-systems/quorum.md) |
 | Split-Brain Problem | 🔒 Paywalled | [`distributed-systems/split-brain-problem.md`](./distributed-systems/split-brain-problem.md) |
 | Distributed Tracing | 🔒 Paywalled | [`distributed-systems/distributed-tracing.md`](./distributed-systems/distributed-tracing.md) |
