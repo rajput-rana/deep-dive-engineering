@@ -152,6 +152,23 @@
 
 </div>
 
+### 🚀 [DevOps](./devops/)
+
+> *Essential DevOps knowledge for engineering leaders and teams*
+
+<div align="center">
+
+| Topic | Description | Key Concepts |
+|:---:|:---:|:---:|
+| **[Docker](./devops/01-docker.md)** | Containerization fundamentals | Images, containers, Dockerfile |
+| **[Kubernetes](./devops/02-kubernetes.md)** | Container orchestration | Pods, services, deployments |
+| **[CI/CD Pipelines](./devops/03-cicd-pipelines.md)** | Continuous integration/deployment | Pipeline design, automation |
+| **[Terraform](./devops/04-terraform.md)** | Infrastructure as code | State management, providers |
+| **[Container Orchestration](./devops/05-container-orchestration.md)** | Orchestration concepts | Why orchestration, alternatives |
+| **[DevOps Best Practices](./devops/06-devops-best-practices.md)** | DevOps principles | Culture, automation, monitoring |
+
+</div>
+
 ### [Tech Concepts](./tech-concepts/)
 
 Core technical concepts for backend and distributed systems engineers.
