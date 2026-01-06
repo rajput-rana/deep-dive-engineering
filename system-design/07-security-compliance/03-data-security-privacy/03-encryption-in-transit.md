@@ -151,5 +151,5 @@
 
 - **[Encryption at Rest](./02-encryption-at-rest.md)** - Protecting stored data
 - **[mTLS](../01-iam/03-service-identity/01-mtls.md)** - Mutual TLS for services
-- **[TLS/HTTPS](../04-networking-protocols/)** - Transport security
+- **[TLS/HTTPS](../04-communication-protocols/)** - Transport security
 

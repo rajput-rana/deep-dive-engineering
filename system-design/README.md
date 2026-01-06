@@ -43,7 +43,7 @@
 | **01. Fundamentals** | 9 Topics | Core concepts, scalability, reliability, API design | [Explore →](./01-fundamentals/) |
 | **02. Data Storage** | 4 Topics | Database fundamentals, indexing, sharding, replication | [Explore →](./02-data-storage/) |
 | **03. Distributed Systems** | 4 Topics | Consistent hashing, service discovery, consensus | [Explore →](./03-distributed-systems/) |
-| **04. Networking Protocols** | 5 Topics | HTTP/HTTPS, WebSockets, API Gateways, Webhooks | [Explore →](./04-networking-protocols/) |
+| **04. Communication Protocols** | 6 Topics | HTTP/HTTPS, WebSockets, API Gateways, Webhooks, Kafka | [Explore →](./04-communication-protocols/) |
 | **05. Scaling Patterns** | 3 Topics | Horizontal scaling, rate limiting, load balancing | [Explore →](./05-scaling-patterns/) |
 | **06. Architectures** | 3 Topics | Microservices, monolithic, peer-to-peer | [Explore →](./06-architectures/) |
 | **07. Security & Compliance** | 50+ Topics | IAM, secrets, data security, compliance | [Explore →](./07-security-compliance/) |
@@ -103,7 +103,7 @@
 | Level | Focus | Key Topics |
 |:---:|:---:|:---:|
 | **🌱 Beginner** | Foundations | [Fundamentals](./01-fundamentals/)<br>Core concepts & patterns<br>Basic scalability |
-| **🌿 Intermediate** | Advanced Concepts | [Distributed Systems](./03-distributed-systems/)<br>[Data Storage](./02-data-storage/)<br>[Networking](./04-networking-protocols/) |
+| **🌿 Intermediate** | Advanced Concepts | [Distributed Systems](./03-distributed-systems/)<br>[Data Storage](./02-data-storage/)<br>[Communication Protocols](./04-communication-protocols/) |
 | **🌳 Advanced** | Mastery | [Architectures](./06-architectures/)<br>[Real-World Systems](./08-real-world/)<br>[Tradeoffs](./10-tradeoffs/) |
 
 </div>

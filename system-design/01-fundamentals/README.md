@@ -123,7 +123,7 @@
 |:---:|:---:|:---:|
 | **Data Storage** | Database fundamentals, replication, indexing, sharding | [02. Data Storage](../02-data-storage/) |
 | **Distributed Systems** | Consensus algorithms, consistent hashing, service discovery | [03. Distributed Systems](../03-distributed-systems/) |
-| **Networking Protocols** | HTTP/HTTPS, WebSockets, API Gateways, Webhooks | [04. Networking Protocols](../04-networking-protocols/) |
+| **Communication Protocols** | HTTP/HTTPS, WebSockets, API Gateways, Webhooks, Kafka | [04. Communication Protocols](../04-communication-protocols/) |
 | **Scaling Patterns** | Horizontal scaling, rate limiting, load balancing algorithms | [05. Scaling Patterns](../05-scaling-patterns/) |
 | **Architectures** | Microservices, monolithic, event-driven architectures | [06. Architectures](../06-architectures/) |
 

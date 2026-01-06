@@ -1,13 +1,13 @@
-# 🌐 Networking & Protocols
+# 🌐 Communication Protocols
 
 <div align="center">
 
-**Communication protocols and networking concepts**
+**Communication protocols and messaging systems**
 
 [![Topics](https://img.shields.io/badge/Topics-6-blue?style=for-the-badge)](./)
-[![Protocols](https://img.shields.io/badge/Protocols-HTTP%2C%20WebSocket-green?style=for-the-badge)](./)
+[![Protocols](https://img.shields.io/badge/Protocols-HTTP%2C%20WebSocket%2C%20Kafka-green?style=for-the-badge)](./)
 
-*Master networking protocols for modern system design*
+*Master communication protocols and messaging systems for modern system design*
 
 </div>
 
@@ -99,6 +99,6 @@
 
 <div align="center">
 
-**Master networking for modern systems! 🚀**
+**Master communication protocols for modern systems! 🚀**
 
 </div>

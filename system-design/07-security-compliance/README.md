@@ -181,7 +181,7 @@ Identity → Secrets → Data → App → Infra → Logs → Incidents → Compl
 | Section | Description | Link |
 |:---:|:---:|:---:|
 | **Fundamentals** | System design basics | [01. Fundamentals](../01-fundamentals/) |
-| **Networking** | HTTPS, TLS | [04. Networking](../04-networking-protocols/) |
+| **Communication Protocols** | HTTPS, TLS | [04. Communication Protocols](../04-communication-protocols/) |
 | **Architectures** | Secure architecture patterns | [06. Architectures](../06-architectures/) |
 
 </div>

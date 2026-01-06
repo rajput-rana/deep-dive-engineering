@@ -100,7 +100,7 @@ When choosing an architectural pattern, consider:
 |:---:|:---:|:---:|
 | **Fundamentals** | System design basics | [01. Fundamentals](../01-fundamentals/) |
 | **Distributed Systems** | Distributed patterns | [03. Distributed Systems](../03-distributed-systems/) |
-| **Networking** | Service communication | [04. Networking](../04-networking-protocols/) |
+| **Communication Protocols** | Service communication | [04. Communication Protocols](../04-communication-protocols/) |
 
 </div>
 

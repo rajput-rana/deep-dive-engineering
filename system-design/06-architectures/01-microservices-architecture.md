@@ -581,5 +581,5 @@ Example regrets: Over-engineering too early, splitting without clear ownership, 
 - **[Event-Driven Architecture](./03-event-driven-architecture.md)** - Communication pattern
 - **[Service Discovery](../03-distributed-systems/02-service-discovery.md)** - Finding services
 - **[Consensus Algorithms](../03-distributed-systems/03-consensus-algorithms.md)** - Strong consistency
-- **[API Gateway](../04-networking-protocols/05-api-gateway.md)** - Entry point
+- **[API Gateway](../04-communication-protocols/05-api-gateway.md)** - Entry point
 
