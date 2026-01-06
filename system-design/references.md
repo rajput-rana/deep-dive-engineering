@@ -77,10 +77,11 @@ Complete reference of all system design topics (117+ chapters), organized by cat
 | Load Balancer Types | ✅ Public | [`networking-protocols/load-balancer-types.md`](./networking-protocols/load-balancer-types.md) |
 | Webhooks | ✅ Public | [`networking-protocols/webhooks.md`](./networking-protocols/webhooks.md) |
 
-## Data Storage (18 topics)
+## Data Storage (19 topics)
 
 | Title | Status | Local File |
 |-------|--------|------------|
+| **Database Fundamentals** | ✅ Public | [`data-storage/database-fundamentals.md`](./data-storage/database-fundamentals.md) ⭐ Comprehensive guide |
 | Database Sharding | ✅ Public | [`data-storage/sharding.md`](./data-storage/sharding.md) |
 | Indexing | ✅ Public | [`data-storage/indexing.md`](./data-storage/indexing.md) |
 | Database Replication | ✅ Public | [`data-storage/database-replication.md`](./data-storage/database-replication.md) |
