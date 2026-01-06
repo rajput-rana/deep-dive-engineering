@@ -9,6 +9,7 @@
 [![AI](https://img.shields.io/badge/AI-Engineering-purple?style=for-the-badge)](./ai/)
 [![DevOps](https://img.shields.io/badge/DevOps-Essentials-cyan?style=for-the-badge)](./devops/)
 [![AWS](https://img.shields.io/badge/AWS-Cloud-yellow?style=for-the-badge)](./aws/)
+[![Languages](https://img.shields.io/badge/Languages-Expert-pink?style=for-the-badge)](./languages/)
 [![Security](https://img.shields.io/badge/Security-Deep%20Dive-red?style=for-the-badge)](./system-design/06-security-compliance/)
 
 *A curated knowledge base for engineers who want to go beyond the basics*
@@ -83,11 +84,11 @@
 
 <div align="center">
 
-| 📊 **System Design** | 💻 **DSA** | 🤖 **AI Engineering** | 🚀 **DevOps** | ☁️ **AWS Cloud** |
-|:---:|:---:|:---:|:---:|:---:|
-| Complete knowledge base | 11 Topics × 3 Levels | LLMs, RAG, Prompting | Docker, K8s, CI/CD | EC2, S3, Lambda |
-| 180+ Topics | Easy → Medium → Hard | Vector DBs, Embeddings | Terraform, IaC | RDS, DynamoDB, VPC |
-| [Explore →](./system-design/) | [Explore →](./dsa/) | [Explore →](./ai/) | [Explore →](./devops/) | [Explore →](./aws/) |
+| 📊 **System Design** | 💻 **DSA** | 🤖 **AI Engineering** | 🚀 **DevOps** | ☁️ **AWS Cloud** | 💻 **Languages** |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| Complete knowledge base | 11 Topics × 3 Levels | LLMs, RAG, Prompting | Docker, K8s, CI/CD | EC2, S3, Lambda | Java, Spring, Node, React |
+| 180+ Topics | Easy → Medium → Hard | Vector DBs, Embeddings | Terraform, IaC | RDS, DynamoDB, VPC | OOP, Hooks, Async |
+| [Explore →](./system-design/) | [Explore →](./dsa/) | [Explore →](./ai/) | [Explore →](./devops/) | [Explore →](./aws/) | [Explore →](./languages/) |
 
 </div>
 
@@ -192,6 +193,22 @@
 | **[API Gateway](./aws/13-api-gateway.md)** | API management | REST APIs, throttling |
 | **[Cost Optimization](./aws/17-cost-optimization.md)** | Cost management | Right-sizing, reservations |
 | **[Architecture Patterns](./aws/18-architecture-patterns.md)** | Well-Architected Framework | Best practices, patterns |
+
+</div>
+
+### 💻 [Programming Languages](./languages/)
+
+> *Master programming languages and frameworks: Java, Spring, Node.js, React*
+
+<div align="center">
+
+| Topic | Description | Key Concepts |
+|:---:|:---:|:---:|
+| **[Java](./languages/01-java.md)** | Object-oriented programming, JVM | OOP, concurrency, collections, streams |
+| **[Spring Framework](./languages/02-spring.md)** | Dependency injection, IoC, AOP | Beans, DI, MVC, transactions |
+| **[Spring Boot](./languages/03-spring-boot.md)** | Auto-configuration, microservices | Starters, REST APIs, Actuator |
+| **[Node.js](./languages/04-nodejs.md)** | Server-side JavaScript runtime | Event loop, async/await, modules |
+| **[React.js](./languages/05-react.md)** | Component-based UI library | Components, hooks, state management |
 
 </div>
 
@@ -372,9 +389,9 @@ Case studies and designs for:
 
 | Level | Focus Areas | Key Topics |
 |:---:|:---:|:---:|
-| **🌱 Beginner** | Foundations | [System Design Fundamentals](./system-design/01-fundamentals/)<br>[DSA Easy Problems](./dsa/)<br>[LLMs Fundamentals](./ai/01-llms-fundamentals.md)<br>[AWS Fundamentals](./aws/01-aws-fundamentals.md) |
-| **🌿 Intermediate** | Advanced Concepts | [Distributed Systems](./system-design/07-distributed-systems/)<br>[RAG Systems](./ai/02-rag-retrieval-augmented-generation.md)<br>[EC2 & S3](./aws/02-ec2-compute.md)<br>[VPC Networking](./aws/08-vpc-networking.md) |
-| **🌳 Advanced** | Mastery | [CRDTs](./system-design/07-distributed-systems/06-crdts.md) & [Consensus](./system-design/07-distributed-systems/05-consensus-algorithms.md)<br>[AI System Design](./ai/05-ai-system-design.md)<br>[AWS Architecture Patterns](./aws/18-architecture-patterns.md)<br>[Real-World Systems](./system-design/08-real-world/) |
+| **🌱 Beginner** | Foundations | [System Design Fundamentals](./system-design/01-fundamentals/)<br>[DSA Easy Problems](./dsa/)<br>[Java Basics](./languages/01-java.md)<br>[React Components](./languages/05-react.md) |
+| **🌿 Intermediate** | Advanced Concepts | [Distributed Systems](./system-design/07-distributed-systems/)<br>[Spring Framework](./languages/02-spring.md)<br>[Node.js Async](./languages/04-nodejs.md)<br>[Spring Boot](./languages/03-spring-boot.md) |
+| **🌳 Advanced** | Mastery | [CRDTs](./system-design/07-distributed-systems/06-crdts.md) & [Consensus](./system-design/07-distributed-systems/05-consensus-algorithms.md)<br>[Java Concurrency](./languages/01-java.md)<br>[React Performance](./languages/05-react.md)<br>[Real-World Systems](./system-design/08-real-world/) |
 
 </div>
 
