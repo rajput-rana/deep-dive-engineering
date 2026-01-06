@@ -5,7 +5,7 @@
 **Master the art of designing scalable, reliable, and performant systems**
 
 [![Topics](https://img.shields.io/badge/Topics-180%2B-blue?style=for-the-badge)](./)
-[![Sections](https://img.shields.io/badge/Sections-10-green?style=for-the-badge)](./)
+[![Sections](https://img.shields.io/badge/Sections-8-green?style=for-the-badge)](./)
 [![Real-World](https://img.shields.io/badge/Real--World-Case%20Studies-orange?style=for-the-badge)](./08-real-world/)
 
 *Comprehensive documentation and case studies for building production-grade systems*
@@ -40,16 +40,14 @@
 
 | Section | Topics | Description | Link |
 |:---:|:---:|:---:|:---:|
-| **01. Fundamentals** | 9 Topics | Core concepts, scalability, reliability, API design | [Explore →](./01-fundamentals/) |
-| **02. Data Storage** | 4 Topics | Database fundamentals, indexing, sharding, replication | [Explore →](./02-data-storage/) |
-| **03. Distributed Systems** | 4 Topics | Consistent hashing, service discovery, consensus | [Explore →](./03-distributed-systems/) |
-| **04. Communication Protocols** | 6 Topics | HTTP/HTTPS, WebSockets, API Gateways, Webhooks, Kafka | [Explore →](./04-communication-protocols/) |
-| **05. Scaling Patterns** | 3 Topics | Horizontal scaling, rate limiting, load balancing | [Explore →](./05-scaling-patterns/) |
-| **06. Architectures** | 3 Topics | Microservices, monolithic, peer-to-peer | [Explore →](./06-architectures/) |
-| **07. Security & Compliance** | 50+ Topics | IAM, secrets, data security, compliance | [Explore →](./07-security-compliance/) |
+| **01. Fundamentals** | 5 Topics | Core concepts, API design, object storage | [Explore →](./01-fundamentals/) |
+| **02. Architectures** | 3 Topics | Microservices, monolithic, peer-to-peer | [Explore →](./02-architectures/) |
+| **03. Scaling & Reliability** | 8 Topics | Scalability, performance, reliability, availability, caching, load balancing | [Explore →](./03-scaling-reliability-availability/) |
+| **04. Database** | 11 Topics | Database fundamentals, indexing, sharding, replication, NoSQL, MongoDB, Redis, Elasticsearch, Graph DBs, CDC | [Explore →](./04-database/) |
+| **05. Communication Protocols** | 6 Topics | HTTP/HTTPS, WebSockets, API Gateways, Webhooks, Kafka | [Explore →](./05-communication-protocols/) |
+| **06. Security & Compliance** | 50+ Topics | IAM, secrets, data security, compliance | [Explore →](./06-security-compliance/) |
+| **07. Distributed Systems** | 6 Topics | CAP theorem, consistent hashing, idempotency, service discovery, consensus, CRDTs | [Explore →](./07-distributed-systems/) |
 | **08. Real-World Systems** | 2+ Topics | Case studies and real-world designs | [Explore →](./08-real-world/) |
-| **09. Case Studies** | - | Detailed system design case studies | [Explore →](./09-case-studies/) |
-| **10. Tradeoffs** | - | Design decision analysis | [Explore →](./10-tradeoffs/) |
 
 </div>
 
@@ -103,8 +101,8 @@
 | Level | Focus | Key Topics |
 |:---:|:---:|:---:|
 | **🌱 Beginner** | Foundations | [Fundamentals](./01-fundamentals/)<br>Core concepts & patterns<br>Basic scalability |
-| **🌿 Intermediate** | Advanced Concepts | [Distributed Systems](./03-distributed-systems/)<br>[Data Storage](./02-data-storage/)<br>[Communication Protocols](./04-communication-protocols/) |
-| **🌳 Advanced** | Mastery | [Architectures](./06-architectures/)<br>[Real-World Systems](./08-real-world/)<br>[Tradeoffs](./10-tradeoffs/) |
+| **🌿 Intermediate** | Advanced Concepts | [Distributed Systems](./07-distributed-systems/)<br>[Database](./04-database/)<br>[Communication Protocols](./05-communication-protocols/) |
+| **🌳 Advanced** | Mastery | [Architectures](./02-architectures/)<br>[Real-World Systems](./08-real-world/)<br>[Security & Compliance](./06-security-compliance/) |
 
 </div>
 
@@ -119,10 +117,10 @@
 | Topic | What to Master | Resources |
 |:---:|:---:|:---:|
 | **Fundamentals** | Scalability, Performance, Reliability | [01. Fundamentals](./01-fundamentals/) |
-| **Distributed Systems** | CAP Theorem, Consensus, Consistency | [03. Distributed Systems](./03-distributed-systems/) |
-| **Data Management** | Database design, Sharding, Replication | [02. Data Storage](./02-data-storage/) |
-| **Architecture** | Microservices, Event-driven, API Gateway | [06. Architectures](./06-architectures/) |
-| **Performance** | Caching, Load balancing, Rate limiting | [05. Scaling Patterns](./05-scaling-patterns/) |
+| **Distributed Systems** | CAP Theorem, Consensus, Consistency | [07. Distributed Systems](./07-distributed-systems/) |
+| **Data Management** | Database design, Sharding, Replication | [04. Database](./04-database/) |
+| **Architecture** | Microservices, Event-driven, API Gateway | [02. Architectures](./02-architectures/) |
+| **Performance** | Caching, Load balancing, Rate limiting | [03. Scaling & Reliability](./03-scaling-reliability-availability/) |
 
 ### 💡 Common Interview Questions
 
@@ -167,8 +165,8 @@
 | Quick Access | Link |
 |:---:|:---:|
 | **Fundamentals Overview** | [01. Fundamentals](./01-fundamentals/README.md) |
-| **Database Fundamentals** | [02. Database Fundamentals](./02-data-storage/01-database-fundamentals.md) |
-| **CAP Theorem** | [08. CAP Theorem](./01-fundamentals/08-distributed-systems/01-cap-theorem.md) |
+| **Database Fundamentals** | [04. Database Fundamentals](./04-database/01-database-fundamentals.md) |
+| **CAP Theorem** | [07. CAP Theorem](./07-distributed-systems/01-cap-theorem.md) |
 | **System Design Template** | [Template](./system-design-template.md) |
 
 </div>

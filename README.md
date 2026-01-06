@@ -6,7 +6,7 @@
 
 [![System Design](https://img.shields.io/badge/System%20Design-Comprehensive-blue?style=for-the-badge)](./system-design/)
 [![DSA](https://img.shields.io/badge/DSA-11%20Topics-green?style=for-the-badge)](./dsa/)
-[![Security](https://img.shields.io/badge/Security-Deep%20Dive-red?style=for-the-badge)](./system-design/07-security-compliance/)
+[![Security](https://img.shields.io/badge/Security-Deep%20Dive-red?style=for-the-badge)](./system-design/06-security-compliance/)
 
 *A curated knowledge base for engineers who want to go beyond the basics*
 
@@ -81,13 +81,13 @@
 
 | Section | Topics | Description |
 |:---:|:---:|:---|
-| **[01. Fundamentals](./system-design/01-fundamentals/)** | 9 Topics | Core concepts, scalability, reliability, API design |
-| **[02. Data Storage](./system-design/02-data-storage/)** | 4 Topics | Database fundamentals, indexing, sharding, replication |
-| **[03. Distributed Systems](./system-design/03-distributed-systems/)** | 4 Topics | Consistent hashing, service discovery, consensus algorithms |
-| **[04. Communication Protocols](./system-design/04-communication-protocols/)** | 6 Topics | HTTP/HTTPS, WebSockets, API Gateways, Webhooks, Kafka |
-| **[05. Scaling Patterns](./system-design/05-scaling-patterns/)** | 3 Topics | Horizontal scaling, rate limiting, load balancing |
-| **[06. Architectures](./system-design/06-architectures/)** | 3 Topics | Microservices, monolithic, peer-to-peer |
-| **[07. Security & Compliance](./system-design/07-security-compliance/)** | 50+ Topics | IAM, secrets management, data security, compliance |
+| **[01. Fundamentals](./system-design/01-fundamentals/)** | 5 Topics | Core concepts, API design, object storage |
+| **[02. Architectures](./system-design/02-architectures/)** | 3 Topics | Microservices, monolithic, peer-to-peer |
+| **[03. Scaling & Reliability](./system-design/03-scaling-reliability-availability/)** | 8 Topics | Scalability, performance, reliability, availability, caching, load balancing |
+| **[04. Database](./system-design/04-database/)** | 11 Topics | Database fundamentals, indexing, sharding, replication, NoSQL, MongoDB, Redis, Elasticsearch, Graph DBs, CDC |
+| **[05. Communication Protocols](./system-design/05-communication-protocols/)** | 6 Topics | HTTP/HTTPS, WebSockets, API Gateways, Webhooks, Kafka |
+| **[06. Security & Compliance](./system-design/06-security-compliance/)** | 50+ Topics | IAM, secrets management, data security, compliance |
+| **[07. Distributed Systems](./system-design/07-distributed-systems/)** | 6 Topics | CAP theorem, consistent hashing, idempotency, service discovery, consensus, CRDTs |
 | **[08. Real-World Systems](./system-design/08-real-world/)** | 2+ Topics | Case studies and real-world system designs |
 
 </div>
@@ -143,136 +143,124 @@ Core technical concepts for backend and distributed systems engineers.
 
 ### System Design - Fundamentals
 
-**Introduction:**
-- [What is System Design](./system-design/01-fundamentals/01-introduction/01-what-is-system-design.md)
-- [Top 30 System Design Concepts](./system-design/01-fundamentals/01-introduction/02-top-30-system-design-concepts.md)
+- [What is System Design](./system-design/01-fundamentals/01-what-is-system-design.md)
+- [Top 30 System Design Concepts](./system-design/01-fundamentals/02-top-30-system-design-concepts.md)
+- [What is an API](./system-design/01-fundamentals/03-what-is-an-api.md)
+- [API Design](./system-design/01-fundamentals/04-api-design.md)
+- [Object Storage](./system-design/01-fundamentals/05-object-storage.md)
 
-**Scalability & Performance:**
-- [Scalability](./system-design/01-fundamentals/02-scalability-performance/01-scalability.md)
-- [Performance](./system-design/01-fundamentals/02-scalability-performance/02-performance.md)
-- [Load Balancing](./system-design/01-fundamentals/02-scalability-performance/03-load-balancing.md)
-- [Caching](./system-design/01-fundamentals/02-scalability-performance/04-caching.md)
+### System Design - Architectures
 
-**Reliability & Availability:**
-- [Reliability](./system-design/01-fundamentals/03-reliability-availability/01-reliability.md)
-- [Availability](./system-design/01-fundamentals/03-reliability-availability/02-availability.md)
-- [Single Point of Failure (SPOF)](./system-design/01-fundamentals/03-reliability-availability/03-single-point-of-failure.md)
+- [Microservices Architecture](./system-design/02-architectures/01-microservices-architecture.md)
+- [Monolithic Architecture](./system-design/02-architectures/01-monolithic-architecture.md)
+- [Peer-to-Peer Architecture](./system-design/02-architectures/03-peer-to-peer-architecture.md)
 
-**API Design:**
-- [What is an API](./system-design/01-fundamentals/04-api-design/01-what-is-an-api.md)
-- [API Design](./system-design/01-fundamentals/04-api-design/02-api-design.md)
+### System Design - Scaling & Reliability
 
-**Concurrency:**
-- [Concurrency vs Parallelism](./system-design/01-fundamentals/05-concurrency/01-concurrency-vs-parallelism.md)
+- [Scalability](./system-design/03-scaling-reliability-availability/01-scalability.md)
+- [Performance](./system-design/03-scaling-reliability-availability/02-performance.md)
+- [Reliability](./system-design/03-scaling-reliability-availability/01-reliability.md)
+- [Availability](./system-design/03-scaling-reliability-availability/02-availability.md)
+- [Single Point of Failure (SPOF)](./system-design/03-scaling-reliability-availability/03-single-point-of-failure.md)
+- [Caching](./system-design/03-scaling-reliability-availability/04-caching.md)
+- [Horizontal Scaling](./system-design/03-scaling-reliability-availability/05-horizontal-scaling.md)
+- [Load Balancing](./system-design/03-scaling-reliability-availability/07-load-balancing.md)
+- [Load Balancing Algorithms](./system-design/03-scaling-reliability-availability/06-load-balancing-algorithms.md)
+- [Rate Limiting](./system-design/03-scaling-reliability-availability/03-rate-limiting.md)
+- [Concurrency vs Parallelism](./system-design/03-scaling-reliability-availability/08-concurrency-vs-parallelism.md)
 
-**Access Control:**
-- [RBAC (Role-Based Access Control)](./system-design/01-fundamentals/06-access-control/01-rbac.md)
+### System Design - Database
 
-**Storage:**
-- [Object Storage](./system-design/01-fundamentals/07-storage/01-object-storage.md)
-
-**Distributed Systems:**
-- [CAP Theorem](./system-design/01-fundamentals/08-distributed-systems/01-cap-theorem.md)
-- [Idempotency](./system-design/01-fundamentals/08-distributed-systems/02-idempotency.md)
-
-**Data Management:**
-- [Database Sharding](./system-design/01-fundamentals/09-data-management/01-database-sharding.md)
+- [Database Fundamentals](./system-design/04-database/01-database-fundamentals.md) - Comprehensive guide covering ACID, SQL vs NoSQL, indexing, sharding, replication
+- [Indexing](./system-design/04-database/02-indexing.md)
+- [Sharding](./system-design/04-database/03-sharding.md)
+- [Database Replication](./system-design/04-database/04-database-replication.md)
+- [Relational Databases (SQL)](./system-design/04-database/05-relational-databases.md)
+- [MongoDB (Document Database)](./system-design/04-database/06-mongodb-document-database.md)
+- [Redis (Cache)](./system-design/04-database/07-redis-cache.md)
+- [Elasticsearch](./system-design/04-database/08-elasticsearch.md)
+- [Graph Databases](./system-design/04-database/09-graph-databases.md)
+- [Change Data Capture (CDC)](./system-design/04-database/10-change-data-capture-cdc.md)
+- [NoSQL Databases](./system-design/04-database/11-nosql-databases.md)
 
 ### System Design - Security & Compliance
 
 **IAM (Identity, Authentication & Authorization):**
 
 **Authentication:**
-- [Authentication Overview](./system-design/07-security-compliance/01-iam/01-authentication/01-authentication-overview.md)
-- [Username & Password](./system-design/07-security-compliance/01-iam/01-authentication/02-username-password.md)
-- [API Keys](./system-design/07-security-compliance/01-iam/01-authentication/03-api-keys.md)
-- [Bearer Tokens](./system-design/07-security-compliance/01-iam/01-authentication/04-bearer-tokens.md)
-- [JWT](./system-design/07-security-compliance/01-iam/01-authentication/05-jwt.md)
-- [OAuth2](./system-design/07-security-compliance/01-iam/01-authentication/06-oauth2.md)
-- [Certificates & mTLS](./system-design/07-security-compliance/01-iam/01-authentication/07-certificates-mtls.md)
-- [HMAC Signatures](./system-design/07-security-compliance/01-iam/01-authentication/08-hmac-signatures.md)
-- [OpenID Connect](./system-design/07-security-compliance/01-iam/01-authentication/09-openid-connect.md)
-- [SSO](./system-design/07-security-compliance/01-iam/01-authentication/10-sso.md)
-- [MFA](./system-design/07-security-compliance/01-iam/01-authentication/11-mfa.md)
-- [Passwordless](./system-design/07-security-compliance/01-iam/01-authentication/12-passwordless.md)
-- [SAML](./system-design/07-security-compliance/01-iam/01-authentication/13-saml.md)
-- [SLO](./system-design/07-security-compliance/01-iam/01-authentication/14-slo.md)
-- [Session Management](./system-design/07-security-compliance/01-iam/01-authentication/15-session-management.md)
-- [Token Refresh](./system-design/07-security-compliance/01-iam/01-authentication/16-token-refresh.md)
-- [OAuth vs JWT](./system-design/07-security-compliance/01-iam/01-authentication/17-oauth-vs-jwt.md)
+- [Authentication Overview](./system-design/06-security-compliance/01-iam/01-authentication/01-authentication-overview.md)
+- [Username & Password](./system-design/06-security-compliance/01-iam/01-authentication/02-username-password.md)
+- [API Keys](./system-design/06-security-compliance/01-iam/01-authentication/03-api-keys.md)
+- [Bearer Tokens](./system-design/06-security-compliance/01-iam/01-authentication/04-bearer-tokens.md)
+- [JWT](./system-design/06-security-compliance/01-iam/01-authentication/05-jwt.md)
+- [OAuth2](./system-design/06-security-compliance/01-iam/01-authentication/06-oauth2.md)
+- [Certificates & mTLS](./system-design/06-security-compliance/01-iam/01-authentication/07-certificates-mtls.md)
+- [HMAC Signatures](./system-design/06-security-compliance/01-iam/01-authentication/08-hmac-signatures.md)
+- [OpenID Connect](./system-design/06-security-compliance/01-iam/01-authentication/09-openid-connect.md)
+- [SSO](./system-design/06-security-compliance/01-iam/01-authentication/10-sso.md)
+- [MFA](./system-design/06-security-compliance/01-iam/01-authentication/11-mfa.md)
+- [Passwordless](./system-design/06-security-compliance/01-iam/01-authentication/12-passwordless.md)
+- [SAML](./system-design/06-security-compliance/01-iam/01-authentication/13-saml.md)
+- [SLO](./system-design/06-security-compliance/01-iam/01-authentication/14-slo.md)
+- [Session Management](./system-design/06-security-compliance/01-iam/01-authentication/15-session-management.md)
+- [Token Refresh](./system-design/06-security-compliance/01-iam/01-authentication/16-token-refresh.md)
+- [OAuth vs JWT](./system-design/06-security-compliance/01-iam/01-authentication/17-oauth-vs-jwt.md)
 
 **Authorization:**
-- [RBAC](./system-design/07-security-compliance/01-iam/02-authorization/01-rbac.md)
-- [ABAC](./system-design/07-security-compliance/01-iam/02-authorization/02-abac.md)
-- [Least Privilege](./system-design/07-security-compliance/01-iam/02-authorization/03-least-privilege.md)
-- [Fine-grained Permissions](./system-design/07-security-compliance/01-iam/02-authorization/04-fine-grained-permissions.md)
-- [Policy-Based Authorization](./system-design/07-security-compliance/01-iam/02-authorization/05-policy-based-authorization.md)
-- [OAuth Scopes](./system-design/07-security-compliance/01-iam/02-authorization/06-oauth-scopes.md)
-- [Resource Ownership](./system-design/07-security-compliance/01-iam/02-authorization/07-resource-ownership.md)
-- [Authorization Comparison](./system-design/07-security-compliance/01-iam/02-authorization/08-authorization-comparison.md)
+- [RBAC](./system-design/06-security-compliance/01-iam/02-authorization/01-rbac.md)
+- [ABAC](./system-design/06-security-compliance/01-iam/02-authorization/02-abac.md)
+- [Least Privilege](./system-design/06-security-compliance/01-iam/02-authorization/03-least-privilege.md)
+- [Fine-grained Permissions](./system-design/06-security-compliance/01-iam/02-authorization/04-fine-grained-permissions.md)
+- [Policy-Based Authorization](./system-design/06-security-compliance/01-iam/02-authorization/05-policy-based-authorization.md)
+- [OAuth Scopes](./system-design/06-security-compliance/01-iam/02-authorization/06-oauth-scopes.md)
+- [Resource Ownership](./system-design/06-security-compliance/01-iam/02-authorization/07-resource-ownership.md)
+- [Authorization Comparison](./system-design/06-security-compliance/01-iam/02-authorization/08-authorization-comparison.md)
 
 **Service Identity:**
-- [Service Identity](./system-design/07-security-compliance/01-iam/03-service-identity/) - mTLS, SPIFFE/SPIRE, Service Accounts
+- [Service Identity](./system-design/06-security-compliance/01-iam/03-service-identity/) - mTLS, SPIFFE/SPIRE, Service Accounts
 
 **Secrets Management:**
-- [Secrets Management](./system-design/07-security-compliance/02-secrets-management/) - API keys, DB passwords, Certificates, Encryption keys
+- [Secrets Management](./system-design/06-security-compliance/02-secrets-management/) - API keys, DB passwords, Certificates, Encryption keys
 
 **Data Security & Privacy:**
-- [Data Security & Privacy](./system-design/07-security-compliance/03-data-security-privacy/) - Data Classification (PII, PHI, PCI)
-- [Encryption at Rest](./system-design/07-security-compliance/03-data-security-privacy/02-encryption-at-rest.md) - Disk, Database, Application-level
-- [Encryption in Transit](./system-design/07-security-compliance/03-data-security-privacy/03-encryption-in-transit.md) - TLS, mTLS
-- [Hashing](./system-design/07-security-compliance/03-data-security-privacy/04-hashing.md) - SHA-256, Password hashing, HMAC
-- [Encryption Fundamentals](./system-design/07-security-compliance/03-data-security-privacy/05-encryption-fundamentals.md) - Symmetric vs Asymmetric, Algorithms
+- [Data Security & Privacy](./system-design/06-security-compliance/03-data-security-privacy/) - Data Classification (PII, PHI, PCI)
+- [Encryption at Rest](./system-design/06-security-compliance/03-data-security-privacy/02-encryption-at-rest.md) - Disk, Database, Application-level
+- [Encryption in Transit](./system-design/06-security-compliance/03-data-security-privacy/03-encryption-in-transit.md) - TLS, mTLS
+- [Hashing](./system-design/06-security-compliance/03-data-security-privacy/04-hashing.md) - SHA-256, Password hashing, HMAC
+- [Encryption Fundamentals](./system-design/06-security-compliance/03-data-security-privacy/05-encryption-fundamentals.md) - Symmetric vs Asymmetric, Algorithms
 
 **Application Security:**
-- [Application Security](./system-design/07-security-compliance/04-application-security/) - OWASP Top 10, Secure Coding Practices, Dependency Security, SAST/DAST
+- [Application Security](./system-design/06-security-compliance/04-application-security/) - OWASP Top 10, Secure Coding Practices, Dependency Security, SAST/DAST
 
 **Infrastructure & Network Security:**
-- [Infrastructure & Network Security](./system-design/07-security-compliance/05-infrastructure-network-security/) - Network Security (VPCs, Firewalls, Security Groups, Zero Trust), Host Security, Container & K8s Security
+- [Infrastructure & Network Security](./system-design/06-security-compliance/05-infrastructure-network-security/) - Network Security (VPCs, Firewalls, Security Groups, Zero Trust), Host Security, Container & K8s Security
 
 **Monitoring & Incident Response:**
-- [Monitoring & Incident Response](./system-design/07-security-compliance/06-monitoring-logging-incident-response/) - SIEM, IDS/IPS, Anomaly Detection, Audit Logs, Incident Response Playbooks
+- [Monitoring & Incident Response](./system-design/06-security-compliance/06-monitoring-logging-incident-response/) - SIEM, IDS/IPS, Anomaly Detection, Audit Logs, Incident Response Playbooks
 
 **Compliance & Governance:**
-- [Compliance & Governance](./system-design/07-security-compliance/07-compliance-governance-risk/) - SOC 2, ISO 27001, PCI DSS, HIPAA, GDPR, Access Reviews, Change Management, Vendor Risk
+- [Compliance & Governance](./system-design/06-security-compliance/07-compliance-governance-risk/) - SOC 2, ISO 27001, PCI DSS, HIPAA, GDPR, Access Reviews, Change Management, Vendor Risk
 
 **Secure SDLC:**
-- [Secure SDLC](./system-design/07-security-compliance/08-secure-sdlc/) - DevSecOps, Threat Modeling, Secure CI/CD, Secrets Scanning
-
-### System Design - Architectures
-
-- [Microservices Architecture](./system-design/06-architectures/01-microservices-architecture.md)
-- [Monolithic Architecture](./system-design/06-architectures/01-monolithic-architecture.md)
-- [Peer-to-Peer Architecture](./system-design/06-architectures/03-peer-to-peer-architecture.md)
-
-### System Design - Distributed Systems
-
-- [Consistent Hashing](./system-design/03-distributed-systems/01-consistent-hashing.md)
-- [Service Discovery](./system-design/03-distributed-systems/02-service-discovery.md)
-- [Consensus Algorithms](./system-design/03-distributed-systems/03-consensus-algorithms.md) - Raft, Paxos
-- [CRDTs (Conflict-free Replicated Data Types)](./system-design/03-distributed-systems/04-crdts.md)
+- [Secure SDLC](./system-design/06-security-compliance/08-secure-sdlc/) - DevSecOps, Threat Modeling, Secure CI/CD, Secrets Scanning
 
 ### System Design - Communication Protocols
 
-- [HTTP/HTTPS](./system-design/04-communication-protocols/01-http-https.md)
-- [OSI Model](./system-design/04-communication-protocols/02-osi.md)
-- [WebSockets](./system-design/04-communication-protocols/03-websockets.md)
-- [Webhooks](./system-design/04-communication-protocols/04-webhooks.md)
-- [API Gateway](./system-design/04-communication-protocols/05-api-gateway.md)
-- [Kafka](./system-design/04-communication-protocols/06-kafka.md) - Distributed event streaming platform
+- [HTTP/HTTPS](./system-design/05-communication-protocols/01-http-https.md)
+- [OSI Model](./system-design/05-communication-protocols/02-osi.md)
+- [WebSockets](./system-design/05-communication-protocols/03-websockets.md)
+- [Webhooks](./system-design/05-communication-protocols/04-webhooks.md)
+- [API Gateway](./system-design/05-communication-protocols/05-api-gateway.md)
+- [Kafka](./system-design/05-communication-protocols/06-kafka.md) - Distributed event streaming platform
 
-### System Design - Scaling Patterns
+### System Design - Distributed Systems
 
-- [Horizontal Scaling](./system-design/05-scaling-patterns/01-horizontal-scaling.md)
-- [Load Balancing Algorithms](./system-design/05-scaling-patterns/02-load-balancing-algorithms.md)
-- [Rate Limiting](./system-design/05-scaling-patterns/03-rate-limiting.md)
-
-### System Design - Data Storage
-
-- [Database Fundamentals](./system-design/02-data-storage/01-database-fundamentals.md) - Comprehensive guide covering ACID, SQL vs NoSQL, indexing, sharding, replication
-- [Indexing](./system-design/02-data-storage/02-indexing.md)
-- [Sharding](./system-design/02-data-storage/03-sharding.md)
-- [Database Replication](./system-design/02-data-storage/04-database-replication.md)
+- [CAP Theorem](./system-design/07-distributed-systems/01-cap-theorem.md)
+- [Consistent Hashing](./system-design/07-distributed-systems/02-consistent-hashing.md)
+- [Idempotency](./system-design/07-distributed-systems/03-idempotency.md)
+- [Service Discovery](./system-design/07-distributed-systems/04-service-discovery.md)
+- [Consensus Algorithms](./system-design/07-distributed-systems/05-consensus-algorithms.md) - Raft, Paxos
+- [CRDTs (Conflict-free Replicated Data Types)](./system-design/07-distributed-systems/06-crdts.md)
 
 ### System Design - Real-World Systems
 
@@ -304,8 +292,8 @@ Case studies and designs for:
 | Level | Focus Areas | Key Topics |
 |:---:|:---:|:---:|
 | **🌱 Beginner** | Foundations | [System Design Fundamentals](./system-design/01-fundamentals/)<br>[DSA Easy Problems](./dsa/)<br>Core Tech Concepts |
-| **🌿 Intermediate** | Advanced Concepts | [Distributed Systems](./system-design/03-distributed-systems/)<br>[Security Basics](./system-design/07-security-compliance/)<br>[Architecture Patterns](./system-design/06-architectures/) |
-| **🌳 Advanced** | Mastery | [CRDTs](./system-design/03-distributed-systems/04-crdts.md) & [Consensus](./system-design/03-distributed-systems/03-consensus-algorithms.md)<br>[Security Deep Dives](./system-design/07-security-compliance/)<br>[Real-World Systems](./system-design/08-real-world/) |
+| **🌿 Intermediate** | Advanced Concepts | [Distributed Systems](./system-design/07-distributed-systems/)<br>[Security Basics](./system-design/06-security-compliance/)<br>[Architecture Patterns](./system-design/02-architectures/) |
+| **🌳 Advanced** | Mastery | [CRDTs](./system-design/07-distributed-systems/06-crdts.md) & [Consensus](./system-design/07-distributed-systems/05-consensus-algorithms.md)<br>[Security Deep Dives](./system-design/06-security-compliance/)<br>[Real-World Systems](./system-design/08-real-world/) |
 
 </div>
 
