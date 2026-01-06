@@ -19,9 +19,10 @@
 
 | Topic | Description | Key Concepts |
 |:---:|:---:|:---:|
-| **[Horizontal Scaling](./01-horizontal-scaling.md)** | Adding more machines | Stateless services, load distribution |
-| **[Load Balancing Algorithms](./02-load-balancing-algorithms.md)** | Distributing traffic across servers | Round-robin, least connections, weighted |
+| **[Horizontal Scaling](./05-horizontal-scaling.md)** | Adding more machines | Stateless services, load distribution |
+| **[Load Balancing Algorithms](./06-load-balancing-algorithms.md)** | Distributing traffic across servers | Round-robin, least connections, weighted |
 | **[Rate Limiting](./03-rate-limiting.md)** | Controlling request rates | Token bucket, sliding window, fixed window |
+| **[Resilience Patterns](./09-resilience-patterns.md)** ⭐ | Fault tolerance patterns | Circuit Breaker, Retry, Bulkhead |
 
 </div>
 
@@ -33,10 +34,10 @@
 
 | Concept | Description | Topics |
 |:---:|:---:|:---:|
-| **📈 Horizontal Scaling** | Adding more machines | [Horizontal Scaling](./01-horizontal-scaling.md) |
-| **⚖️ Load Balancing** | Distributing traffic | [Load Balancing Algorithms](./02-load-balancing-algorithms.md) |
+| **📈 Horizontal Scaling** | Adding more machines | [Horizontal Scaling](./05-horizontal-scaling.md) |
+| **⚖️ Load Balancing** | Distributing traffic | [Load Balancing Algorithms](./06-load-balancing-algorithms.md) |
 | **🚦 Rate Limiting** | Controlling request rates | [Rate Limiting](./03-rate-limiting.md) |
-| **🛡️ Resilience** | Handling failures gracefully | All topics |
+| **🛡️ Resilience** | Handling failures gracefully | [Resilience Patterns](./09-resilience-patterns.md) |
 
 </div>
 
@@ -52,8 +53,7 @@
 | **Load Balancing** | Algorithms and patterns |
 | **Auto-Scaling** | Dynamic resource allocation |
 | **Rate Limiting** | Throttling and quota management |
-| **Circuit Breaker** | Failure handling patterns |
-| **Retry Patterns** | Resilient request handling |
+| **Resilience Patterns** | Circuit Breaker, Retry, Bulkhead, Rate Limiter |
 | **Caching Strategies** | Performance optimization |
 | **Connection Pooling** | Resource management |
 
@@ -69,9 +69,10 @@
 
 | Step | Topic | Why |
 |:---:|:---:|:---:|
-| **1️⃣** | [Horizontal Scaling](./01-horizontal-scaling.md) | Foundation |
-| **2️⃣** | [Load Balancing Algorithms](./02-load-balancing-algorithms.md) | Traffic distribution |
+| **1️⃣** | [Reliability](./01-reliability.md) | Foundation |
+| **2️⃣** | [Resilience Patterns](./09-resilience-patterns.md) | Fault tolerance |
 | **3️⃣** | [Rate Limiting](./03-rate-limiting.md) | Request control |
+| **4️⃣** | [Horizontal Scaling](./05-horizontal-scaling.md) | Scaling strategies |
 
 </div>
 
