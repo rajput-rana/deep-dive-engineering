@@ -210,4 +210,4 @@ Follow this systematic approach when designing systems:
 - [01. Fundamentals Overview](./01-fundamentals/README.md)
 - [02. Database Fundamentals](./02-data-storage/01-database-fundamentals.md)
 - [08. CAP Theorem](./01-fundamentals/08-distributed-systems/01-cap-theorem.md)
-- [System Design Template](../system-design/system-design-template.md)
+- [System Design Template](./system-design-template.md)
