@@ -33,6 +33,46 @@
 
 **Mental Model:** Think of Redis as a super-fast hash table in memory that can persist to disk.
 
+**🎯 Interview Red Flag:**  
+❌ "Redis is a database"  
+✅ "Redis is a high-performance in-memory data store used for caching, coordination, and real-time data."
+
+**💡 Director-Level Insight:** Redis optimizes latency, not correctness. It's a performance optimization layer, not a database replacement.
+
+</div>
+
+---
+
+## 🧠 Redis Mental Model (0 → 1)
+
+<div align="center">
+
+### Core Architecture
+
+**Redis = In-memory, single-threaded, data structure server**
+
+| Characteristic | Description | Impact |
+|:---:|:---:|:---:|
+| **Single-Threaded** | Uses event loop, not thread-per-request | No context switching, no locks |
+| **In-Memory** | Data lives primarily in RAM | Ultra-fast access |
+| **Atomic Operations** | Each command is atomic | No race conditions |
+| **Event Loop** | Non-blocking I/O | Handles many connections efficiently |
+
+### Why Redis is Fast
+
+| Factor | Why It Matters |
+|:---:|:---:|
+| **Memory Access** | RAM is 100x faster than disk |
+| **No Locks** | Single-threaded eliminates lock contention |
+| **Simple Execution** | CPU-light operations, no complex queries |
+| **Async Network I/O** | Non-blocking, handles many clients |
+
+**⚠️ Common Misconception:**  
+"Isn't single-threading a bottleneck?"
+
+**✅ Correct Answer:**  
+No, because Redis is CPU-light and avoids locks. Network I/O is async, so single-threading actually eliminates context switching overhead.
+
 </div>
 
 ---
@@ -94,6 +134,17 @@ SET user:123:email "john@example.com" EX 3600
 - ✅ Counters
 - ✅ Session storage
 - ✅ Feature flags
+- ✅ Can store ints, floats, JSON blobs
+
+**🚨 Trap:**  
+Redis does NOT understand JSON unless you use RedisJSON module. Partial updates require rewriting the full value.
+
+**Example:**
+```redis
+SET user:123 '{"name":"John","age":30}'
+# To update age, must rewrite entire JSON string
+SET user:123 '{"name":"John","age":31}'
+```
 
 ---
 
@@ -122,11 +173,14 @@ HINCRBY user:123 age 1
 - Atomic operations on multiple fields
 - Memory efficient for objects
 
+**🚨 Trap:**  
+Small hashes are memory efficient, but large hashes can cause rehashing latency spikes. Monitor hash size and consider splitting large hashes.
+
 ---
 
 ### 3. Lists
 
-**Ordered collection of strings**
+**Ordered collection of strings (Linked list implementation)**
 
 ```redis
 LPUSH notifications:user:123 "New message"
@@ -142,12 +196,17 @@ RPOP notifications:user:123
 - ✅ Message queues
 - ✅ Activity feeds
 - ✅ Recent items
+- ✅ Background jobs
 
 **Operations:**
 - `LPUSH/RPUSH` - Add to left/right
 - `LPOP/RPOP` - Remove from left/right
+- `BLPOP/BRPOP` - Blocking pop (waits for element)
 - `LRANGE` - Get range of elements
 - `LLEN` - Get length
+
+**🚨 Trap:**  
+Blocking operations (`BLPOP`) are connection blockers. Not durable unless persistence is configured. Use Redis Streams for persistent message queues.
 
 ---
 
@@ -169,17 +228,28 @@ SINTER tags:product:456 tags:product:789
 - ✅ Tags
 - ✅ Unique identifiers
 - ✅ Set operations (union, intersection)
+- ✅ Feature flags
+- ✅ Deduplication
+- ✅ Fast membership checks
 
 **Operations:**
 - `SADD` - Add members
 - `SMEMBERS` - Get all members
+- `SISMEMBER` - Check membership (O(1))
 - `SINTER` - Intersection
 - `SUNION` - Union
 - `SDIFF` - Difference
 
+**Example:**
+```redis
+SADD online_users 123
+SISMEMBER online_users 123
+# Returns: 1 (true)
+```
+
 ---
 
-### 5. Sorted Sets
+### 5. Sorted Sets 🔥 (Interview Favorite)
 
 **Ordered collection with scores**
 
@@ -197,6 +267,7 @@ ZREVRANGE leaderboard 0 2 WITHSCORES
 - ✅ Time-series data
 - ✅ Priority queues
 - ✅ Ranking systems
+- ✅ Rate limiting (sliding window)
 
 **Operations:**
 - `ZADD` - Add with score
@@ -204,6 +275,15 @@ ZREVRANGE leaderboard 0 2 WITHSCORES
 - `ZREVRANGE` - Get range (descending)
 - `ZRANK` - Get rank
 - `ZSCORE` - Get score
+
+**Implementation:** Skip list + hash table  
+**Complexity:** O(log n) inserts, O(1) range access
+
+**🎯 Trap Question:**  
+"Why not use a database index instead?"
+
+**✅ Strong Answer:**  
+Redis sorted sets give O(log n) inserts and O(1) range access in memory, which is ideal for real-time ranking, but trade durability and scale for performance.
 
 ---
 
@@ -250,7 +330,7 @@ PFCOUNT visitors:2024-01-15
 
 ### 8. Streams
 
-**Log-like data structure**
+**Log-like data structure (between Pub/Sub and Kafka)**
 
 ```redis
 XADD orders * user_id 123 product_id 456 total 99.99
@@ -262,6 +342,42 @@ XREAD STREAMS orders 0
 - ✅ Event sourcing
 - ✅ Message queues
 - ✅ Activity logs
+- ✅ Consumer groups support
+
+**Features:**
+- ✅ Persistent storage
+- ✅ Consumer groups
+- ✅ Message acknowledgment
+- ✅ Simpler than Kafka, more durable than Pub/Sub
+
+**💡 Insight:** Redis Streams sits between Redis Pub/Sub and Kafka — offering persistence and consumer groups, but at smaller scale and simpler semantics.
+
+</div>
+
+---
+
+## 🔌 Redis Modules
+
+<div align="center">
+
+### Extended Functionality
+
+**Redis Modules extend core functionality:**
+
+| Module | Description | Use Case |
+|:---:|:---:|:---:|
+| **RediSearch** | Full-text search engine | Search functionality |
+| **Redis Graph** | Graph database capabilities | Relationship queries |
+| **Redis JSON** | Native JSON support | Document storage, partial updates |
+| **Redis Time Series** | Time-series data | Metrics, IoT data |
+
+**Multi-Model Capabilities:**
+- ✅ Relational-like queries (RediSearch)
+- ✅ Document storage (Redis JSON)
+- ✅ Graph queries (Redis Graph)
+- ✅ Time-series (Redis Time Series)
+
+**💡 Insight:** Redis can be used as a multi-model database with modules, but core Redis remains key-value.
 
 </div>
 
@@ -436,6 +552,22 @@ appendfsync everysec
 - ✅ AOF for minimal data loss
 - ✅ Best of both worlds
 
+**💡 Interview Insight:**  
+Most production systems use RDB + AOF hybrid for optimal balance.
+
+---
+
+### Data Loss Scenarios
+
+**🚨 Tricky Question:**  
+"Can Redis lose data even with AOF enabled?"
+
+**✅ Answer:**  
+Yes. Writes acknowledged before fsync can be lost in crashes. AOF `everysec` mode can lose up to 1 second of data.
+
+**Best Practice:**  
+Separate persistent service from cache service. If Redis is on EC2, persist data in Elastic Block Storage (EBS).
+
 </div>
 
 ---
@@ -484,6 +616,43 @@ Node 3: Slots 10923-16383 (Master) + Replica
 slot = CRC16(key) % 16384
 ```
 
+**🎯 Interview Killer Point:**  
+Redis Cluster prioritizes availability over consistency (AP-ish). No multi-key transactions across shards.
+
+---
+
+### Redis on Flash
+
+**Cost Optimization Strategy**
+
+| Type | Description | Trade-off |
+|:---:|:---:|:---:|
+| **Standard Redis** | All data in RAM | Higher cost for performance |
+| **Redis on Flash** | Hot keys in RAM, warm in SSD | Lower cost, slightly higher latency |
+
+**Use Case:**  
+Large datasets where only subset is frequently accessed.
+
+---
+
+### Multi-Geo Distribution
+
+**Active-Active Geo Replication**
+
+| Feature | Description |
+|:---:|:---:|
+| **Higher Availability** | Clusters replicated in multiple geo locations |
+| **Lower Latency** | Data closer to users |
+| **Disaster Recovery** | Automatic failover across regions |
+| **Active-Active** | Writes accepted in multiple regions |
+
+**Conflict Resolution (CRDT):**
+- **Last Write Wins** - Timestamp-based resolution
+- **Append vs Delete** - Append wins
+- **Converge to Consistent State** - Eventually consistent
+
+**💡 Insight:** CRDT (Conflict-Free Replicated Data Type) ensures data converges to a single consistent state across regions.
+
 </div>
 
 ---
@@ -515,6 +684,28 @@ slot = CRC16(key) % 16384
 | **Complex Queries** | SQL databases |
 | **Permanent Storage** | Databases with persistence |
 | **ACID Requirements** | Relational databases |
+
+</div>
+
+---
+
+## ⚠️ When Redis Is a BAD Idea
+
+<div align="center">
+
+### 🚫 Anti-Use Cases
+
+| Use Case | Why Redis Fails | Better Alternative |
+|:---:|:---:|:---:|
+| **System of Record** | Data loss risk | Relational database |
+| **Large Datasets** | RAM cost prohibitive | Disk-based databases |
+| **Strong Consistency** | Async replication | ACID databases |
+| **Complex Queries** | No joins, limited querying | SQL databases |
+| **Auditing** | No history, eviction | Database with audit logs |
+| **Money Movement** | Not suitable for financial transactions | ACID-compliant database |
+
+**💡 Director-Level Insight:**  
+Redis optimizes latency, not correctness. Never use Redis locks for money movement.
 
 </div>
 
@@ -559,8 +750,9 @@ def rate_limit(user_id, limit=100, window=3600):
 
 ---
 
-### 3. Distributed Lock
+### 3. Distributed Lock ⚠️
 
+**Basic Pattern:**
 ```python
 def acquire_lock(lock_key, timeout=10):
     identifier = str(uuid.uuid4())
@@ -589,6 +781,12 @@ def release_lock(lock_key, identifier):
             pass
     return False
 ```
+
+**🚨 Critical Warning:**  
+- Redlock algorithm is controversial
+- **Never use Redis locks for money movement**
+- Use for coordination, not critical financial operations
+- Consider alternatives (Zookeeper, etcd) for critical locks
 
 ---
 
@@ -634,6 +832,44 @@ def get_session(session_id):
 | **Monitor memory usage** | Prevent evictions |
 | **Use connection pooling** | Reduce connection overhead |
 | **Batch operations** | Reduce network calls |
+
+### Memory Management
+
+**Key Metadata Overhead:**
+- Every key consumes metadata (~96 bytes per key)
+- Small keys are expensive relative to value size
+- Use hashes for multiple fields instead of separate keys
+
+**Eviction Policies:**
+
+| Policy | Description | Use Case |
+|:---:|:---:|:---:|
+| **allkeys-lru** | Evict least recently used | General caching |
+| **allkeys-lfu** | Evict least frequently used | Long-term caching |
+| **volatile-lru** | Evict LRU with expiration | Mixed data |
+| **volatile-ttl** | Evict shortest TTL | Time-based data |
+
+**💡 Trade-off:** Eviction = data loss by design. Configure `maxmemory-policy` carefully.
+
+### Hot Keys Problem
+
+**🚨 Common Issue:**  
+Hot keys cause CPU spikes on single-threaded core.
+
+**Mitigations:**
+- Sharding (split key across multiple Redis instances)
+- Local caching (cache hot keys in application)
+- Key splitting (distribute load across multiple keys)
+
+**Example:**
+```python
+# Instead of single hot key
+redis.incr("popular_product:123")
+
+# Split across multiple keys
+shard = hash("popular_product:123") % 10
+redis.incr(f"popular_product:123:shard_{shard}")
+```
 
 ### Pipelining Example
 
@@ -693,6 +929,53 @@ ACL SETUSER app_user on >password +get +set +hget +hset ~cache:*
 
 ---
 
+## 🔄 Consistency, Correctness & Edge Cases
+
+<div align="center">
+
+### Atomicity
+
+**Single Command = Atomic**
+
+```redis
+INCR counter  # Atomic operation
+```
+
+**Multi Commands = NOT Atomic Unless:**
+
+| Method | Description | Use Case |
+|:---:|:---:|:---:|
+| **MULTI/EXEC** | Transaction block | Multiple related operations |
+| **Lua Scripts** | Server-side script | Complex atomic operations |
+
+**🚨 Trap:**  
+Long Lua scripts = global latency spike. Keep scripts short and fast.
+
+### Transactions
+
+**Redis Transactions ≠ Database Transactions**
+
+| Aspect | Redis | Database |
+|:---:|:---:|:---:|
+| **Rollback** | ❌ No rollback | ✅ Rollback support |
+| **Isolation** | Optimistic locking (WATCH) | Full isolation levels |
+| **Atomicity** | All or nothing execution | ACID guarantees |
+
+**WATCH Example:**
+```redis
+WATCH key
+MULTI
+SET key value
+EXEC  # Fails if key changed
+```
+
+**💡 Interview Insight:**  
+Redis transactions provide atomicity but not full ACID guarantees.
+
+</div>
+
+---
+
 ## 🎓 Interview Questions
 
 <div align="center">
@@ -739,13 +1022,138 @@ PSUBSCRIBE notifications:*
 - ✅ Event broadcasting
 - ✅ Chat systems
 - ✅ Cache invalidation
+- ✅ WebSocket notifications
+- ✅ Live dashboards
+- ✅ Feature flag updates
+
+**How It Works:**
+1. Publisher sends message
+2. Redis pushes to currently connected subscribers
+3. If subscriber is offline → message is lost
+
+**🚨 Interview Trap:**  
+❌ "Redis Pub/Sub guarantees delivery"  
+✅ "Redis Pub/Sub offers best-effort delivery only"
 
 **Limitations:**
 - ❌ No message persistence
 - ❌ No message queuing
 - ❌ No acknowledgment
+- ❌ No retry mechanism
+- ❌ No consumer groups
+- ❌ No backpressure handling
 
-**For persistent messaging:** Use Redis Streams or dedicated message queue
+**For persistent messaging:** Use Redis Streams or dedicated message queue (Kafka)
+
+</div>
+
+---
+
+## 🔄 Redis Pub/Sub vs Kafka
+
+<div align="center">
+
+### One-Line Mental Model
+
+**Redis Pub/Sub is ephemeral, in-memory message broadcasting. Kafka is a durable, replayable, distributed event log.**
+
+### Core Architectural Differences
+
+| Dimension | Redis Pub/Sub | Kafka |
+|:---:|:---:|:---:|
+| **Message Durability** | ❌ None | ✅ Persistent |
+| **Message Storage** | In memory only | Disk + memory |
+| **Replay** | ❌ Impossible | ✅ Yes |
+| **Consumer Model** | Push | Pull |
+| **Ordering** | Best effort | Strong per partition |
+| **Backpressure** | ❌ None | ✅ Built-in |
+| **Scale** | Thousands msgs/sec | Millions msgs/sec |
+| **Failure Tolerance** | Weak | Strong |
+
+### Failure Scenarios
+
+| Scenario | Redis Pub/Sub | Kafka |
+|:---:|:---:|:---:|
+| **Subscriber crash** | Message lost | Resumes from offset |
+| **Redis/Broker restart** | All messages lost | Replica takes over |
+| **Slow consumer** | Drops messages | Lag accumulates |
+| **Network partition** | Silent data loss | Controlled behavior |
+
+### Backpressure Handling
+
+**Redis Pub/Sub:**
+- ❌ No backpressure
+- Slow consumer = message drop or client disconnect
+- Producer never knows
+
+**Kafka:**
+- ✅ Consumer lag tracking
+- ✅ Retention policies
+- ✅ Flow control
+- System absorbs spikes
+
+**💡 Senior Insight:** Kafka shifts pressure from runtime to storage.
+
+### Ordering Guarantees
+
+**Redis Pub/Sub:**
+- Ordering per connection
+- Breaks on reconnects
+- No replay = ordering is moot
+
+**Kafka:**
+- Guaranteed ordering per partition
+- Requires careful partition key design
+
+**Follow-up Question:** "How do you preserve order in Kafka?"  
+**✅ Answer:** By ensuring all related events go to the same partition via the same key.
+
+### Throughput & Scale
+
+| System | Throughput | Limitations |
+|:---:|:---:|:---:|
+| **Redis Pub/Sub** | 10K–100K msgs/sec | Single-threaded, network fan-out |
+| **Kafka** | Millions msgs/sec | Horizontally scalable, partition-based parallelism |
+
+### Exactly-Once Semantics
+
+**Redis Pub/Sub:**
+- ❌ Impossible
+
+**Kafka:**
+- ✅ Achievable with idempotent producers and transactional consumers
+- Still complex and costly
+
+**💡 Interview-Safe Phrasing:**  
+Kafka provides at-least-once by default and exactly-once with careful configuration.
+
+### When to Use What
+
+**Use Redis Pub/Sub when:**
+- ✅ You need real-time fan-out
+- ✅ Message loss is acceptable
+- ✅ Low latency is critical
+- ✅ Subscribers are always online
+
+**Use Kafka when:**
+- ✅ You need durability
+- ✅ You need replayability
+- ✅ You need consumer independence
+- ✅ Message loss is unacceptable
+
+### Common Interview Traps
+
+**Trap 1:** "Can Redis Pub/Sub replace Kafka?"  
+❌ No. Redis lacks durability, replay, backpressure, and consumer groups.
+
+**Trap 2:** "Kafka is slower than Redis"  
+**Correct Answer:** Kafka trades latency for durability and correctness. End-to-end latency is still milliseconds.
+
+**Trap 3:** "Why not just add persistence to Redis Pub/Sub?"  
+**Answer:** Persistence doesn't fix replay, offsets, consumer groups, or backpressure.
+
+**💡 Director-Level Closing Insight:**  
+Redis optimizes for speed, Kafka optimizes for correctness at scale.
 
 </div>
 
@@ -798,6 +1206,15 @@ KEYS pattern            # Find keys (use SCAN in production)
 | **Use Case** | Cache + Data Store | Pure Cache | Persistent Storage |
 
 **💡 Choose Redis when:** You need rich data structures, persistence options, and high performance.
+
+### Redis Deployment Options
+
+| Option | Description | Pros | Cons |
+|:---:|:---:|:---:|:---:|
+| **Self-Managed** | Run on VMs/containers | Full control | Operational overhead |
+| **K8s Deployment** | Helm charts, operators | Scalable, cloud-native | K8s complexity |
+| **Managed (AWS ElastiCache)** | Fully managed | Less ops, HA built-in | Vendor lock-in, cost |
+| **Redis Enterprise** | Commercial offering | Advanced features, support | Licensing cost |
 
 </div>
 
