@@ -4,7 +4,7 @@
 
 **Database concepts, storage patterns, and data management strategies**
 
-[![Topics](https://img.shields.io/badge/Topics-9-blue?style=for-the-badge)](./)
+[![Topics](https://img.shields.io/badge/Topics-10-blue?style=for-the-badge)](./)
 [![Database](https://img.shields.io/badge/Database-Fundamentals-green?style=for-the-badge)](./01-database-fundamentals.md)
 
 *Master database design, optimization, and scaling strategies*
@@ -35,6 +35,7 @@
 | **[Redis (Cache)](./07-redis-cache.md)** | In-memory key-value store | Ultra-fast, rich data structures, caching | [Explore →](./07-redis-cache.md) |
 | **[Elasticsearch (Search)](./08-elasticsearch.md)** | Search and analytics engine | Full-text search, aggregations, real-time | [Explore →](./08-elasticsearch.md) |
 | **[Graph Databases](./09-graph-databases.md)** | Relationship-focused storage | Nodes, relationships, graph algorithms | [Explore →](./09-graph-databases.md) |
+| **[Change Data Capture (CDC)](./10-change-data-capture-cdc.md)** | Real-time change tracking | Log-based CDC, event-driven, data synchronization | [Explore →](./10-change-data-capture-cdc.md) |
 
 </div>
 
@@ -65,6 +66,7 @@
 | **Database Design** | Normalization, denormalization, data modeling patterns |
 | **Sharding & Partitioning** | Horizontal & vertical partitioning strategies |
 | **Replication** | Master-Slave, Master-Master patterns |
+| **Change Data Capture** | Real-time change tracking, event-driven architectures |
 | **Indexing Strategies** | B-tree, hash indexes, composite indexes |
 | **Consistency Models** | ACID vs BASE, eventual consistency |
 | **Performance Optimization** | Query optimization, indexing strategies |
@@ -91,8 +93,9 @@
 | **5️⃣** | [Redis](./07-redis-cache.md) | Caching strategies |
 | **6️⃣** | [Sharding](./03-sharding.md) | Scalability |
 | **7️⃣** | [Replication](./04-database-replication.md) | Reliability |
-| **8️⃣** | [Elasticsearch](./08-elasticsearch.md) | Search & analytics |
-| **9️⃣** | [Graph Databases](./09-graph-databases.md) | Relationship-heavy data |
+| **8️⃣** | [Change Data Capture](./10-change-data-capture-cdc.md) | Real-time sync |
+| **9️⃣** | [Elasticsearch](./08-elasticsearch.md) | Search & analytics |
+| **🔟** | [Graph Databases](./09-graph-databases.md) | Relationship-heavy data |
 
 </div>
 
