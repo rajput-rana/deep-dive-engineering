@@ -109,7 +109,7 @@ Security built into the system from the start, not bolted on.
 
 - **[01. Fundamentals](../01-fundamentals/)** - System design basics
 - **[04. Networking Protocols](../04-networking-protocols/)** - HTTPS, TLS
-- **[06. Design Patterns](../06-design-patterns/)** - Secure architecture patterns
+- **[06. Design Patterns](../06-architectures/)** - Secure architecture patterns
 
 ## Learning Path
 

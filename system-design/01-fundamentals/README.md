@@ -83,7 +83,7 @@ For data management topics, see:
 - **[03. Distributed Systems](../03-distributed-systems/)** - Consensus algorithms, consistent hashing, service discovery
 - **[04. Networking Protocols](../04-networking-protocols/)** - HTTP/HTTPS, WebSockets, API Gateways, Webhooks
 - **[05. Scaling Patterns](../05-scaling-patterns/)** - Horizontal scaling, rate limiting, load balancing algorithms
-- **[06. Design Patterns](../06-design-patterns/)** - Microservices, monolithic, event-driven architectures
+- **[06. Design Patterns](../06-architectures/)** - Microservices, monolithic, event-driven architectures
 - **[07. Authentication](../07-authentication/)** - JWT, OAuth, SSO, security patterns
 
 ## Learning Path

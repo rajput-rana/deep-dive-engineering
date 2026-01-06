@@ -39,7 +39,7 @@ Comprehensive system design documentation and case studies for building scalable
   - Load balancing algorithms
 
 ### 06. Architecture Patterns
-- **[06. Design Patterns](./06-design-patterns/)** - Common architectural patterns
+- **[06. Design Patterns](./06-architectures/)** - Common architectural patterns
   - Microservices architecture
   - Monolithic architecture
   - Event-driven architecture
@@ -170,7 +170,7 @@ Follow this systematic approach when designing systems:
 3. Explore **[04. Networking Protocols](./04-networking-protocols/)** - HTTP, WebSockets, API Gateways
 
 ### Advanced
-1. Master **[06. Design Patterns](./06-design-patterns/)** - Microservices, Event-driven
+1. Master **[06. Design Patterns](./06-architectures/)** - Microservices, Event-driven
 2. Study **[08. Real-World Systems](./08-real-world/)** - Case studies
 3. Understand **[10. Tradeoffs](./10-tradeoffs/)** - Design decision analysis
 

@@ -137,14 +137,14 @@ Complete reference of all system design topics (117+ chapters), organized by cat
 
 | Title | Status | Local File |
 |-------|--------|------------|
-| Microservices Architecture | ✅ Public | [`design-patterns/microservices-architecture.md`](./design-patterns/microservices-architecture.md) |
-| Monolithic Architecture | ✅ Public | [`design-patterns/monolithic-architecture.md`](./design-patterns/monolithic-architecture.md) |
-| Peer-to-Peer Architecture | ✅ Public | [`design-patterns/peer-to-peer-architecture.md`](./design-patterns/peer-to-peer-architecture.md) |
-| Event-Driven Architecture | ✅ Public | [`design-patterns/event-driven-architecture.md`](./design-patterns/event-driven-architecture.md) |
-| Serverless Architecture | ✅ Public | [`design-patterns/serverless-architecture.md`](./design-patterns/serverless-architecture.md) |
-| Service-Oriented Architecture | ✅ Public | [`design-patterns/service-oriented-architecture.md`](./design-patterns/service-oriented-architecture.md) |
-| Layered Architecture | ✅ Public | [`design-patterns/layered-architecture.md`](./design-patterns/layered-architecture.md) |
-| Hexagonal Architecture | ✅ Public | [`design-patterns/hexagonal-architecture.md`](./design-patterns/hexagonal-architecture.md) |
+| Microservices Architecture | ✅ Public | [`architectures/microservices-architecture.md`](./architectures/microservices-architecture.md) |
+| Monolithic Architecture | ✅ Public | [`architectures/monolithic-architecture.md`](./architectures/monolithic-architecture.md) |
+| Peer-to-Peer Architecture | ✅ Public | [`architectures/peer-to-peer-architecture.md`](./architectures/peer-to-peer-architecture.md) |
+| Event-Driven Architecture | ✅ Public | [`architectures/event-driven-architecture.md`](./architectures/event-driven-architecture.md) |
+| Serverless Architecture | ✅ Public | [`architectures/serverless-architecture.md`](./architectures/serverless-architecture.md) |
+| Service-Oriented Architecture | ✅ Public | [`architectures/service-oriented-architecture.md`](./architectures/service-oriented-architecture.md) |
+| Layered Architecture | ✅ Public | [`architectures/layered-architecture.md`](./architectures/layered-architecture.md) |
+| Hexagonal Architecture | ✅ Public | [`architectures/hexagonal-architecture.md`](./architectures/hexagonal-architecture.md) |
 
 ## Real-World System Designs (19 topics)
 
