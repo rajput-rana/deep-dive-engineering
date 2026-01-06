@@ -20,6 +20,9 @@ Authentication is the process of verifying the identity of a user, service, or s
 - **[12. Passwordless](./12-passwordless.md)** - WebAuthn, Passkeys
 - **[13. SAML](./13-saml.md)** - XML-based SSO protocol
 - **[14. SLO](./14-slo.md)** - Single Logout
+- **[15. Session Management](./15-session-management.md)** - Managing user sessions
+- **[16. Token Refresh](./16-token-refresh.md)** - Refreshing access tokens
+- **[17. OAuth vs JWT](./17-oauth-vs-jwt.md)** - Understanding the difference
 
 ## Quick Reference
 
