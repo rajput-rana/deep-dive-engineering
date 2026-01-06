@@ -10,6 +10,7 @@
 [![DevOps](https://img.shields.io/badge/DevOps-Essentials-cyan?style=for-the-badge)](./devops/)
 [![AWS](https://img.shields.io/badge/AWS-Cloud-yellow?style=for-the-badge)](./aws/)
 [![Languages](https://img.shields.io/badge/Languages-Expert-pink?style=for-the-badge)](./languages/)
+[![Data Engineering](https://img.shields.io/badge/Data%20Engineering-Big%20Data-teal?style=for-the-badge)](./data-engineering/)
 [![Security](https://img.shields.io/badge/Security-Deep%20Dive-red?style=for-the-badge)](./system-design/06-security-compliance/)
 
 *A curated knowledge base for engineers who want to go beyond the basics*
@@ -73,6 +74,12 @@
 </td>
 <td width="33%">
 
+### 📊 Data Engineering
+- **Data Lakes & Warehouses**
+- **Big Data Processing**
+- **Spark & MapReduce**
+- **BigQuery Analytics**
+
 </td>
 <td width="33%">
 
@@ -84,11 +91,11 @@
 
 <div align="center">
 
-| 📊 **System Design** | 💻 **DSA** | 🤖 **AI Engineering** | 🚀 **DevOps** | ☁️ **AWS Cloud** | 💻 **Languages** |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| Complete knowledge base | 11 Topics × 3 Levels | LLMs, RAG, Prompting | Docker, K8s, CI/CD | EC2, S3, Lambda | Java, Spring, Node, React |
-| 180+ Topics | Easy → Medium → Hard | Vector DBs, Embeddings | Terraform, IaC | RDS, DynamoDB, VPC | OOP, Hooks, Async |
-| [Explore →](./system-design/) | [Explore →](./dsa/) | [Explore →](./ai/) | [Explore →](./devops/) | [Explore →](./aws/) | [Explore →](./languages/) |
+| 📊 **System Design** | 💻 **DSA** | 🤖 **AI Engineering** | 🚀 **DevOps** | ☁️ **AWS Cloud** | 💻 **Languages** | 📈 **Data Engineering** |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Complete knowledge base | 11 Topics × 3 Levels | LLMs, RAG, Prompting | Docker, K8s, CI/CD | EC2, S3, Lambda | Java, Spring, Node, React | Data Lakes, Spark, BigQuery |
+| 180+ Topics | Easy → Medium → Hard | Vector DBs, Embeddings | Terraform, IaC | RDS, DynamoDB, VPC | OOP, Hooks, Async | Big Data, MapReduce, Warehouses |
+| [Explore →](./system-design/) | [Explore →](./dsa/) | [Explore →](./ai/) | [Explore →](./devops/) | [Explore →](./aws/) | [Explore →](./languages/) | [Explore →](./data-engineering/) |
 
 </div>
 
@@ -209,6 +216,23 @@
 | **[Spring Boot](./languages/03-spring-boot.md)** | Auto-configuration, microservices | Starters, REST APIs, Actuator |
 | **[Node.js](./languages/04-nodejs.md)** | Server-side JavaScript runtime | Event loop, async/await, modules |
 | **[React.js](./languages/05-react.md)** | Component-based UI library | Components, hooks, state management |
+
+</div>
+
+### 📊 [Data Engineering](./data-engineering/)
+
+> *Master data engineering: data lakes, warehouses, big data processing, and analytics*
+
+<div align="center">
+
+| Topic | Description | Key Concepts |
+|:---:|:---:|:---:|
+| **[Data Lakes](./data-engineering/01-data-lakes.md)** | Raw data storage architecture | Schema-on-read, scalability, cost-effective |
+| **[Data Warehouse](./data-engineering/02-data-warehouse.md)** | Structured analytics storage | Schema-on-write, ETL, OLAP |
+| **[Big Data](./data-engineering/03-big-data.md)** | Massive datasets processing | Volume, velocity, variety, veracity |
+| **[BigQuery](./data-engineering/04-big-query.md)** | Google's serverless data warehouse | SQL, partitioning, clustering |
+| **[Spark](./data-engineering/05-spark.md)** | In-memory distributed processing | RDDs, DataFrames, streaming, MLlib |
+| **[MapReduce](./data-engineering/06-map-reduce.md)** | Distributed processing algorithm | Map phase, reduce phase, shuffle |
 
 </div>
 
