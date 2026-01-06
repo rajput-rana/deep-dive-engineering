@@ -4,7 +4,7 @@ Common architectural patterns for building scalable and maintainable systems.
 
 ## Contents
 
-- **[Microservices Architecture](./microservices-architecture.md)** - Service decomposition, communication patterns, tradeoffs
+- **[01. Microservices Architecture](./01-microservices-architecture.md)** - Service decomposition, communication patterns, tradeoffs, language selection, interview questions
 - **[Monolithic Architecture](./monolithic-architecture.md)** - Single unified application, when to use, migration paths
 - **[Peer-to-Peer Architecture](./peer-to-peer-architecture.md)** - Decentralized networks, DHT, use cases
 
