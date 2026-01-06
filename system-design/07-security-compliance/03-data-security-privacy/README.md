@@ -13,18 +13,20 @@ Create → Store → Use → Share → Archive → Delete
 ### Data Classification
 - **[01. Data Classification](./01-data-classification.md)** - PII, PHI, PCI classification
 
-### Encryption
-- **[02. Encryption at Rest](./02-encryption-at-rest.md)** - Database encryption, disk encryption
-- **[03. Encryption in Transit](./03-encryption-in-transit.md)** - TLS/SSL, HTTPS
+### Encryption & Hashing
+- **[02. Encryption at Rest](./02-encryption-at-rest.md)** - Database encryption, disk encryption, application-level encryption
+- **[03. Encryption in Transit](./03-encryption-in-transit.md)** - TLS/SSL, HTTPS, mTLS
+- **[04. Hashing](./04-hashing.md)** - Cryptographic hashing, password hashing, HMAC
+- **[05. Encryption Fundamentals](./05-encryption-fundamentals.md)** - Symmetric vs asymmetric, algorithms, key management
 
 ### Data Protection
-- **[04. Tokenization](./04-tokenization.md)** - Tokenizing sensitive data
-- **[05. Data Masking](./05-data-masking.md)** - Masking data for non-production
+- **[06. Tokenization](./06-tokenization.md)** - Tokenizing sensitive data
+- **[07. Data Masking](./07-data-masking.md)** - Masking data for non-production
 
 ### Privacy
-- **[06. GDPR Compliance](./06-gdpr-compliance.md)** - General Data Protection Regulation
-- **[07. Data Residency](./07-data-residency.md)** - Geographic data storage requirements
-- **[08. Consent Management](./08-consent-management.md)** - User consent tracking
+- **[08. GDPR Compliance](./08-gdpr-compliance.md)** - General Data Protection Regulation
+- **[09. Data Residency](./09-data-residency.md)** - Geographic data storage requirements
+- **[10. Consent Management](./10-consent-management.md)** - User consent tracking
 
 ## Data Classification
 
