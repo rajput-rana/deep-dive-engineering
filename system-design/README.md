@@ -117,7 +117,7 @@ Follow this systematic approach when designing systems:
    - Address feedback
    - Refine and evolve
 
-**Template:** See [`../system-design/system-design-template.md`](../system-design/system-design-template.md) for a detailed template.
+**Template:** See [`system-design-template.md`](./system-design-template.md) for a detailed template.
 
 ## 🔑 Key Focus Areas
 
@@ -202,7 +202,7 @@ Follow this systematic approach when designing systems:
 ## 📚 Additional Resources
 
 - **[References](./references.md)** - Complete index of all topics
-- **[Templates](../)** - DSA and System Design templates
+- **[System Design Template](./system-design-template.md)** - Template for system design interviews
 - **[Case Studies](./08-real-world/)** - Real-world system designs
 
 ## 🔗 Quick Links
