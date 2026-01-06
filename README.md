@@ -84,7 +84,7 @@
 | **[01. Fundamentals](./system-design/01-fundamentals/)** | 9 Topics | Core concepts, scalability, reliability, API design |
 | **[02. Data Storage](./system-design/02-data-storage/)** | 4 Topics | Database fundamentals, indexing, sharding, replication |
 | **[03. Distributed Systems](./system-design/03-distributed-systems/)** | 4 Topics | Consistent hashing, service discovery, consensus algorithms |
-| **[04. Networking Protocols](./system-design/04-networking-protocols/)** | 5 Topics | HTTP/HTTPS, WebSockets, API Gateways, Webhooks |
+| **[04. Networking Protocols](./system-design/04-networking-protocols/)** | 6 Topics | HTTP/HTTPS, WebSockets, API Gateways, Webhooks, Kafka |
 | **[05. Scaling Patterns](./system-design/05-scaling-patterns/)** | 3 Topics | Horizontal scaling, rate limiting, load balancing |
 | **[06. Architectures](./system-design/06-architectures/)** | 3 Topics | Microservices, monolithic, peer-to-peer |
 | **[07. Security & Compliance](./system-design/07-security-compliance/)** | 50+ Topics | IAM, secrets management, data security, compliance |
@@ -259,6 +259,7 @@ Core technical concepts for backend and distributed systems engineers.
 - [WebSockets](./system-design/04-networking-protocols/03-websockets.md)
 - [Webhooks](./system-design/04-networking-protocols/04-webhooks.md)
 - [API Gateway](./system-design/04-networking-protocols/05-api-gateway.md)
+- [Kafka](./system-design/04-networking-protocols/06-kafka.md) - Distributed event streaming platform
 
 ### System Design - Scaling Patterns
 

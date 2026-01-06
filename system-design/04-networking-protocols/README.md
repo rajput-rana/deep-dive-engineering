@@ -4,7 +4,7 @@
 
 **Communication protocols and networking concepts**
 
-[![Topics](https://img.shields.io/badge/Topics-5-blue?style=for-the-badge)](./)
+[![Topics](https://img.shields.io/badge/Topics-6-blue?style=for-the-badge)](./)
 [![Protocols](https://img.shields.io/badge/Protocols-HTTP%2C%20WebSocket-green?style=for-the-badge)](./)
 
 *Master networking protocols for modern system design*
@@ -24,6 +24,7 @@
 | **[WebSockets](./03-websockets.md)** | Real-time bidirectional communication | Full-duplex, persistent connections |
 | **[Webhooks](./04-webhooks.md)** | Event-driven HTTP callbacks | Push notifications, event handling |
 | **[API Gateway](./05-api-gateway.md)** | API management and routing | Request routing, rate limiting, authentication |
+| **[Kafka](./06-kafka.md)** | Distributed event streaming platform | High throughput, partitions, consumer groups, durability |
 
 </div>
 
@@ -39,6 +40,7 @@
 | **🌐 API Design** | REST, GraphQL, gRPC | [HTTP/HTTPS](./01-http-https.md), [API Gateway](./05-api-gateway.md) |
 | **⚡ Real-time Communication** | WebSockets, SSE | [WebSockets](./03-websockets.md) |
 | **🔄 Event-Driven** | Webhooks and callbacks | [Webhooks](./04-webhooks.md) |
+| **🚀 Event Streaming** | High-throughput event streaming | [Kafka](./06-kafka.md) |
 
 </div>
 
@@ -56,6 +58,7 @@
 | **API Patterns** | REST, GraphQL, gRPC |
 | **API Management** | API Gateway patterns, routing, rate limiting |
 | **Event-Driven** | Webhooks, message queues |
+| **Event Streaming** | Kafka, high-throughput event streaming, partitions |
 
 </div>
 
@@ -74,6 +77,7 @@
 | **3️⃣** | [WebSockets](./03-websockets.md) | Real-time communication |
 | **4️⃣** | [API Gateway](./05-api-gateway.md) | API management |
 | **5️⃣** | [Webhooks](./04-webhooks.md) | Event-driven patterns |
+| **6️⃣** | [Kafka](./06-kafka.md) | High-throughput event streaming |
 
 </div>
 
