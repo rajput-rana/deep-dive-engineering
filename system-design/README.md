@@ -47,6 +47,14 @@ Comprehensive system design documentation and case studies for building scalable
 
 ### 07. Security & Compliance
 - **[07. Security & Compliance](./07-security-compliance/)** - Comprehensive security landscape
+  - **01. IAM** - Identity, Authentication & Authorization (JWT, MFA, SSO, OAuth2, RBAC, ABAC)
+  - **02. Secrets Management** - API keys, DB passwords, Certificates, Encryption keys
+  - **03. Data Security & Privacy** - Data classification, Encryption, Tokenization, GDPR
+  - **04. Application Security** - OWASP Top 10, Secure coding, SAST/DAST
+  - **05. Infrastructure & Network Security** - VPCs, Firewalls, Zero Trust, Container security
+  - **06. Monitoring & Incident Response** - SIEM, IDS/IPS, Audit logs, Breach handling
+  - **07. Compliance & Governance** - SOC 2, ISO 27001, PCI DSS, HIPAA, GDPR
+  - **08. Secure SDLC** - DevSecOps, Threat modeling, Secure CI/CD
   - 01. IAM (Identity, Authentication & Authorization)
   - 02. Secrets Management
   - 03. Data Security & Privacy
