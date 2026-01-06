@@ -18,6 +18,8 @@ Authentication is the process of verifying the identity of a user, service, or s
 - **[10. SSO](./10-sso.md)** - Single Sign-On
 - **[11. MFA](./11-mfa.md)** - Multi-Factor Authentication
 - **[12. Passwordless](./12-passwordless.md)** - WebAuthn, Passkeys
+- **[13. SAML](./13-saml.md)** - XML-based SSO protocol
+- **[14. SLO](./14-slo.md)** - Single Logout
 
 ## Quick Reference
 
