@@ -11,7 +11,7 @@ Each topic folder (`arrays`, `strings`, `linked-list`, etc.) contains three subd
 
 ## Problem Format
 
-Each problem solution should follow the template in `../templates/dsa-problem-template.md`:
+Each problem solution should follow the template in `../dsa/dsa-problem-template.md`:
 - Problem statement
 - Constraints
 - Intuition

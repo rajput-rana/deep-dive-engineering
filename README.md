@@ -58,12 +58,12 @@ Core technical concepts for backend and distributed systems engineers.
 - Security & Auth
 - Scalability & Performance
 
-### [Templates](./templates/)
+### Templates
 
 Ready-to-use templates for problem-solving and system design.
 
-- **[DSA Problem Template](./templates/dsa-problem-template.md)** - Structured template for algorithm problems
-- **[System Design Template](./templates/system-design-template.md)** - Template for system design interviews
+- **[DSA Problem Template](./dsa/dsa-problem-template.md)** - Structured template for algorithm problems
+- **[System Design Template](./system-design/system-design-template.md)** - Template for system design interviews
 
 ## 🔍 Detailed Index
 
@@ -237,7 +237,7 @@ Case studies and designs for:
 1. **For System Design:** Start with [Fundamentals](./system-design/01-fundamentals/)
 2. **For DSA:** Browse by topic in [DSA](./dsa/)
 3. **For Tech Concepts:** Explore [Tech Concepts](./tech-concepts/)
-4. **For Templates:** Use [Templates](./templates/) for structured problem-solving
+4. **For Templates:** Use [DSA Template](./dsa/dsa-problem-template.md) or [System Design Template](./system-design/system-design-template.md)
 
 ## 📖 Learning Path
 
