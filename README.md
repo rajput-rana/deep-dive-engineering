@@ -7,6 +7,7 @@
 [![System Design](https://img.shields.io/badge/System%20Design-Comprehensive-blue?style=for-the-badge)](./system-design/)
 [![DSA](https://img.shields.io/badge/DSA-11%20Topics-green?style=for-the-badge)](./dsa/)
 [![AI](https://img.shields.io/badge/AI-Engineering-purple?style=for-the-badge)](./ai/)
+[![DevOps](https://img.shields.io/badge/DevOps-Essentials-cyan?style=for-the-badge)](./devops/)
 [![Security](https://img.shields.io/badge/Security-Deep%20Dive-red?style=for-the-badge)](./system-design/06-security-compliance/)
 
 *A curated knowledge base for engineers who want to go beyond the basics*
@@ -81,11 +82,11 @@
 
 <div align="center">
 
-| 📊 **System Design** | 💻 **DSA** | 🤖 **AI Engineering** |
-|:---:|:---:|:---:|
-| Complete knowledge base | 11 Topics × 3 Levels | LLMs, RAG, Prompting |
-| 180+ Topics | Easy → Medium → Hard | Vector DBs, Embeddings |
-| [Explore →](./system-design/) | [Explore →](./dsa/) | [Explore →](./ai/) |
+| 📊 **System Design** | 💻 **DSA** | 🤖 **AI Engineering** | 🚀 **DevOps** |
+|:---:|:---:|:---:|:---:|
+| Complete knowledge base | 11 Topics × 3 Levels | LLMs, RAG, Prompting | Docker, K8s, CI/CD |
+| 180+ Topics | Easy → Medium → Hard | Vector DBs, Embeddings | Terraform, IaC |
+| [Explore →](./system-design/) | [Explore →](./dsa/) | [Explore →](./ai/) | [Explore →](./devops/) |
 
 </div>
 
@@ -328,9 +329,9 @@ Case studies and designs for:
 
 | Level | Focus Areas | Key Topics |
 |:---:|:---:|:---:|
-| **🌱 Beginner** | Foundations | [System Design Fundamentals](./system-design/01-fundamentals/)<br>[DSA Easy Problems](./dsa/)<br>[LLMs Fundamentals](./ai/01-llms-fundamentals.md) |
-| **🌿 Intermediate** | Advanced Concepts | [Distributed Systems](./system-design/07-distributed-systems/)<br>[RAG Systems](./ai/02-rag-retrieval-augmented-generation.md)<br>[Architecture Patterns](./system-design/02-architectures/) |
-| **🌳 Advanced** | Mastery | [CRDTs](./system-design/07-distributed-systems/06-crdts.md) & [Consensus](./system-design/07-distributed-systems/05-consensus-algorithms.md)<br>[AI System Design](./ai/05-ai-system-design.md)<br>[Real-World Systems](./system-design/08-real-world/) |
+| **🌱 Beginner** | Foundations | [System Design Fundamentals](./system-design/01-fundamentals/)<br>[DSA Easy Problems](./dsa/)<br>[LLMs Fundamentals](./ai/01-llms-fundamentals.md)<br>[Docker](./devops/01-docker.md) |
+| **🌿 Intermediate** | Advanced Concepts | [Distributed Systems](./system-design/07-distributed-systems/)<br>[RAG Systems](./ai/02-rag-retrieval-augmented-generation.md)<br>[Kubernetes](./devops/02-kubernetes.md)<br>[CI/CD](./devops/03-cicd-pipelines.md) |
+| **🌳 Advanced** | Mastery | [CRDTs](./system-design/07-distributed-systems/06-crdts.md) & [Consensus](./system-design/07-distributed-systems/05-consensus-algorithms.md)<br>[AI System Design](./ai/05-ai-system-design.md)<br>[Terraform](./devops/04-terraform.md)<br>[Real-World Systems](./system-design/08-real-world/) |
 
 </div>
 
