@@ -687,13 +687,26 @@ db.employees.aggregate([
 
 | Question | Key Points |
 |:---:|:---:|
+| **How does MongoDB differ from relational databases?** | Document model, schema flexibility, relationships (embedding/referencing), horizontal scaling, query language |
+| **Explain document and collection** | Document = JSON-like object (BSON), Collection = group of documents (like table) |
+| **How does MongoDB store data internally?** | BSON format, WiredTiger storage engine, files on disk |
+| **What is the role of _id?** | Unique identifier, default primary key, helps indexing |
+| **Explain replica sets** | Primary + secondaries, automatic failover, read scaling |
+| **What is sharding?** | Distribute data across servers, horizontal scaling, automatic balancing |
 | **Design a database for a social media app** | Users, Posts, Comments (embedded vs referenced), Likes, Follows, Timeline generation |
 | **How do you handle high write throughput?** | Sharding, write concern, batch inserts, connection pooling |
 | **Design a database for an e-commerce site** | Products (varying attributes), Orders, Users, Inventory |
-| **How do you ensure data consistency?** | Transactions, write concern, read concern, replica sets |
-| **How do you optimize slow queries?** | Explain plan, indexes, aggregation pipeline, query patterns |
-| **Design a database for a blog platform** | Articles, Authors, Categories, Tags, Comments (nested) |
+| **How do you ensure data consistency?** | Transactions, write concern, read concern, replica sets, journaling |
+| **How do you optimize slow queries?** | Explain plan, indexes, aggregation pipeline, query patterns, projections |
 | **How do you scale MongoDB?** | Replica sets, sharding, read preferences, connection pooling |
+| **What are aggregation pipelines?** | Multi-stage data processing, $match, $group, $sort stages |
+| **Explain write concern** | Level of acknowledgment, durability vs performance trade-off |
+| **What are TTL indexes?** | Auto-delete documents after time, session data, logs |
+| **What is GridFS?** | Store large files, splits into chunks, files > 16MB |
+| **How do you handle transactions?** | Multi-document ACID transactions, sessions, commit/abort |
+| **What are Change Streams?** | Real-time change notifications, event-driven architectures |
+| **How do you implement full-text search?** | Text indexes, $text operator, relevance scoring |
+| **How do you monitor performance?** | Profiling, explain(), index analysis, resource monitoring |
 
 </div>
 
