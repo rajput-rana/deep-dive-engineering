@@ -6,83 +6,76 @@ Authentication is the process of verifying the identity of a user, service, or s
 
 ## Table of Contents
 
-- **[01. JWT (JSON Web Tokens)](./01-jwt.md)** - Token-based authentication
-- **[02. Passwords & Hashing](./02-passwords-hashing.md)** - Password security, hashing algorithms (bcrypt, argon2)
-- **[03. MFA (Multi-Factor Authentication)](./03-mfa.md)** - TOTP, SMS, hardware keys
-- **[04. SSO (Single Sign-On)](./04-sso.md)** - SAML, OIDC
-- **[05. OAuth2](./05-oauth2.md)** - OAuth2 flows and patterns
-- **[06. Passwordless](./06-passwordless.md)** - WebAuthn, passkeys
+- **[01. Authentication Overview](./01-authentication-overview.md)** - Introduction to authentication methods
+- **[02. Username & Password](./02-username-password.md)** - Traditional authentication, HTTP Basic Auth
+- **[03. API Keys](./03-api-keys.md)** - Simple app authentication
+- **[04. Bearer Tokens](./04-bearer-tokens.md)** - Token transport mechanism
+- **[05. JWT](./05-jwt.md)** ⭐ - Self-contained tokens (most important)
+- **[06. OAuth 2.0](./06-oauth2.md)** ⭐ - Delegated authorization framework
+- **[07. Certificates & mTLS](./07-certificates-mtls.md)** 🔐 - Strongest security
+- **[08. HMAC Signatures](./08-hmac-signatures.md)** - Signature-based authentication
+- **[09. OpenID Connect](./09-openid-connect.md)** - Identity layer on OAuth
+- **[10. SSO](./10-sso.md)** - Single Sign-On
+- **[11. MFA](./11-mfa.md)** - Multi-Factor Authentication
+- **[12. Passwordless](./12-passwordless.md)** - WebAuthn, Passkeys
 
-## Authentication Methods
+## Quick Reference
 
-### 1. Password-Based Authentication
-- Traditional username/password
-- Requires secure password hashing
-- Vulnerable to brute force attacks
-- **Best Practice:** Use strong hashing (bcrypt, argon2)
+### By Scenario
+- **Public API** → API Key
+- **Internal microservices** → JWT + mTLS
+- **External SaaS** → OAuth 2.0
+- **Machine-to-machine** → OAuth Client Credentials
+- **Legacy systems** → Username + Password
+- **Banking/Payments** → Certificates
 
-### 2. Multi-Factor Authentication (MFA)
-- Something you know (password)
-- Something you have (phone, hardware key)
-- Something you are (biometrics)
-- **Types:** TOTP, SMS, hardware keys (FIDO2)
+### By Use Case
+- **Humans logging in** → Username/Password, OAuth, SSO
+- **Simple apps** → API Key
+- **Scalable identity** → JWT
+- **Delegated access** → OAuth
+- **App identity** → Client Secret
+- **Strongest security** → Certificates
 
-### 3. Single Sign-On (SSO)
-- One login for multiple applications
-- **Protocols:** SAML, OIDC
-- Reduces password fatigue
-- Centralized identity management
+## Authentication Proof Types
 
-### 4. OAuth2
-- Delegated authorization
-- **Flows:** Authorization Code, Client Credentials, Device Flow
-- Used for third-party access
-- Industry standard for API access
+### Something You Know
+- Password
+- API key
+- Client secret
 
-### 5. Passwordless Authentication
-- **WebAuthn / Passkeys**
-- Biometric authentication
-- Hardware security keys
-- More secure than passwords
+### Something You Have
+- Token (JWT, OAuth)
+- Certificate
+- Hardware key
 
-## Authentication Flow
-
-```
-User → Authentication Request → Identity Provider
-                                    ↓
-                            Verify Credentials
-                                    ↓
-                            Generate Token/Session
-                                    ↓
-                            Return to Application
-```
+### Something the Auth Server Issued
+- OAuth access token
+- JWT token
+- Session token
 
 ## Security Considerations
 
 ### Password Security
-- ✅ Use strong password policies (length, complexity)
-- ✅ Hash passwords (never store plaintext)
-- ✅ Use salt with hashing
+- ✅ Use strong password policies
+- ✅ Hash passwords (bcrypt, argon2)
 - ✅ Implement account lockout
 - ❌ Never log passwords
-- ❌ Never send passwords via email
 
 ### Token Security
 - ✅ Use short-lived tokens
 - ✅ Implement token refresh
 - ✅ Validate token signatures
 - ✅ Use HTTPS for token transmission
-- ❌ Don't store tokens in localStorage (XSS risk)
 
 ### Session Security
 - ✅ Use secure cookies (HttpOnly, Secure, SameSite)
 - ✅ Implement session timeout
 - ✅ Regenerate session IDs
-- ✅ Validate session on each request
 
 ## Common Vulnerabilities
 
-1. **Weak Passwords** - Easily guessable passwords
+1. **Weak Passwords** - Easily guessable
 2. **Password Reuse** - Same password across services
 3. **Session Hijacking** - Stolen session tokens
 4. **Brute Force Attacks** - Automated password guessing
@@ -96,11 +89,9 @@ User → Authentication Request → Identity Provider
 - Log all authentication events
 - Monitor for suspicious login patterns
 - Use secure password reset flows
-- Implement account recovery mechanisms
 
 ## Related Topics
 
 - **[Authorization](../02-authorization/)** - What users can do after authentication
 - **[Secrets Management](../../02-secrets-management/)** - Managing authentication credentials
 - **[Application Security](../../04-application-security/)** - Secure authentication implementation
-
