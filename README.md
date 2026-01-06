@@ -5,9 +5,9 @@ A comprehensive repository showcasing system design, data structures & algorithm
 ## 🎯 Repository Overview
 
 This repository is organized into three main areas:
-- **DSA** - Data Structures & Algorithms problems
+- **[DSA](./dsa/)** - Data Structures & Algorithms problems
 - **Tech Concepts** - Core technical concepts (concurrency, databases, networking, etc.)
-- **System Design** - Complete system design knowledge base
+- **[System Design](./system-design/)** - Complete system design knowledge base
 
 ## 📚 Quick Navigation
 
@@ -30,17 +30,17 @@ Comprehensive system design knowledge base covering fundamentals, distributed sy
 Data Structures & Algorithms organized by topic and difficulty.
 
 **Topics:**
-- Arrays
-- Strings
-- Linked List
-- Stacks & Queues
-- Trees
-- Graphs
-- Dynamic Programming
-- Greedy
-- Backtracking
-- Bit Manipulation
-- Math
+- [Arrays](./dsa/arrays/)
+- [Strings](./dsa/strings/)
+- [Linked List](./dsa/linked-list/)
+- [Stacks & Queues](./dsa/stacks-queues/)
+- [Trees](./dsa/trees/)
+- [Graphs](./dsa/graphs/)
+- [Dynamic Programming](./dsa/dynamic-programming/)
+- [Greedy](./dsa/greedy/)
+- [Backtracking](./dsa/backtracking/)
+- [Bit Manipulation](./dsa/bit-manipulation/)
+- [Math](./dsa/math/)
 
 **Difficulty Levels:** Easy, Medium, Hard
 
@@ -70,167 +70,140 @@ Ready-to-use templates for problem-solving and system design.
 ### System Design - Fundamentals
 
 **Introduction:**
-- What is System Design
-- Top 30 System Design Concepts
+- [What is System Design](./system-design/01-fundamentals/01-introduction/01-what-is-system-design.md)
+- [Top 30 System Design Concepts](./system-design/01-fundamentals/01-introduction/02-top-30-system-design-concepts.md)
 
 **Scalability & Performance:**
-- Horizontal Scaling
-- Vertical Scaling
-- Load Balancing
-- Caching Strategies
+- [Scalability](./system-design/01-fundamentals/02-scalability-performance/01-scalability.md)
+- [Performance](./system-design/01-fundamentals/02-scalability-performance/02-performance.md)
+- [Load Balancing](./system-design/01-fundamentals/02-scalability-performance/03-load-balancing.md)
+- [Caching](./system-design/01-fundamentals/02-scalability-performance/04-caching.md)
 
 **Reliability & Availability:**
-- Availability
-- Single Point of Failure (SPOF)
-- Redundancy
+- [Reliability](./system-design/01-fundamentals/03-reliability-availability/01-reliability.md)
+- [Availability](./system-design/01-fundamentals/03-reliability-availability/02-availability.md)
+- [Single Point of Failure (SPOF)](./system-design/01-fundamentals/03-reliability-availability/03-single-point-of-failure.md)
 
 **API Design:**
-- What is an API
-- REST API
-- GraphQL
-- API Gateway
-- Rate Limiting
-- Idempotency
+- [What is an API](./system-design/01-fundamentals/04-api-design/01-what-is-an-api.md)
+- [API Design](./system-design/01-fundamentals/04-api-design/02-api-design.md)
 
 **Concurrency:**
-- Concurrency vs Parallelism
-- Threading Models
+- [Concurrency vs Parallelism](./system-design/01-fundamentals/05-concurrency/01-concurrency-vs-parallelism.md)
 
 **Access Control:**
-- RBAC (Role-Based Access Control)
-- ABAC (Attribute-Based Access Control)
+- [RBAC (Role-Based Access Control)](./system-design/01-fundamentals/06-access-control/01-rbac.md)
+
+**Storage:**
+- [Object Storage](./system-design/01-fundamentals/07-storage/01-object-storage.md)
 
 **Distributed Systems:**
-- CAP Theorem
-- Eventual Consistency
-- Consistent Hashing
-- Service Discovery
-- Consensus Algorithms (Raft, Paxos)
-- CRDTs
+- [CAP Theorem](./system-design/01-fundamentals/08-distributed-systems/01-cap-theorem.md)
+- [Idempotency](./system-design/01-fundamentals/08-distributed-systems/02-idempotency.md)
 
 **Data Management:**
-- Database Fundamentals (ACID, SQL vs NoSQL, Indexing, Sharding, Replication)
-- Data Compression
-- Denormalization
+- [Database Sharding](./system-design/01-fundamentals/09-data-management/01-database-sharding.md)
 
 ### System Design - Security & Compliance
 
 **IAM (Identity, Authentication & Authorization):**
-- Authentication: JWT, Passwords, MFA, SSO, OAuth2, Passwordless, SAML, SLO, Session Management, Token Refresh
-- Authorization: RBAC, ABAC, Least Privilege, Fine-grained Permissions, Policy-Based, OAuth Scopes, Resource Ownership
-- Service Identity: mTLS, SPIFFE/SPIRE, Service Accounts
+
+**Authentication:**
+- [Authentication Overview](./system-design/07-security-compliance/01-iam/01-authentication/01-authentication-overview.md)
+- [Username & Password](./system-design/07-security-compliance/01-iam/01-authentication/02-username-password.md)
+- [API Keys](./system-design/07-security-compliance/01-iam/01-authentication/03-api-keys.md)
+- [Bearer Tokens](./system-design/07-security-compliance/01-iam/01-authentication/04-bearer-tokens.md)
+- [JWT](./system-design/07-security-compliance/01-iam/01-authentication/05-jwt.md)
+- [OAuth2](./system-design/07-security-compliance/01-iam/01-authentication/06-oauth2.md)
+- [Certificates & mTLS](./system-design/07-security-compliance/01-iam/01-authentication/07-certificates-mtls.md)
+- [HMAC Signatures](./system-design/07-security-compliance/01-iam/01-authentication/08-hmac-signatures.md)
+- [OpenID Connect](./system-design/07-security-compliance/01-iam/01-authentication/09-openid-connect.md)
+- [SSO](./system-design/07-security-compliance/01-iam/01-authentication/10-sso.md)
+- [MFA](./system-design/07-security-compliance/01-iam/01-authentication/11-mfa.md)
+- [Passwordless](./system-design/07-security-compliance/01-iam/01-authentication/12-passwordless.md)
+- [SAML](./system-design/07-security-compliance/01-iam/01-authentication/13-saml.md)
+- [SLO](./system-design/07-security-compliance/01-iam/01-authentication/14-slo.md)
+- [Session Management](./system-design/07-security-compliance/01-iam/01-authentication/15-session-management.md)
+- [Token Refresh](./system-design/07-security-compliance/01-iam/01-authentication/16-token-refresh.md)
+- [OAuth vs JWT](./system-design/07-security-compliance/01-iam/01-authentication/17-oauth-vs-jwt.md)
+
+**Authorization:**
+- [RBAC](./system-design/07-security-compliance/01-iam/02-authorization/01-rbac.md)
+- [ABAC](./system-design/07-security-compliance/01-iam/02-authorization/02-abac.md)
+- [Least Privilege](./system-design/07-security-compliance/01-iam/02-authorization/03-least-privilege.md)
+- [Fine-grained Permissions](./system-design/07-security-compliance/01-iam/02-authorization/04-fine-grained-permissions.md)
+- [Policy-Based Authorization](./system-design/07-security-compliance/01-iam/02-authorization/05-policy-based-authorization.md)
+- [OAuth Scopes](./system-design/07-security-compliance/01-iam/02-authorization/06-oauth-scopes.md)
+- [Resource Ownership](./system-design/07-security-compliance/01-iam/02-authorization/07-resource-ownership.md)
+- [Authorization Comparison](./system-design/07-security-compliance/01-iam/02-authorization/08-authorization-comparison.md)
+
+**Service Identity:**
+- [Service Identity](./system-design/07-security-compliance/01-iam/03-service-identity/) - mTLS, SPIFFE/SPIRE, Service Accounts
 
 **Secrets Management:**
-- API keys, DB passwords, Certificates, Encryption keys
-- Best practices: Never hardcode, central vault, short-lived secrets
+- [Secrets Management](./system-design/07-security-compliance/02-secrets-management/) - API keys, DB passwords, Certificates, Encryption keys
 
 **Data Security & Privacy:**
-- Data Classification (PII, PHI, PCI)
-- Encryption at Rest (Disk, Database, Application-level)
-- Encryption in Transit (TLS, mTLS)
-- Hashing (SHA-256, Password hashing, HMAC)
-- Encryption Fundamentals (Symmetric vs Asymmetric, Algorithms)
-- Tokenization
-- Data Masking
-- GDPR Compliance
-- Data Residency
-- Consent Management
+- [Data Security & Privacy](./system-design/07-security-compliance/03-data-security-privacy/) - Data Classification (PII, PHI, PCI)
+- [Encryption at Rest](./system-design/07-security-compliance/03-data-security-privacy/02-encryption-at-rest.md) - Disk, Database, Application-level
+- [Encryption in Transit](./system-design/07-security-compliance/03-data-security-privacy/03-encryption-in-transit.md) - TLS, mTLS
+- [Hashing](./system-design/07-security-compliance/03-data-security-privacy/04-hashing.md) - SHA-256, Password hashing, HMAC
+- [Encryption Fundamentals](./system-design/07-security-compliance/03-data-security-privacy/05-encryption-fundamentals.md) - Symmetric vs Asymmetric, Algorithms
 
 **Application Security:**
-- OWASP Top 10
-- Secure Coding Practices
-- Dependency Security (SBOM, Vulnerability Scanning)
-- SAST/DAST
+- [Application Security](./system-design/07-security-compliance/04-application-security/) - OWASP Top 10, Secure Coding Practices, Dependency Security, SAST/DAST
 
 **Infrastructure & Network Security:**
-- Network Security (VPCs, Firewalls, Security Groups, Zero Trust)
-- Host Security (OS Hardening, Patch Management)
-- Container & K8s Security
+- [Infrastructure & Network Security](./system-design/07-security-compliance/05-infrastructure-network-security/) - Network Security (VPCs, Firewalls, Security Groups, Zero Trust), Host Security, Container & K8s Security
 
 **Monitoring & Incident Response:**
-- SIEM, IDS/IPS, Anomaly Detection
-- Audit Logs, Immutable Logs
-- Incident Response Playbooks
+- [Monitoring & Incident Response](./system-design/07-security-compliance/06-monitoring-logging-incident-response/) - SIEM, IDS/IPS, Anomaly Detection, Audit Logs, Incident Response Playbooks
 
 **Compliance & Governance:**
-- SOC 2, ISO 27001, PCI DSS, HIPAA, GDPR
-- Access Reviews, Change Management, Vendor Risk
+- [Compliance & Governance](./system-design/07-security-compliance/07-compliance-governance-risk/) - SOC 2, ISO 27001, PCI DSS, HIPAA, GDPR, Access Reviews, Change Management, Vendor Risk
 
 **Secure SDLC:**
-- DevSecOps
-- Threat Modeling
-- Secure CI/CD
-- Secrets Scanning
+- [Secure SDLC](./system-design/07-security-compliance/08-secure-sdlc/) - DevSecOps, Threat Modeling, Secure CI/CD, Secrets Scanning
 
 ### System Design - Architectures
 
-**Microservices Architecture:**
-- Principles, Communication Patterns
-- Language Selection Guide
-- Data Consistency (Saga Pattern)
-- Service Discovery & API Gateway
-- Deployment & Infrastructure
-- Observability
-- Testing Strategy
-- Security Basics
-- Common Anti-Patterns
-- Interview Questions (40+)
-
-**Monolithic Architecture:**
-- When to use, Migration paths
-
-**Peer-to-Peer Architecture:**
-- Decentralized networks, DHT
+- [Microservices Architecture](./system-design/06-architectures/01-microservices-architecture.md)
+- [Monolithic Architecture](./system-design/06-architectures/01-monolithic-architecture.md)
+- [Peer-to-Peer Architecture](./system-design/06-architectures/03-peer-to-peer-architecture.md)
 
 ### System Design - Distributed Systems
 
-- Consistent Hashing
-- Service Discovery
-- Consensus Algorithms (Raft, Paxos)
-- CRDTs (Conflict-free Replicated Data Types)
+- [Consistent Hashing](./system-design/03-distributed-systems/01-consistent-hashing.md)
+- [Service Discovery](./system-design/03-distributed-systems/02-service-discovery.md)
+- [Consensus Algorithms](./system-design/03-distributed-systems/03-consensus-algorithms.md) - Raft, Paxos
+- [CRDTs (Conflict-free Replicated Data Types)](./system-design/03-distributed-systems/04-crdts.md)
 
 ### System Design - Networking Protocols
 
-- HTTP/HTTPS
-- WebSockets
-- API Gateways
-- Webhooks
-- OSI Model
+- [HTTP/HTTPS](./system-design/04-networking-protocols/01-http-https.md)
+- [OSI Model](./system-design/04-networking-protocols/02-osi.md)
+- [WebSockets](./system-design/04-networking-protocols/03-websockets.md)
+- [Webhooks](./system-design/04-networking-protocols/04-webhooks.md)
+- [API Gateway](./system-design/04-networking-protocols/05-api-gateway.md)
 
 ### System Design - Scaling Patterns
 
-- Horizontal Scaling
-- Vertical Scaling
-- Rate Limiting
-- Load Balancing Algorithms
-- Auto-scaling
+- [Horizontal Scaling](./system-design/05-scaling-patterns/01-horizontal-scaling.md)
+- [Load Balancing Algorithms](./system-design/05-scaling-patterns/02-load-balancing-algorithms.md)
+- [Rate Limiting](./system-design/05-scaling-patterns/03-rate-limiting.md)
 
 ### System Design - Data Storage
 
-- Database Fundamentals (comprehensive guide)
-- ACID Transactions
-- SQL vs NoSQL
-- Indexing
-- Sharding
-- Vertical Partitioning
-- Replication
-- Connection Pooling
-- Denormalization
-- Data Compression
+- [Database Fundamentals](./system-design/02-data-storage/01-database-fundamentals.md) - Comprehensive guide covering ACID, SQL vs NoSQL, indexing, sharding, replication
+- [Indexing](./system-design/02-data-storage/02-indexing.md)
+- [Sharding](./system-design/02-data-storage/03-sharding.md)
+- [Database Replication](./system-design/02-data-storage/04-database-replication.md)
 
 ### System Design - Real-World Systems
 
 Case studies and designs for:
-- Twitter, Facebook, Instagram
-- Netflix, Uber, WhatsApp
-- YouTube, Chat Systems
-- News Feed, Search Engine
-- Payment Systems
-- Notification Systems
-- Rate Limiters
-- Distributed Cache
-- File Storage Systems
-- URL Shorteners
+- [Design a URL Shortener](./system-design/08-real-world/01-design-a-url-shortener.md)
+- [Design Search Autocomplete System](./system-design/08-real-world/02-design-search-autocomplete-system.md)
 
 ## 🚀 Getting Started
 
@@ -242,21 +215,21 @@ Case studies and designs for:
 ## 📖 Learning Path
 
 ### Beginner
-1. System Design Fundamentals
+1. [System Design Fundamentals](./system-design/01-fundamentals/)
 2. Basic DSA problems (Easy)
 3. Core Tech Concepts
 
 ### Intermediate
-1. Distributed Systems concepts
-2. Security & Compliance basics
+1. [Distributed Systems concepts](./system-design/03-distributed-systems/)
+2. [Security & Compliance basics](./system-design/07-security-compliance/)
 3. Medium DSA problems
-4. Architecture patterns
+4. [Architecture patterns](./system-design/06-architectures/)
 
 ### Advanced
-1. Advanced distributed systems (CRDTs, Consensus)
-2. Security deep dives
+1. Advanced distributed systems ([CRDTs](./system-design/03-distributed-systems/04-crdts.md), [Consensus](./system-design/03-distributed-systems/03-consensus-algorithms.md))
+2. [Security deep dives](./system-design/07-security-compliance/)
 3. Hard DSA problems
-4. Real-world system designs
+4. [Real-world system designs](./system-design/08-real-world/)
 5. Interview preparation
 
 ## 🎯 Interview Preparation
