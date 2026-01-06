@@ -1,6 +1,6 @@
 # What is an API?
 
-**Reference:** [AlgoMaster - What is an API](https://algomaster.io/learn/system-design/what-is-an-api)
+// (// 
 
 ## Summary
 
@@ -154,8 +154,5 @@ When discussing APIs:
 3. Discuss design principles
 4. Address security and performance
 5. Give real-world examples
-
-## Reference
-
-[AlgoMaster - What is an API](https://algomaster.io/learn/system-design/what-is-an-api)
+// (// 
 

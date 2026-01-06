@@ -1,6 +1,6 @@
 # Role-Based Access Control (RBAC)
 
-**Reference:** [AlgoMaster - RBAC](https://algomaster.io/learn/system-design/rbac)
+// (// 
 
 ## Problem / Concept Overview
 

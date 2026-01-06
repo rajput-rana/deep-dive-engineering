@@ -1,6 +1,6 @@
 # Monolithic Architecture
 
-**Reference:** [AlgoMaster - Monolithic Architecture](https://algomaster.io/learn/system-design/monolithic-architecture)
+// (// 
 
 ## Problem / Concept Overview
 

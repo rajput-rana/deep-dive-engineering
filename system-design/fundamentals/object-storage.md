@@ -1,6 +1,6 @@
 # Object Storage
 
-**Reference:** [AlgoMaster - Object Storage](https://algomaster.io/learn/system-design/object-storage)
+// (// 
 
 ## Problem / Concept Overview
 

@@ -1,6 +1,6 @@
 # Service Discovery
 
-**Reference:** [AlgoMaster - Service Discovery](https://algomaster.io/learn/system-design/service-discovery)
+// (// 
 
 ## Summary
 
@@ -152,8 +152,5 @@ When discussing service discovery:
 3. Select registry solution
 4. Address failure scenarios
 5. Discuss caching and performance
-
-## Reference
-
-[AlgoMaster - Service Discovery](https://algomaster.io/learn/system-design/service-discovery)
+// (// 
 

@@ -1,6 +1,6 @@
 # Reliability
 
-**Reference:** [AlgoMaster - Reliability](https://algomaster.io/learn/system-design/reliability)
+// (// 
 
 ## Problem / Concept Overview
 

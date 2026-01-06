@@ -1,6 +1,6 @@
 # CAP Theorem
 
-**Reference:** [AlgoMaster - CAP Theorem](https://algomaster.io/learn/system-design/cap-theorem)
+// (// 
 
 ## Status
 
@@ -13,10 +13,7 @@ This topic covers the CAP theorem, which states that in a distributed system, yo
 - **Consistency:** All nodes see the same data simultaneously
 - **Availability:** System remains operational
 - **Partition Tolerance:** System continues despite network failures
-
-## Reference
-
-[AlgoMaster - CAP Theorem](https://algomaster.io/learn/system-design/cap-theorem)
+// (// 
 
 ---
 

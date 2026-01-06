@@ -1,6 +1,6 @@
 # Design a URL Shortener
 
-**Reference:** [AlgoMaster - Design a URL Shortener](https://algomaster.io/learn/system-design/design-a-url-shortener)
+// (// 
 
 ## Summary
 
@@ -167,8 +167,5 @@ When designing URL shortener:
 4. Handle collisions
 5. Discuss scaling (sharding, caching)
 6. Address edge cases (malicious URLs, rate limiting)
-
-## Reference
-
-[AlgoMaster - Design a URL Shortener](https://algomaster.io/learn/system-design/design-a-url-shortener)
+// (// 
 

@@ -1,6 +1,6 @@
 # Load Balancing Algorithms
 
-**Reference:** [AlgoMaster - Load Balancing Algorithms](https://algomaster.io/learn/system-design/load-balancing-algorithms)
+// (// 
 
 ## Summary
 
@@ -120,8 +120,5 @@ When discussing load balancing:
 3. Choose appropriate algorithm
 4. Discuss tradeoffs
 5. Address edge cases (server failures, etc.)
-
-## Reference
-
-[AlgoMaster - Load Balancing Algorithms](https://algomaster.io/learn/system-design/load-balancing-algorithms)
+// (// 
 

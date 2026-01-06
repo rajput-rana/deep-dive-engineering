@@ -1,6 +1,6 @@
 # Caching
 
-**Reference:** [AlgoMaster - Caching](https://algomaster.io/learn/system-design/caching)
+// (// 
 
 ## Problem / Concept Overview
 

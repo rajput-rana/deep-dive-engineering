@@ -1,6 +1,6 @@
 # Database Indexing
 
-**Reference:** [AlgoMaster - Indexing](https://algomaster.io/learn/system-design/indexing)
+// (// 
 
 ## Summary
 
@@ -147,8 +147,5 @@ When discussing indexing:
 3. Consider composite indexes
 4. Discuss tradeoffs (read vs write performance)
 5. Address index maintenance
-
-## Reference
-
-[AlgoMaster - Indexing](https://algomaster.io/learn/system-design/indexing)
+// (// 
 

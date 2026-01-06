@@ -1,6 +1,6 @@
 # Database Sharding
 
-**Reference:** [AlgoMaster - Sharding](https://algomaster.io/learn/system-design/sharding)
+// (// 
 
 ## Summary
 
@@ -169,8 +169,5 @@ When discussing sharding:
 3. Select sharding strategy
 4. Address rebalancing
 5. Handle cross-shard queries
-
-## Reference
-
-[AlgoMaster - Sharding](https://algomaster.io/learn/system-design/sharding)
+// (// 
 

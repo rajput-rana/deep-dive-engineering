@@ -1,6 +1,6 @@
 # Concurrency vs Parallelism
 
-**Reference:** [AlgoMaster - Concurrency vs Parallelism](https://algomaster.io/learn/system-design/concurrency-vs-parallelism)
+// (// 
 
 ## Summary
 
@@ -167,8 +167,5 @@ When discussing concurrency vs parallelism:
 3. Explain when to use which
 4. Discuss tradeoffs
 5. Mention real-world applications
-
-## Reference
-
-[AlgoMaster - Concurrency vs Parallelism](https://algomaster.io/learn/system-design/concurrency-vs-parallelism)
+// (// 
 

@@ -1,6 +1,6 @@
 # Peer-to-Peer (P2P) Architecture
 
-**Reference:** [AlgoMaster - Peer-to-Peer Architecture](https://algomaster.io/learn/system-design/peer-to-peer-p2p-architecture)
+// (// 
 
 ## Problem / Concept Overview
 

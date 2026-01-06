@@ -1,6 +1,6 @@
 # OSI Model
 
-**Reference:** [AlgoMaster - OSI](https://algomaster.io/learn/system-design/osi)
+// (// 
 
 ## Summary
 
@@ -121,8 +121,5 @@ When discussing OSI model:
 3. Give examples of protocols at each layer
 4. Discuss encapsulation process
 5. Compare with TCP/IP model
-
-## Reference
-
-[AlgoMaster - OSI](https://algomaster.io/learn/system-design/osi)
+// (// 
 

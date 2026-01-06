@@ -1,6 +1,6 @@
 # Consensus Algorithms
 
-**Reference:** [AlgoMaster - Consensus Algorithms](https://algomaster.io/learn/system-design/consensus-algorithms)
+// (// 
 
 ## Summary
 
@@ -132,8 +132,5 @@ When discussing consensus:
 3. Discuss fault tolerance requirements
 4. Address CAP theorem tradeoffs
 5. Explain performance implications
-
-## Reference
-
-[AlgoMaster - Consensus Algorithms](https://algomaster.io/learn/system-design/consensus-algorithms)
+// (// 
 

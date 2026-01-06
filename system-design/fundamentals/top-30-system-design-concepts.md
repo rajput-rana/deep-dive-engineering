@@ -1,6 +1,6 @@
 # Top 30 System Design Concepts
 
-**Reference:** [AlgoMaster - Top 30 System Design Concepts](https://algomaster.io/learn/system-design/top-30-system-design-concepts)
+// (// 
 
 ## Summary
 
@@ -67,8 +67,5 @@ When asked "What are the key concepts in system design?":
 2. Explain tradeoffs between related concepts
 3. Give real-world examples for each
 4. Show understanding of when to apply each concept
-
-## Reference
-
-[AlgoMaster - Top 30 System Design Concepts](https://algomaster.io/learn/system-design/top-30-system-design-concepts)
+// (// 
 

@@ -1,6 +1,6 @@
 # Microservices Architecture
 
-**Reference:** [AlgoMaster - Microservices Architecture](https://algomaster.io/learn/system-design/microservices-architecture)
+// (// 
 
 ## Problem / Concept Overview
 

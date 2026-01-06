@@ -1,6 +1,6 @@
 # Database Sharding
 
-**Reference:** [AlgoMaster - Database Sharding](https://algomaster.io/learn/system-design/database-sharding)
+// (// 
 
 ## Problem / Concept Overview
 

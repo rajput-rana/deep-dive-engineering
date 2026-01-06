@@ -1,6 +1,6 @@
 # WebSockets
 
-**Reference:** [AlgoMaster - WebSockets](https://algomaster.io/learn/system-design/websockets)
+// (// 
 
 ## Summary
 
@@ -167,8 +167,5 @@ When discussing WebSockets:
 3. Discuss use cases
 4. Address scaling challenges
 5. Compare with alternatives (SSE, polling)
-
-## Reference
-
-[AlgoMaster - WebSockets](https://algomaster.io/learn/system-design/websockets)
+// (// 
 

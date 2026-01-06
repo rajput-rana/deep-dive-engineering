@@ -1,6 +1,6 @@
 # Performance
 
-**Reference:** [AlgoMaster - Performance](https://algomaster.io/learn/system-design/performance)
+// (// 
 
 ## Problem / Concept Overview
 

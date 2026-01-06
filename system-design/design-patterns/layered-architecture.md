@@ -1,7 +1,5 @@
 # Layered Architecture
 
-**Reference:** [https://algomaster.io/learn/system-design/layered-architecture](https://algomaster.io/learn/system-design/layered-architecture)
-
 ## Status
 
 🔒 **Content behind paywall** — Manual fill required
@@ -9,10 +7,7 @@
 ## Placeholder
 
 This topic covers n-tier architecture.
-
-## Reference
-
-[https://algomaster.io/learn/system-design/layered-architecture](https://algomaster.io/learn/system-design/layered-architecture)
+[// 
 
 ---
 

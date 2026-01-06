@@ -1,6 +1,6 @@
 # Design a Search Autocomplete System
 
-**Reference:** [AlgoMaster - Design Search Autocomplete System](https://algomaster.io/learn/system-design/design-search-autocomplete-system)
+// (// 
 
 ## Summary
 
@@ -194,8 +194,5 @@ When designing autocomplete:
 4. Design ranking algorithm
 5. Discuss caching strategy
 6. Address scaling (sharding, updates)
-
-## Reference
-
-[AlgoMaster - Design Search Autocomplete System](https://algomaster.io/learn/system-design/design-search-autocomplete-system)
+// (// 
 

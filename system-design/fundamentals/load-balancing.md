@@ -1,6 +1,6 @@
 # Load Balancing
 
-**Reference:** [AlgoMaster - Load Balancing](https://algomaster.io/learn/system-design/load-balancing)
+// (// 
 
 ## Problem / Concept Overview
 

@@ -1,7 +1,5 @@
 # Scalability
 
-**Reference:** [AlgoMaster - Scalability](https://algomaster.io/learn/system-design/scalability)
-
 ## Problem / Concept Overview
 
 Scalability is the ability of a system to handle increasing amounts of work by adding resources. As your user base grows from 1,000 to 1 million users, can your system accommodate this growth without breaking?

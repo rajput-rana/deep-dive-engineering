@@ -1,6 +1,6 @@
 # What is System Design?
 
-**Source:** [AlgoMaster - What is System Design](https://algomaster.io/learn/system-design/what-is-system-design)
+**Source:** // (// 
 
 ## Definition
 

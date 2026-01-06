@@ -1,7 +1,5 @@
 # API Design
 
-**Reference:** [AlgoMaster - API Design](https://algomaster.io/learn/system-design-interviews/api-design)
-
 ## Problem / Concept Overview
 
 API design defines how clients interact with your system. Well-designed APIs are intuitive, consistent, and scalable. Poor API design leads to confusion, breaking changes, and developer frustration.

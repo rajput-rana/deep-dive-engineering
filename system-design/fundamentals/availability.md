@@ -1,6 +1,6 @@
 # Availability
 
-**Reference:** [AlgoMaster - Availability](https://algomaster.io/learn/system-design/availability)
+// (// 
 
 ## Summary
 
@@ -93,8 +93,5 @@ When discussing availability:
 3. Propose redundancy strategies
 4. Discuss tradeoffs (cost vs availability)
 5. Explain how to measure and monitor availability
-
-## Reference
-
-[AlgoMaster - Availability](https://algomaster.io/learn/system-design/availability)
+// (// 
 

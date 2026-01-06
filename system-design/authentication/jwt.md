@@ -1,6 +1,6 @@
 # JSON Web Tokens (JWT)
 
-**Reference:** [AlgoMaster - JWT](https://algomaster.io/learn/system-design/jwt)
+// (// 
 
 ## Summary
 
@@ -149,8 +149,5 @@ When discussing JWT:
 3. Discuss security considerations
 4. Address revocation challenges
 5. Compare with session-based auth
-
-## Reference
-
-[AlgoMaster - JWT](https://algomaster.io/learn/system-design/jwt)
+// (// 
 
