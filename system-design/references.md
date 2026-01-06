@@ -9,7 +9,7 @@ Complete reference of all system design topics (117+ chapters), organized by cat
 
 ---
 
-## Fundamentals (15 topics)
+## Fundamentals (17 topics)
 
 | Title | Status | Local File |
 |-------|--------|------------|
@@ -28,6 +28,8 @@ Complete reference of all system design topics (117+ chapters), organized by cat
 | RBAC | ✅ Public | [`fundamentals/rbac.md`](./fundamentals/rbac.md) |
 | Object Storage | ✅ Public | [`fundamentals/object-storage.md`](./fundamentals/object-storage.md) |
 | CAP Theorem | ✅ Public | [`fundamentals/cap-theorem.md`](./fundamentals/cap-theorem.md) |
+| Single Point of Failure (SPOF) | ✅ Public | [`fundamentals/single-point-of-failure.md`](./fundamentals/single-point-of-failure.md) |
+| Idempotency | ✅ Public | [`fundamentals/idempotency.md`](./fundamentals/idempotency.md) |
 
 ## Distributed Systems (20 topics)
 
@@ -54,7 +56,7 @@ Complete reference of all system design topics (117+ chapters), organized by cat
 | Split-Brain Problem | 🔒 Paywalled | [`distributed-systems/split-brain-problem.md`](./distributed-systems/split-brain-problem.md) |
 | Distributed Tracing | 🔒 Paywalled | [`distributed-systems/distributed-tracing.md`](./distributed-systems/distributed-tracing.md) |
 
-## Networking & Protocols (15 topics)
+## Networking & Protocols (16 topics)
 
 | Title | Status | Local File |
 |-------|--------|------------|
@@ -73,6 +75,7 @@ Complete reference of all system design topics (117+ chapters), organized by cat
 | Event Streaming | ✅ Public | [`networking-protocols/event-streaming.md`](./networking-protocols/event-streaming.md) |
 | API Gateway | ✅ Public | [`networking-protocols/api-gateway.md`](./networking-protocols/api-gateway.md) |
 | Load Balancer Types | ✅ Public | [`networking-protocols/load-balancer-types.md`](./networking-protocols/load-balancer-types.md) |
+| Webhooks | ✅ Public | [`networking-protocols/webhooks.md`](./networking-protocols/webhooks.md) |
 
 ## Data Storage (18 topics)
 
