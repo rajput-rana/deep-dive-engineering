@@ -18,7 +18,9 @@
 
 <div align="center">
 
-**MongoDB is a NoSQL document database that stores data in flexible, JSON-like documents called BSON.**
+**MongoDB is the most popular open-source, document-oriented NoSQL database, holding over 45% of the NoSQL market share.**
+
+MongoDB stores data in flexible BSON format (Binary JSON), enabling faster and more efficient storage and retrieval compared to rigid relational databases.
 
 ### Key Characteristics
 
@@ -31,6 +33,11 @@
 | **🔄 Rich Queries** | Complex queries, aggregations, text search |
 
 **Mental Model:** Think of MongoDB as a filing cabinet where each document is a folder containing related information.
+
+**💡 Why MongoDB Exists:**
+- Modern applications (social, interactive, data-heavy) require faster, larger data access
+- RDBMS limitations: Not horizontally scalable, single-server deployments hit scaling limits
+- NoSQL databases: More scalable and higher performing for big data workloads
 
 </div>
 
@@ -74,6 +81,31 @@
 - **Nested documents** - Objects within documents
 - **Arrays** - Lists of values
 - **Mixed types** - Different data types in same collection
+
+---
+
+### BSON (Binary JSON)
+
+**BSON is MongoDB's internal storage format**
+
+| Aspect | Description |
+|:---:|:---:|
+| **Format** | Binary-encoded serialization of JSON |
+| **Purpose** | Efficient storage and traversal |
+| **Advantages** | Faster than text JSON, supports more data types |
+| **Storage Engine** | WiredTiger (default) stores collections as files on disk |
+
+**BSON Extends JSON:**
+- ✅ Supports dates, binary data, ObjectId
+- ✅ More efficient storage space
+- ✅ Faster scan speed
+- ✅ Type preservation
+
+**Supported Data Types:**
+- String, Number (int, long, double, Decimal128)
+- Boolean, Date, Array, Object/Embedded Document
+- ObjectId, Null, Binary Data
+- Regular Expression, Timestamp, Code/JavaScript
 
 </div>
 
@@ -238,6 +270,30 @@ db.orders.aggregate([
 | **Geospatial** | Location-based queries | `db.places.createIndex({ location: "2dsphere" })` |
 | **TTL** | Auto-delete after time | `db.sessions.createIndex({ expires_at: 1 }, { expireAfterSeconds: 3600 })` |
 | **Partial** | Index subset of documents | `db.users.createIndex({ email: 1 }, { partialFilterExpression: { active: true } })` |
+| **Hashed** | Hash-based index | Sharding, even distribution |
+
+**TTL Index Example:**
+```javascript
+// Remove documents 1 hour after createdAt
+db.sessions.createIndex({ "createdAt": 1 }, { expireAfterSeconds: 3600 })
+```
+
+**Geospatial Index Types:**
+- **2d** - Flat geometries (legacy)
+- **2dsphere** - Spherical geometries (recommended)
+
+**Example:**
+```javascript
+db.places.createIndex({ location: "2dsphere" })
+db.places.find({
+  location: {
+    $near: {
+      $geometry: { type: "Point", coordinates: [-73.97, 40.77] },
+      $maxDistance: 5000
+    }
+  }
+})
+```
 
 ### Index Best Practices
 
@@ -290,6 +346,28 @@ try {
 }
 ```
 
+### Write Concern
+
+**Write Concern = Level of acknowledgment for write operations**
+
+| Level | Description | Use Case |
+|:---:|:---:|:---:|
+| **acknowledged** | Default, primary confirms | General writes |
+| **unacknowledged** | No acknowledgment | Fire-and-forget |
+| **journaled** | Written to journal | Durability required |
+| **majority** | Majority of replica set | High durability |
+| **w: N** | N nodes must confirm | Custom durability |
+
+**Example:**
+```javascript
+db.orders.insertOne(
+  { user_id: 123, total: 100 },
+  { writeConcern: { w: "majority", wtimeout: 5000 } }
+)
+```
+
+**💡 Trade-off:** Higher write concern = Better durability but higher latency
+
 ### Consistency Models
 
 | Model | Description | Use Case |
@@ -299,6 +377,19 @@ try {
 | **Causal Consistency** | Causal relationships preserved | Related operations |
 
 **⚠️ Trade-off:** Strong consistency vs. performance
+
+### Journaling
+
+**Write-Ahead Logging for Data Durability**
+
+| Aspect | Description |
+|:---:|:---:|
+| **Purpose** | Crash recovery, data integrity |
+| **How** | Records changes to journal before applying to data files |
+| **Recovery** | Replay journal after crash |
+| **Impact** | Additional I/O operations, slight performance overhead |
+
+**💡 Insight:** Journaling ensures data durability but can impact performance due to additional I/O.
 
 </div>
 
@@ -317,6 +408,12 @@ try {
 | **Primary** | Handles all writes |
 | **Secondaries** | Read replicas, automatic failover |
 | **Arbiter** | Vote-only member (no data) |
+
+**How It Works:**
+- Primary receives all write operations
+- Secondaries replicate primary's data
+- Automatic election if primary fails
+- Read operations can be served by secondaries
 
 **Benefits:**
 - ✅ Automatic failover
@@ -343,11 +440,28 @@ try {
 | **Hash Sharding** | Partition by hash of shard key | Even distribution |
 | **Zoned Sharding** | Custom partition ranges | Geographic data |
 
+**Hashed Sharding Keys:**
+
+**Use Case:** Fields with monotonically increasing values (timestamps, IDs)
+
+**Example:**
+```javascript
+db.collection.createIndex({ _id: "hashed" });
+sh.shardCollection("mydb.mycollection", { _id: "hashed" });
+```
+
+**Benefits:**
+- ✅ Even data distribution
+- ✅ Avoids hot shards
+- ✅ Better for sequential values
+
 **Shard Key Selection:**
 - ✅ High cardinality (many unique values)
 - ✅ Even distribution
 - ✅ Used in most queries
 - ❌ Avoid: Monotonic (date, auto-increment)
+
+**💡 Horizontal Scalability:** MongoDB achieves horizontal scalability through sharding, where data is partitioned across multiple shards (replica sets), allowing the system to handle large datasets and high-throughput operations.
 
 </div>
 
@@ -402,8 +516,24 @@ try {
 
 ### Role-Based Access Control
 
+**Enable Authentication:**
 ```javascript
-// Create role
+// Start MongoDB with --auth or set in config
+security:
+  authorization: enabled
+```
+
+**Create User:**
+```javascript
+db.createUser({
+  user: "admin",
+  pwd: "password",
+  roles: [{ role: "userAdminAnyDatabase", db: "admin" }]
+});
+```
+
+**Create Role:**
+```javascript
 db.createRole({
   role: "readWriteUsers",
   privileges: [
@@ -477,6 +607,9 @@ db.users.find({ age: { $gte: 18 } }, { name: 1, email: 1 })
 
 // Find with pagination
 db.users.find().skip(10).limit(10).sort({ created_at: -1 })
+
+// Find one
+db.users.findOne({ email: "john@example.com" })
 ```
 
 **Update:**
@@ -508,6 +641,38 @@ db.users.deleteOne({ email: "john@example.com" })
 
 // Delete many
 db.users.deleteMany({ status: "inactive" })
+```
+
+---
+
+### Advanced Query Examples
+
+**Find employees in Engineering department:**
+```javascript
+db.employees.find({ department: "Engineering" })
+```
+
+**Find highest salary:**
+```javascript
+db.employees.find().sort({ salary: -1 }).limit(1)
+```
+
+**Count by department:**
+```javascript
+db.employees.aggregate([
+  { $group: { _id: "$department", count: { $sum: 1 } } }
+])
+```
+
+**Average salary by department:**
+```javascript
+db.employees.aggregate([
+  { $group: { 
+    _id: "$department", 
+    averageSalary: { $avg: "$salary" } 
+  } },
+  { $sort: { averageSalary: -1 } }
+])
 ```
 
 </div>
@@ -548,17 +713,22 @@ db.users.deleteMany({ status: "inactive" })
 | **Batch Operations** | Bulk writes | Reduce round trips |
 | **Connection Pooling** | Reuse connections | Lower latency |
 | **Read Preferences** | Route reads to secondaries | Distribute load |
+| **Index Hints** | Force specific index | Optimize query plans |
+| **Query Analysis** | Use explain() method | Identify bottlenecks |
 
 ### Monitoring & Profiling
 
+**Enable Profiling:**
 ```javascript
-// Enable profiling (slow queries > 100ms)
+// Profile slow queries (> 100ms)
 db.setProfilingLevel(1, { slowms: 100 })
 
 // View profiled queries
 db.system.profile.find().sort({ ts: -1 }).limit(5)
+```
 
-// Explain query
+**Explain Query:**
+```javascript
 db.users.find({ email: "john@example.com" }).explain("executionStats")
 ```
 
@@ -567,6 +737,22 @@ db.users.find({ email: "john@example.com" }).explain("executionStats")
 - **totalDocsExamined** - Documents scanned
 - **totalKeysExamined** - Index keys examined
 - **stage** - Query execution stage
+
+**Optimization Strategies:**
+- ✅ Create indexes for query patterns
+- ✅ Use projections to limit fields
+- ✅ Optimize aggregation pipeline stages
+- ✅ Analyze query execution plans
+- ✅ Review and optimize indexes
+
+### Troubleshooting Performance
+
+| Issue | Diagnosis | Solution |
+|:---:|:---:|:---:|
+| **Slow Queries** | Check explain() plan | Add indexes |
+| **High CPU** | Monitor resource usage | Optimize queries, scale |
+| **Memory Pressure** | Check working set | Add RAM, optimize indexes |
+| **Disk I/O** | Monitor disk usage | Add indexes, optimize queries |
 
 </div>
 
@@ -586,8 +772,12 @@ db.users.find({ email: "john@example.com" }).explain("executionStats")
 | **Geospatial Queries** | Location-based queries | Nearby places, mapping |
 | **Time-Series Collections** | Optimized for time-series | IoT, metrics |
 | **Views** | Virtual collections | Simplified queries |
+| **Capped Collections** | Fixed-size collections | Logging, caching |
+| **Map-Reduce** | Complex aggregations | Data processing |
 
-### Change Streams Example
+### Change Streams
+
+**Listen for real-time changes to collections, databases, or clusters**
 
 ```javascript
 const changeStream = db.orders.watch([
@@ -598,6 +788,128 @@ changeStream.on("change", (change) => {
   console.log("New order:", change.fullDocument);
 });
 ```
+
+**Operations Captured:**
+- ✅ Insert
+- ✅ Update
+- ✅ Replace
+- ✅ Delete
+
+**Use Cases:**
+- Event-driven architectures
+- Real-time notifications
+- Cache invalidation
+- Audit logging
+
+---
+
+### GridFS
+
+**Store and retrieve large files (> 16MB)**
+
+**How It Works:**
+- Splits large files into chunks (255KB default)
+- Stores chunks in `fs.chunks` collection
+- Stores metadata in `fs.files` collection
+
+**Example:**
+```javascript
+// Store file
+const bucket = new GridFSBucket(db, { bucketName: 'files' });
+fs.createReadStream('large-video.mp4')
+  .pipe(bucket.openUploadStream('large-video.mp4'));
+
+// Retrieve file
+bucket.openDownloadStreamByName('large-video.mp4')
+  .pipe(fs.createWriteStream('output.mp4'));
+```
+
+**Use Cases:**
+- Videos, images, large datasets
+- Efficient retrieval of file sections
+- Files exceeding 16MB BSON limit
+
+---
+
+### Capped Collections
+
+**Fixed-size collections that automatically overwrite oldest documents**
+
+```javascript
+db.createCollection("logs", { 
+  capped: true, 
+  size: 100000,  // Size in bytes
+  max: 1000      // Max documents (optional)
+});
+```
+
+**Characteristics:**
+- ✅ Maintains insertion order
+- ✅ Automatic oldest document removal
+- ✅ High-performance inserts
+- ✅ No updates that increase document size
+
+**Use Cases:**
+- Logging
+- Caching recent data
+- Monitoring data
+- Recent activity feeds
+
+---
+
+### Full-Text Search
+
+**Text indexes for searching string content**
+
+```javascript
+// Create text index
+db.articles.createIndex({ content: "text", title: "text" });
+
+// Search
+db.articles.find({ 
+  $text: { $search: "mongodb database" } 
+});
+
+// With relevance score
+db.articles.find(
+  { $text: { $search: "mongodb" } },
+  { score: { $meta: "textScore" } }
+).sort({ score: { $meta: "textScore" } });
+```
+
+**Features:**
+- ✅ Multiple fields in one index
+- ✅ Relevance scoring
+- ✅ Language-specific stemming
+- ✅ Case-insensitive search
+
+---
+
+### Map-Reduce
+
+**Complex data aggregation paradigm**
+
+**Two Phases:**
+1. **Map** - Process each document, emit key-value pairs
+2. **Reduce** - Process all values for each key, output result
+
+**Example:**
+```javascript
+db.orders.mapReduce(
+  // Map function
+  function() {
+    emit(this.category, this.price);
+  },
+  // Reduce function
+  function(key, values) {
+    return Array.sum(values);
+  },
+  // Options
+  { out: "category_totals" }
+);
+```
+
+**💡 Note:** Aggregation pipeline is preferred over Map-Reduce for most use cases (simpler, more efficient).
 
 </div>
 
@@ -616,6 +928,23 @@ changeStream.on("change", (change) => {
 | **Continuous Backup** | Real-time backup | MongoDB Atlas, Ops Manager |
 | **Point-in-Time Recovery** | Restore to timestamp | Oplog replay |
 
+### Data Import/Export
+
+**Import:**
+```bash
+mongoimport --db mydatabase --collection mycollection --file data.json
+```
+
+**Export:**
+```bash
+mongoexport --db mydatabase --collection mycollection --out data.json
+```
+
+**Formats Supported:**
+- JSON
+- CSV
+- TSV
+
 ### Recovery Scenarios
 
 | Scenario | Strategy |
@@ -625,6 +954,12 @@ changeStream.on("change", (change) => {
 | **Hardware failure** | Restore to new server |
 | **Disaster recovery** | Replicate to different region |
 
+**Best Practices:**
+- ✅ Regular automated backups
+- ✅ Test restore procedures
+- ✅ Multiple backup locations
+- ✅ Monitor backup success
+
 </div>
 
 ---
@@ -633,18 +968,173 @@ changeStream.on("change", (change) => {
 
 <div align="center">
 
-### Comparison
+### Detailed Comparison
 
 | Aspect | MongoDB | SQL Databases |
 |:---:|:---:|:---:|
-| **Schema** | Flexible, schema-less | Fixed schema |
-| **Relationships** | References, embedded | Foreign keys, JOINs |
-| **Scaling** | Horizontal (sharding) | Vertical, read replicas |
+| **Data Model** | Document-oriented (JSON/BSON) | Table-based (rows/columns) |
+| **Schema** | Flexible, schema-less | Fixed schema, defined upfront |
+| **Relationships** | Embedding or referencing (no JOINs) | Foreign keys and JOINs |
+| **Scalability** | Horizontal (sharding) | Vertical, horizontal is complex |
 | **Transactions** | Multi-document (4.0+) | Full ACID support |
-| **Queries** | Document queries, aggregation | SQL, JOINs |
+| **Queries** | Rich query language for documents | SQL for structured queries |
 | **Best For** | Flexible data, rapid development | Structured data, complex relationships |
 
+**Key Differences:**
+
+**Data Model:**
+- MongoDB: Documents with nested structures
+- SQL: Tables with fixed columns
+
+**Schema:**
+- MongoDB: Documents can have different structures
+- SQL: All rows follow same structure
+
+**Relationships:**
+- MongoDB: Embedding or references, no JOINs
+- SQL: Foreign keys and JOINs
+
+**Scalability:**
+- MongoDB: Horizontal via sharding
+- SQL: Vertical scaling, complex horizontal scaling
+
 **💡 Choose MongoDB when:** You need flexibility, horizontal scaling, and JSON-native storage.
+
+</div>
+
+---
+
+## 🏢 MongoDB Storage Engines
+
+<div align="center">
+
+### WiredTiger vs MMAPv1
+
+| Feature | WiredTiger | MMAPv1 |
+|:---:|:---:|:---:|
+| **Concurrency** | Document-level concurrency | Collection-level concurrency |
+| **Compression** | ✅ Supports data compression | ❌ No compression |
+| **Performance** | Better for most workloads | Limited performance |
+| **Journaling** | Write-ahead logging | Basic journaling |
+| **Status** | Modern, default engine | Legacy, deprecated |
+
+**WiredTiger (Default):**
+- ✅ Document-level locking (better concurrency)
+- ✅ Data compression (reduces storage)
+- ✅ Better performance
+- ✅ Advanced journaling
+
+**💡 Recommendation:** Always use WiredTiger (default since MongoDB 3.2)
+
+</div>
+
+---
+
+## 🛠️ MongoDB Tools
+
+<div align="center">
+
+### MongoDB Compass
+
+**Graphical user interface (GUI) for MongoDB**
+
+| Feature | Description |
+|:---:|:---:|
+| **Schema Visualization** | View data schema, field types, distributions |
+| **Query Building** | Visual query interface |
+| **Aggregation Pipeline** | Construct and run aggregations |
+| **Index Management** | Create and manage indexes |
+| **Performance Monitoring** | Monitor slow queries, resource utilization |
+| **Data Validation** | Define schema validation rules |
+| **Import/Export** | Import/export JSON/CSV files |
+
+**Use Cases:**
+- ✅ Data exploration
+- ✅ Query development
+- ✅ Index optimization
+- ✅ Performance analysis
+
+---
+
+### MongoDB Atlas
+
+**Fully managed cloud database service**
+
+| Feature | Description |
+|:---:|:---:|
+| **Managed Service** | Infrastructure, backups, monitoring, upgrades |
+| **Scalability** | Easy cluster scaling up/down |
+| **Security** | Encryption, access controls, compliance |
+| **Global Distribution** | Multi-region deployment |
+| **Integrations** | Cloud service integrations |
+
+**vs Self-Hosted:**
+
+| Aspect | Atlas | Self-Hosted |
+|:---:|:---:|:---:|
+| **Management** | Fully managed | Manual |
+| **Scaling** | Easy scaling | Manual scaling |
+| **Backups** | Automated | Manual setup |
+| **Monitoring** | Built-in | Third-party tools |
+| **Cost** | Higher | Lower (but more ops) |
+
+**💡 Choose Atlas when:** You want managed service, less operational overhead.
+
+</div>
+
+---
+
+## 🚀 Production Deployment
+
+<div align="center">
+
+### Key Considerations
+
+| Consideration | Description | Implementation |
+|:---:|:---:|:---:|
+| **Replication** | High availability | Replica sets |
+| **Sharding** | Horizontal scaling | Shard clusters |
+| **Backup & Recovery** | Data protection | Automated backups |
+| **Security** | Authentication, encryption | RBAC, TLS |
+| **Monitoring** | Performance tracking | Ops Manager, Cloud Manager |
+| **Capacity Planning** | Resource allocation | Storage, memory, CPU |
+| **Maintenance** | Updates, optimization | Regular maintenance |
+
+**Production Checklist:**
+- ✅ Replica sets configured
+- ✅ Sharding implemented (if needed)
+- ✅ Backup strategy in place
+- ✅ Security enabled (auth, TLS)
+- ✅ Monitoring configured
+- ✅ Capacity planned
+- ✅ Maintenance scheduled
+
+</div>
+
+---
+
+## 🔄 Migration from Relational Database
+
+<div align="center">
+
+### Migration Process
+
+| Step | Description | Details |
+|:---:|:---:|:---:|
+| **1. Schema Design** | Redesign for document model | Embedding vs referencing |
+| **2. Data Export** | Export from SQL database | CSV, JSON format |
+| **3. Data Transformation** | Transform to MongoDB schema | Restructure documents |
+| **4. Data Import** | Import to MongoDB | mongoimport or scripts |
+| **5. Validation** | Verify data consistency | Compare counts, validate |
+| **6. Application Changes** | Update application code | MongoDB drivers |
+| **7. Testing** | Thorough testing | Functionality, performance |
+| **8. Go Live** | Deploy to production | Monitor transition |
+
+**Key Challenges:**
+- Schema redesign (normalized → denormalized)
+- Relationship handling (JOINs → embedding/references)
+- Data type conversions
+- Application code changes
 
 </div>
 
