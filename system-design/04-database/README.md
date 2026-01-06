@@ -4,7 +4,7 @@
 
 **Database concepts, storage patterns, and data management strategies**
 
-[![Topics](https://img.shields.io/badge/Topics-10-blue?style=for-the-badge)](./)
+[![Topics](https://img.shields.io/badge/Topics-11-blue?style=for-the-badge)](./)
 [![Database](https://img.shields.io/badge/Database-Fundamentals-green?style=for-the-badge)](./01-database-fundamentals.md)
 
 *Master database design, optimization, and scaling strategies*
@@ -36,6 +36,7 @@
 | **[Elasticsearch (Search)](./08-elasticsearch.md)** | Search and analytics engine | Full-text search, aggregations, real-time | [Explore →](./08-elasticsearch.md) |
 | **[Graph Databases](./09-graph-databases.md)** | Relationship-focused storage | Nodes, relationships, graph algorithms | [Explore →](./09-graph-databases.md) |
 | **[Change Data Capture (CDC)](./10-change-data-capture-cdc.md)** | Real-time change tracking | Log-based CDC, event-driven, data synchronization | [Explore →](./10-change-data-capture-cdc.md) |
+| **[NoSQL Databases](./11-nosql-databases.md)** | Flexible, scalable database systems | Key-value, Document, Column-family, Graph databases | [Explore →](./11-nosql-databases.md) |
 
 </div>
 
@@ -62,13 +63,13 @@
 
 | Area | Coverage |
 |:---:|:---:|
-| **Database Types** | Relational (SQL), Document (MongoDB), Cache (Redis), Search (Elasticsearch), Graph (Neo4j) |
-| **Database Design** | Normalization, denormalization, data modeling patterns |
+| **Database Types** | Relational (SQL), NoSQL (Key-value, Document, Column-family, Graph), Cache (Redis), Search (Elasticsearch) |
+| **Database Design** | Normalization, denormalization, data modeling patterns, embedding vs referencing |
 | **Sharding & Partitioning** | Horizontal & vertical partitioning strategies |
 | **Replication** | Master-Slave, Master-Master patterns |
 | **Change Data Capture** | Real-time change tracking, event-driven architectures |
 | **Indexing Strategies** | B-tree, hash indexes, composite indexes |
-| **Consistency Models** | ACID vs BASE, eventual consistency |
+| **Consistency Models** | ACID vs BASE, eventual consistency, CAP theorem |
 | **Performance Optimization** | Query optimization, indexing strategies |
 | **Caching Strategies** | Cache-aside, write-through, write-back patterns |
 | **Search & Analytics** | Full-text search, aggregations, real-time queries |
@@ -87,15 +88,16 @@
 | Step | Topic | Why |
 |:---:|:---:|:---:|
 | **1️⃣** | [Database Fundamentals](./01-database-fundamentals.md) | Foundation |
-| **2️⃣** | [Relational Databases](./05-relational-databases.md) | Most common, ACID concepts |
-| **3️⃣** | [Indexing](./02-indexing.md) | Performance optimization |
-| **4️⃣** | [MongoDB](./06-mongodb-document-database.md) | Document database patterns |
-| **5️⃣** | [Redis](./07-redis-cache.md) | Caching strategies |
-| **6️⃣** | [Sharding](./03-sharding.md) | Scalability |
-| **7️⃣** | [Replication](./04-database-replication.md) | Reliability |
-| **8️⃣** | [Change Data Capture](./10-change-data-capture-cdc.md) | Real-time sync |
-| **9️⃣** | [Elasticsearch](./08-elasticsearch.md) | Search & analytics |
-| **🔟** | [Graph Databases](./09-graph-databases.md) | Relationship-heavy data |
+| **2️⃣** | [NoSQL Databases](./11-nosql-databases.md) | NoSQL fundamentals, types, CAP theorem |
+| **3️⃣** | [Relational Databases](./05-relational-databases.md) | Most common, ACID concepts |
+| **4️⃣** | [Indexing](./02-indexing.md) | Performance optimization |
+| **5️⃣** | [MongoDB](./06-mongodb-document-database.md) | Document database patterns |
+| **6️⃣** | [Redis](./07-redis-cache.md) | Caching strategies |
+| **7️⃣** | [Sharding](./03-sharding.md) | Scalability |
+| **8️⃣** | [Replication](./04-database-replication.md) | Reliability |
+| **9️⃣** | [Change Data Capture](./10-change-data-capture-cdc.md) | Real-time sync |
+| **🔟** | [Elasticsearch](./08-elasticsearch.md) | Search & analytics |
+| **1️⃣1️⃣** | [Graph Databases](./09-graph-databases.md) | Relationship-heavy data |
 
 </div>
 
