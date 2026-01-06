@@ -45,11 +45,16 @@ Comprehensive system design documentation and case studies for building scalable
   - Event-driven architecture
   - Serverless architecture
 
-### 07. Security & Authentication
-- **[07. Authentication](./07-authentication/)** - JWT, OAuth, SSO, security patterns
-  - Authentication mechanisms
-  - Authorization patterns
-  - Security best practices
+### 07. Security & Compliance
+- **[07. Security & Compliance](./07-security-compliance/)** - Comprehensive security landscape
+  - 01. IAM (Identity, Authentication & Authorization)
+  - 02. Secrets Management
+  - 03. Data Security & Privacy
+  - 04. Application Security (AppSec)
+  - 05. Infrastructure & Network Security
+  - 06. Monitoring, Logging & Incident Response
+  - 07. Compliance, Governance & Risk (GRC)
+  - 08. Secure SDLC (Shift Left)
 
 ### 08. Real-World Systems
 - **[08. Real-World Systems](./08-real-world/)** - Case studies and design examples
