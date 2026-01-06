@@ -24,20 +24,20 @@ Core concepts and foundational knowledge for system design, organized by topic a
 - **[02. API Design](./04-api-design/02-api-design.md)** - RESTful principles, versioning, error handling, best practices
 
 ### 🔄 05. Concurrency
-- **[01. Concurrency vs Parallelism](./05-concurrency/concurrency-vs-parallelism.md)** - Understanding the difference, when to use each, real-world examples
+- **[01. Concurrency vs Parallelism](./05-concurrency/01-concurrency-vs-parallelism.md)** - Understanding the difference, when to use each, real-world examples
 
 ### 🔐 06. Access Control
-- **[01. Role-Based Access Control (RBAC)](./06-access-control/rbac.md)** - RBAC models, implementation patterns, security best practices
+- **[01. Role-Based Access Control (RBAC)](./06-access-control/01-rbac.md)** - RBAC models, implementation patterns, security best practices
 
 ### 💾 07. Storage
-- **[01. Object Storage](./07-storage/object-storage.md)** - Object storage vs alternatives, use cases, storage tiers
+- **[01. Object Storage](./07-storage/01-object-storage.md)** - Object storage vs alternatives, use cases, storage tiers
 
 ### 🌍 08. Distributed Systems
-- **[01. CAP Theorem](./08-distributed-systems/cap-theorem.md)** - Consistency, Availability, Partition Tolerance trade-offs
-- **[02. Idempotency](./08-distributed-systems/idempotency.md)** - Idempotent operations, implementation patterns, real-world examples
+- **[01. CAP Theorem](./08-distributed-systems/01-cap-theorem.md)** - Consistency, Availability, Partition Tolerance trade-offs
+- **[02. Idempotency](./08-distributed-systems/02-idempotency.md)** - Idempotent operations, implementation patterns, real-world examples
 
 ### 📊 09. Data Management
-- **[01. Database Sharding](./09-data-management/database-sharding.md)** - Sharding strategies, challenges, rebalancing, tradeoffs
+- **[01. Database Sharding](./09-data-management/01-database-sharding.md)** - Sharding strategies, challenges, rebalancing, tradeoffs
 
 ## Quick Reference by Category
 
@@ -92,7 +92,7 @@ For data management topics, see:
 2. **Core Concepts:** Review [02. Top 30 System Design Concepts](./01-introduction/02-top-30-system-design-concepts.md)
 3. **Scalability:** Understand [01. Scalability](./02-scalability-performance/01-scalability.md) and [02. Performance](./02-scalability-performance/02-performance.md)
 4. **Reliability:** Learn about [01. Reliability](./03-reliability-availability/01-reliability.md) and [02. Availability](./03-reliability-availability/02-availability.md)
-5. **Distributed Systems:** Study [01. CAP Theorem](./08-distributed-systems/cap-theorem.md) and [02. Idempotency](./08-distributed-systems/idempotency.md)
+5. **Distributed Systems:** Study [01. CAP Theorem](./08-distributed-systems/01-cap-theorem.md) and [02. Idempotency](./08-distributed-systems/02-idempotency.md)
 6. **Deep Dives:** Explore specific topics based on your needs
 
 ## Interview Preparation
