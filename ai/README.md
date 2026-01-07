@@ -24,7 +24,11 @@
 | **🔍 RAG** | Retrieval-augmented generation, vector DBs | Building knowledge-aware AI systems |
 | **✍️ Prompting** | Prompt engineering, techniques, patterns | Effective LLM interaction |
 | **📊 Embeddings** | Vector embeddings, similarity search | Semantic understanding |
-| **🏗️ Architecture** | AI system design, patterns, integration | Production AI systems |
+| **🤖 Agentic AI** | Autonomous agents, tool use, reasoning | Building autonomous AI systems |
+| **🧠 Reasoning** | Large reasoning models, CoT, problem-solving | Advanced reasoning capabilities |
+| **🔌 Integration** | MCP protocol, model integration | Standardized AI integration |
+| **🎯 Architecture** | MoE, efficient scaling, model design | Advanced model architectures |
+| **🏗️ System Design** | AI system design, patterns, integration | Production AI systems |
 | **💰 Cost & Performance** | Optimization, caching, token management | Efficient AI systems |
 
 </div>
@@ -47,6 +51,10 @@
 | **[Fine-tuning vs Prompting](./06-fine-tuning-vs-prompting.md)** | When to fine-tune vs prompt | Cost, performance, use cases |
 | **[AI Evaluation](./07-ai-evaluation.md)** | Measuring AI system performance | Metrics, testing, monitoring |
 | **[Cost Optimization](./08-cost-optimization.md)** | Token management, caching, efficiency | Reducing AI costs |
+| **[Agentic AI](./09-agentic-ai.md)** ⭐ | Autonomous agents, tool use, reasoning | ReAct pattern, function calling, planning |
+| **[Large Reasoning Models](./10-large-reasoning-models.md)** ⭐ | Advanced reasoning, CoT, problem-solving | Chain-of-thought, tree-of-thoughts, verification |
+| **[MCP (Model Context Protocol)](./11-mcp-model-context-protocol.md)** ⭐ | Standardized AI integration protocol | Tools, resources, prompt templates |
+| **[MoE (Mixture of Experts)](./12-moe-mixture-of-experts.md)** ⭐ | Efficient model scaling architecture | Sparse activation, routing, load balancing |
 
 </div>
 
@@ -81,6 +89,10 @@
 | **🔍 RAG** | Retrieval-augmented generation | [RAG Systems](./02-rag-retrieval-augmented-generation.md) |
 | **✍️ Prompting** | Effective LLM interaction | [Prompt Engineering](./03-prompt-engineering.md) |
 | **📊 Embeddings** | Semantic understanding | [Vector Embeddings](./04-vector-embeddings.md) |
+| **🤖 Agentic AI** | Autonomous agents | [Agentic AI](./09-agentic-ai.md) |
+| **🧠 Reasoning** | Advanced reasoning | [Large Reasoning Models](./10-large-reasoning-models.md) |
+| **🔌 MCP** | Integration protocol | [MCP](./11-mcp-model-context-protocol.md) |
+| **🎯 MoE** | Efficient scaling | [MoE](./12-moe-mixture-of-experts.md) |
 | **🏗️ Architecture** | Production AI systems | [AI System Design](./05-ai-system-design.md) |
 
 </div>
