@@ -1,6 +1,6 @@
 # 🎯 MoE (Mixture of Experts) - Expert Guide
 
-<div align="center>
+<div align="center">
 
 **Master MoE: efficient scaling through expert routing and sparse activation**
 
