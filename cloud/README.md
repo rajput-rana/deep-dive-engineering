@@ -45,6 +45,9 @@
 | **[AWS Fundamentals](./aws/01-aws-fundamentals.md)** | AWS basics, regions, accounts | Regions, AZs, pricing |
 | **[EC2 - Compute](./aws/02-ec2-compute.md)** | Virtual servers | Instances, AMIs, Auto Scaling |
 | **[Lambda - Serverless](./aws/03-lambda-serverless.md)** | Serverless functions | Functions, triggers, pricing |
+| **[ECS - Container Service](./aws/19-ecs-elastic-container-service.md)** ⭐ | Elastic Container Service | Tasks, services, Fargate, clusters |
+| **[EKS - Kubernetes](./aws/20-eks-elastic-kubernetes-service.md)** ⭐ | Elastic Kubernetes Service | Clusters, nodes, pods, deployments |
+| **[ECR - Container Registry](./aws/21-ecr-elastic-container-registry.md)** ⭐ | Elastic Container Registry | Repositories, images, scanning |
 | **[S3 - Object Storage](./aws/04-s3-object-storage.md)** | Object storage | Buckets, lifecycle, versioning |
 | **[EBS & EFS - Storage](./aws/05-ebs-efs-storage.md)** | Block and file storage | Volumes, snapshots, performance |
 | **[RDS - Databases](./aws/06-rds-databases.md)** | Managed relational databases | Multi-AZ, read replicas |
