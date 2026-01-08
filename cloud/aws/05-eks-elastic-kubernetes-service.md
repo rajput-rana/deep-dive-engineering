@@ -55,7 +55,22 @@
 
 </div>
 
-### Architecture Diagram
+### Kubernetes Architecture Reference
+
+<div align="center">
+
+**EKS runs standard Kubernetes, so understanding Kubernetes architecture is essential.**
+
+For the official Kubernetes architecture diagram and detailed component explanations, see the **[Kubernetes Architecture Documentation](https://kubernetes.io/docs/concepts/architecture/)**.
+
+The Kubernetes architecture consists of:
+- **Control Plane Components:** kube-apiserver, etcd, kube-scheduler, kube-controller-manager
+- **Node Components:** kubelet, kube-proxy, container runtime
+- **Addons:** DNS, Web UI, monitoring, logging, network plugins
+
+</div>
+
+### EKS Architecture Diagram
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
