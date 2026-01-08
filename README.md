@@ -178,7 +178,7 @@
 
 </div>
 
-### ☁️ [AWS Cloud](./aws/)
+### ☁️ [AWS Cloud](./cloud/aws/)
 
 > *Comprehensive AWS knowledge: from fundamentals to expert-level*
 
@@ -186,20 +186,21 @@
 
 | Topic | Description | Key Concepts |
 |:---:|:---:|:---:|
-| **[AWS Fundamentals](./aws/01-aws-fundamentals.md)** | AWS basics, regions, accounts | Regions, AZs, pricing |
-| **[EC2 - Compute](./aws/02-ec2-compute.md)** | Virtual servers | Instances, AMIs, Auto Scaling |
-| **[Lambda - Serverless](./aws/03-lambda-serverless.md)** | Serverless functions | Functions, triggers, pricing |
-| **[S3 - Object Storage](./aws/04-s3-object-storage.md)** | Object storage | Buckets, lifecycle, versioning |
-| **[RDS - Databases](./aws/06-rds-databases.md)** | Managed relational databases | Multi-AZ, read replicas |
-| **[DynamoDB - NoSQL](./aws/07-dynamodb-nosql.md)** | Managed NoSQL | Tables, streams, performance |
-| **[VPC - Networking](./aws/08-vpc-networking.md)** | Virtual private cloud | Subnets, routing, security |
-| **[CloudFront - CDN](./aws/09-cloudfront-cdn.md)** | Content delivery network | Edge locations, caching |
-| **[Route 53 - DNS](./aws/10-route53-dns.md)** | Domain name system | DNS, health checks, routing |
-| **[IAM - Security](./aws/11-iam-security.md)** | Identity and access management | Users, roles, policies |
-| **[CloudWatch - Monitoring](./aws/12-cloudwatch-monitoring.md)** | Monitoring and logging | Metrics, logs, alarms |
-| **[API Gateway](./aws/13-api-gateway.md)** | API management | REST APIs, throttling |
-| **[Cost Optimization](./aws/17-cost-optimization.md)** | Cost management | Right-sizing, reservations |
-| **[Architecture Patterns](./aws/18-architecture-patterns.md)** | Well-Architected Framework | Best practices, patterns |
+| **[Cloud Cost Optimization Guide](./cloud/cloud-cost-optimization-guide.md)** ⭐ | Complete guide to cloud cost optimization | Pricing models, savings plans, storage classes, cost controls |
+| **[AWS Fundamentals](./cloud/aws/01-aws-fundamentals.md)** | AWS basics, regions, accounts | Regions, AZs, pricing |
+| **[EC2 - Compute](./cloud/aws/02-ec2-compute.md)** | Virtual servers | Instances, AMIs, Auto Scaling |
+| **[Lambda - Serverless](./cloud/aws/03-lambda-serverless.md)** | Serverless functions | Functions, triggers, pricing |
+| **[S3 - Object Storage](./cloud/aws/04-s3-object-storage.md)** | Object storage | Buckets, lifecycle, versioning |
+| **[RDS - Databases](./cloud/aws/06-rds-databases.md)** | Managed relational databases | Multi-AZ, read replicas |
+| **[DynamoDB - NoSQL](./cloud/aws/07-dynamodb-nosql.md)** | Managed NoSQL | Tables, streams, performance |
+| **[VPC - Networking](./cloud/aws/08-vpc-networking.md)** | Virtual private cloud | Subnets, routing, security |
+| **[CloudFront - CDN](./cloud/aws/09-cloudfront-cdn.md)** | Content delivery network | Edge locations, caching |
+| **[Route 53 - DNS](./cloud/aws/10-route53-dns.md)** | Domain name system | DNS, health checks, routing |
+| **[IAM - Security](./cloud/aws/11-iam-security.md)** | Identity and access management | Users, roles, policies |
+| **[CloudWatch - Monitoring](./cloud/aws/12-cloudwatch-monitoring.md)** | Monitoring and logging | Metrics, logs, alarms |
+| **[API Gateway](./cloud/aws/13-api-gateway.md)** | API management | REST APIs, throttling |
+| **[Cost Optimization](./cloud/aws/17-cost-optimization.md)** | Cost management | Right-sizing, reservations |
+| **[Architecture Patterns](./cloud/aws/18-architecture-patterns.md)** | Well-Architected Framework | Best practices, patterns |
 
 </div>
 

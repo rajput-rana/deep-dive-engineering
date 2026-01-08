@@ -99,6 +99,18 @@
 
 ---
 
+## 💻 Real-World Projects
+
+<div align="center">
+
+| Project | Description | Link |
+|:---:|:---:|:---:|
+| **Knowledge-AI** | Production-grade RAG system with agentic AI, reasoning models, and MCP support | [GitHub Repository](https://github.com/rajput-rana/knowledge-ai) |
+
+</div>
+
+---
+
 ## 🔗 Related Sections
 
 <div align="center">
