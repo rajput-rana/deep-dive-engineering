@@ -226,11 +226,12 @@ Primary (us-east-1a) ←→ Standby (us-east-1b)
 
 ### Network Security
 
-| Feature | Description |
-|:---:|:---:|
-| **VPC** | Deploy in private subnets |
-| **Security Groups** | Control access |
-| **No Public Access** | Keep databases private |
+**Best Practices:**
+- Deploy in private subnets (VPC)
+- Use Security Groups to control access
+- Disable public access for security
+
+For comprehensive VPC networking, subnets, Security Groups, and network security details, see **[VPC Networking Guide](./11-vpc-networking.md)**.
 
 ---
 
@@ -250,26 +251,19 @@ Primary (us-east-1a) ←→ Standby (us-east-1b)
 
 <div align="center">
 
-### CloudWatch Metrics
+**RDS integrates with CloudWatch for comprehensive monitoring and Performance Insights for database-specific metrics.**
 
-| Metric | Description |
-|:---:|:---:|
-| **CPU Utilization** | Instance CPU usage |
-| **Database Connections** | Active connections |
-| **Free Storage Space** | Available storage |
-| **Read/Write IOPS** | Database performance |
+**Key Metrics:**
+- CPU Utilization, Database Connections
+- Free Storage Space, Read/Write IOPS
+- Network throughput, Replication lag
 
----
+**Performance Insights:**
+- Query performance analysis
+- Wait event identification
+- Database bottleneck detection
 
-### Performance Insights
-
-**Database performance monitoring**
-
-| Feature | Description |
-|:---:|:---:|
-| **Query Performance** | Slow query identification |
-| **Wait Events** | Database bottlenecks |
-| **Time Range** | Historical analysis |
+For comprehensive CloudWatch monitoring, metrics, logs, alarms, and dashboards, see **[CloudWatch Monitoring Guide](./15-cloudwatch-monitoring.md)**.
 
 </div>
 

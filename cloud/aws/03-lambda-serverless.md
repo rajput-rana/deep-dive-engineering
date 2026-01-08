@@ -227,15 +227,15 @@ layer.zip
 ### VPC Configuration
 
 **When to Use:**
-
-- ✅ Access private resources (RDS, ElastiCache)
-- ✅ Access resources in VPC
+- Access private resources (RDS, ElastiCache)
+- Access resources in VPC
 
 **Considerations:**
+- Cold starts slower (ENI creation)
+- Additional cost (NAT Gateway)
+- Timeout considerations
 
-- ⚠️ Cold starts slower (ENI creation)
-- ⚠️ Additional cost (NAT Gateway)
-- ⚠️ Timeout considerations
+For comprehensive VPC networking details including subnets, security groups, and NAT Gateway configuration, see **[VPC Networking Guide](./11-vpc-networking.md)**.
 
 </div>
 

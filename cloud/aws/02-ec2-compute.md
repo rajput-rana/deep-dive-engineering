@@ -129,7 +129,7 @@
 
 <div align="center">
 
-### Pricing Options
+**EC2 offers multiple pricing options to optimize costs based on your workload patterns.**
 
 | Model | Description | Savings | Use Case |
 |:---:|:---:|:---:|:---:|
@@ -139,32 +139,13 @@
 | **Spot Instances** | Bid on spare capacity | Up to 90% | Flexible, fault-tolerant |
 | **Dedicated Hosts** | Physical server | Premium | Compliance, licensing |
 
----
+**Quick Tips:**
+- **On-Demand:** No commitment, highest flexibility
+- **Reserved:** Best for steady 24/7 workloads
+- **Spot:** Up to 90% savings, can be interrupted
+- **Savings Plans:** Flexibility with commitment benefits
 
-### Reserved Instances Types
-
-| Type | Description | Savings |
-|:---:|:---:|:---:|
-| **Standard** | No modifications | Up to 72% |
-| **Convertible** | Can change instance type | Up to 54% |
-| **Scheduled** | Reserved for specific time | Variable |
-
----
-
-### Spot Instances
-
-**Characteristics:**
-
-- ⚠️ Can be interrupted with 2-minute notice
-- 💰 Up to 90% cheaper
-- ✅ Good for fault-tolerant workloads
-- ✅ Batch processing, data analysis
-
-**Best Practices:**
-
-- Use Spot Fleet for availability
-- Diversify across instance types
-- Use Spot interruption notices
+For comprehensive cost optimization strategies, detailed pricing comparisons, and decision frameworks, see **[AWS Cost Optimization Guide](./20-cost-optimization.md)** and **[Cloud Cost Optimization Guide](../cloud-cost-optimization-guide.md)**.
 
 </div>
 
@@ -174,46 +155,23 @@
 
 <div align="center">
 
-### What are Security Groups?
+**Security Groups are virtual firewalls that control inbound and outbound traffic for EC2 instances.**
 
-**Virtual firewall controlling inbound/outbound traffic**
+**Key Characteristics:**
+- **Stateful:** Return traffic automatically allowed
+- **Default Deny:** All traffic denied by default
+- **Instance-Level:** Applied to EC2 instances
+- **Multiple Groups:** Instance can belong to multiple security groups
 
-| Characteristic | Description |
-|:---:|:---:|
-| **Stateful** | Return traffic automatically allowed |
-| **Default Deny** | All traffic denied by default |
-| **Rules** | Allow specific traffic |
-| **Multiple Groups** | Instance can have multiple |
+**Common Rules:**
+- SSH (port 22) from office IP
+- HTTP (port 80) from internet
+- HTTPS (port 443) from internet
+- Database ports from application security group
 
----
+**Best Practice:** Reference security groups (not IPs) for dynamic, flexible rules.
 
-### Security Group Rules
-
-**Rule Components:**
-
-| Component | Description | Example |
-|:---:|:---:|:---:|
-| **Type** | Protocol | SSH, HTTP, HTTPS |
-| **Port** | Port number | 22, 80, 443 |
-| **Source** | IP or security group | 0.0.0.0/0, sg-xxx |
-
-**Example:**
-```
-Type: SSH
-Port: 22
-Source: 203.0.113.0/24 (your office IP)
-```
-
----
-
-### Best Practices
-
-| Practice | Why |
-|:---:|:---:|
-| **Least privilege** | Only allow necessary traffic |
-| **Reference security groups** | Not IPs (dynamic) |
-| **Separate by tier** | Web, app, database tiers |
-| **Regular review** | Remove unused rules |
+For comprehensive Security Groups details including NACLs, VPC integration, and advanced networking, see **[VPC Networking Guide](./11-vpc-networking.md)**.
 
 </div>
 
@@ -264,45 +222,18 @@ Scale in when CPU < 30%
 
 ---
 
-## 💾 EBS Volumes
+## 💾 Storage for EC2
 
 <div align="center">
 
-### What is EBS?
+**EC2 instances use EBS volumes for persistent block storage.**
 
-**Elastic Block Store - persistent block storage for EC2**
+For detailed information about EBS volume types, snapshots, performance, and best practices, see **[EBS & EFS Storage Guide](./08-ebs-efs-storage.md)**.
 
-| Characteristic | Description |
-|:---:|:---:|
-| **Persistent** | Data survives instance termination |
-| **Attachable** | Can attach/detach volumes |
-| **Backup** | Snapshots for backup |
-| **Types** | gp3, gp2, io1, io2, st1, sc1 |
-
----
-
-### EBS Volume Types
-
-| Type | Description | Use Case |
-|:---:|:---:|:---:|
-| **gp3** | General purpose SSD | Most workloads |
-| **gp2** | General purpose SSD (legacy) | General purpose |
-| **io1/io2** | Provisioned IOPS SSD | High-performance databases |
-| **st1** | Throughput optimized HDD | Big data, data warehouses |
-| **sc1** | Cold HDD | Infrequent access |
-
----
-
-### Snapshots
-
-**Point-in-time backup of EBS volume**
-
-| Feature | Description |
-|:---:|:---:|
-| **Incremental** | Only changed blocks saved |
-| **Cross-Region** | Copy to other regions |
-| **Encrypted** | Can encrypt snapshots |
-| **Lifecycle** | Automated snapshot management |
+**Quick Reference:**
+- **EBS:** Persistent block storage attached to EC2 instances
+- **EFS:** Shared file storage accessible by multiple EC2 instances
+- **Instance Store:** Ephemeral storage (lost on instance stop)
 
 </div>
 
@@ -347,7 +278,7 @@ Scale in when CPU < 30%
 | **Multi-AZ deployment** | High availability |
 | **Use appropriate instance types** | Cost optimization |
 | **Enable detailed monitoring** | Performance insights |
-| **Use EBS snapshots** | Backup and recovery |
+| **Configure EBS volumes properly** | Storage performance and cost |
 | **Tag instances** | Cost tracking, organization |
 
 ---

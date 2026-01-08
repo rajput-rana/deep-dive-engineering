@@ -47,24 +47,24 @@
 | **[AWS Fundamentals](./01-aws-fundamentals.md)** | AWS basics, regions, accounts, services | Regions, AZs, accounts, billing |
 | **[EC2 - Compute](./02-ec2-compute.md)** | Elastic Compute Cloud | Instances, AMIs, Auto Scaling |
 | **[Lambda - Serverless](./03-lambda-serverless.md)** | Serverless compute | Functions, triggers, pricing |
-| **[ECS - Container Service](./19-ecs-elastic-container-service.md)** ⭐ | Elastic Container Service | Tasks, services, Fargate, clusters |
-| **[EKS - Kubernetes](./20-eks-elastic-kubernetes-service.md)** ⭐ | Elastic Kubernetes Service | Clusters, nodes, pods, deployments |
-| **[ECR - Container Registry](./21-ecr-elastic-container-registry.md)** ⭐ | Elastic Container Registry | Repositories, images, scanning |
-| **[S3 - Object Storage](./04-s3-object-storage.md)** | Simple Storage Service | Buckets, objects, lifecycle |
-| **[EBS & EFS - Block Storage](./05-ebs-efs-storage.md)** | Block and file storage | Volumes, snapshots, performance |
-| **[RDS - Relational Databases](./06-rds-databases.md)** | Managed relational databases | Multi-AZ, read replicas, backups |
-| **[DynamoDB - NoSQL](./07-dynamodb-nosql.md)** | Managed NoSQL database | Tables, items, streams |
-| **[VPC - Networking](./08-vpc-networking.md)** | Virtual Private Cloud | Subnets, routing, security |
-| **[CloudFront - CDN](./09-cloudfront-cdn.md)** | Content delivery network | Distributions, caching, origins |
-| **[Route 53 - DNS](./10-route53-dns.md)** | Domain name system | Records, routing, health checks |
-| **[IAM - Security](./11-iam-security.md)** | Identity and Access Management | Users, roles, policies |
-| **[CloudWatch - Monitoring](./12-cloudwatch-monitoring.md)** | Monitoring and logging | Metrics, logs, alarms |
-| **[API Gateway](./13-api-gateway.md)** | API management | REST APIs, WebSocket, throttling |
-| **[ElastiCache](./14-elasticache.md)** | In-memory caching | Redis, Memcached |
-| **[SQS & SNS - Messaging](./15-sqs-sns-messaging.md)** | Queue and notification services | Queues, topics, fanout |
-| **[Step Functions](./16-step-functions.md)** | Serverless workflows | State machines, orchestration |
-| **[Cost Optimization](./17-cost-optimization.md)** | Cost management strategies | Reserved instances, savings plans |
-| **[AWS Architecture Patterns](./18-architecture-patterns.md)** | Well-Architected Framework | Best practices, patterns |
+| **[ECS - Container Service](./04-ecs-elastic-container-service.md)** ⭐ | Elastic Container Service | Tasks, services, Fargate, clusters |
+| **[EKS - Kubernetes](./05-eks-elastic-kubernetes-service.md)** ⭐ | Elastic Kubernetes Service | Clusters, nodes, pods, deployments |
+| **[ECR - Container Registry](./06-ecr-elastic-container-registry.md)** ⭐ | Elastic Container Registry | Repositories, images, scanning |
+| **[S3 - Object Storage](./07-s3-object-storage.md)** | Simple Storage Service | Buckets, objects, lifecycle |
+| **[EBS & EFS - Block Storage](./08-ebs-efs-storage.md)** | Block and file storage | Volumes, snapshots, performance |
+| **[RDS - Relational Databases](./09-rds-databases.md)** | Managed relational databases | Multi-AZ, read replicas, backups |
+| **[DynamoDB - NoSQL](./10-dynamodb-nosql.md)** | Managed NoSQL database | Tables, items, streams |
+| **[VPC - Networking](./11-vpc-networking.md)** | Virtual Private Cloud | Subnets, routing, security |
+| **[CloudFront - CDN](./12-cloudfront-cdn.md)** | Content delivery network | Distributions, caching, origins |
+| **[Route 53 - DNS](./13-route53-dns.md)** | Domain name system | Records, routing, health checks |
+| **[IAM - Security](./14-iam-security.md)** | Identity and Access Management | Users, roles, policies |
+| **[CloudWatch - Monitoring](./15-cloudwatch-monitoring.md)** | Monitoring and logging | Metrics, logs, alarms |
+| **[API Gateway](./16-api-gateway.md)** | API management | REST APIs, WebSocket, throttling |
+| **[ElastiCache](./17-elasticache.md)** | In-memory caching | Redis, Memcached |
+| **[SQS & SNS - Messaging](./18-sqs-sns-messaging.md)** | Queue and notification services | Queues, topics, fanout |
+| **[Step Functions](./19-step-functions.md)** | Serverless workflows | State machines, orchestration |
+| **[Cost Optimization](./20-cost-optimization.md)** | Cost management strategies | Reserved instances, savings plans |
+| **[AWS Architecture Patterns](./21-architecture-patterns.md)** | Well-Architected Framework | Best practices, patterns |
 
 </div>
 
@@ -80,17 +80,17 @@
 |:---:|:---:|:---:|
 | **1️⃣** | [AWS Fundamentals](./01-aws-fundamentals.md) | Foundation |
 | **2️⃣** | [EC2 - Compute](./02-ec2-compute.md) | Core compute |
-| **3️⃣** | [ECR - Container Registry](./21-ecr-elastic-container-registry.md) | Container images |
-| **4️⃣** | [ECS - Container Service](./19-ecs-elastic-container-service.md) | Container orchestration |
-| **5️⃣** | [S3 - Object Storage](./04-s3-object-storage.md) | Core storage |
-| **6️⃣** | [VPC - Networking](./08-vpc-networking.md) | Networking basics |
-| **7️⃣** | [IAM - Security](./11-iam-security.md) | Security foundation |
-| **8️⃣** | [RDS - Databases](./06-rds-databases.md) | Managed databases |
-| **9️⃣** | [Lambda - Serverless](./03-lambda-serverless.md) | Serverless compute |
-| **🔟** | [EKS - Kubernetes](./20-eks-elastic-kubernetes-service.md) | Kubernetes orchestration |
-| **1️⃣1️⃣** | [CloudWatch - Monitoring](./12-cloudwatch-monitoring.md) | Observability |
-| **1️⃣2️⃣** | [Cost Optimization](./17-cost-optimization.md) | Cost management |
-| **1️⃣3️⃣** | [Architecture Patterns](./18-architecture-patterns.md) | Best practices |
+| **3️⃣** | [Lambda - Serverless](./03-lambda-serverless.md) | Serverless compute |
+| **4️⃣** | [ECS - Container Service](./04-ecs-elastic-container-service.md) | Container orchestration |
+| **5️⃣** | [EKS - Kubernetes](./05-eks-elastic-kubernetes-service.md) | Kubernetes orchestration |
+| **6️⃣** | [ECR - Container Registry](./06-ecr-elastic-container-registry.md) | Container images |
+| **7️⃣** | [S3 - Object Storage](./07-s3-object-storage.md) | Core storage |
+| **8️⃣** | [VPC - Networking](./11-vpc-networking.md) | Networking basics |
+| **9️⃣** | [IAM - Security](./14-iam-security.md) | Security foundation |
+| **🔟** | [RDS - Databases](./09-rds-databases.md) | Managed databases |
+| **1️⃣1️⃣** | [CloudWatch - Monitoring](./15-cloudwatch-monitoring.md) | Observability |
+| **1️⃣2️⃣** | [Cost Optimization](./20-cost-optimization.md) | Cost management |
+| **1️⃣3️⃣** | [Architecture Patterns](./21-architecture-patterns.md) | Best practices |
 
 </div>
 
@@ -102,11 +102,11 @@
 
 | Concept | Description | Topics |
 |:---:|:---:|:---:|
-| **💻 Compute** | EC2, Lambda, containers | [EC2](./02-ec2-compute.md), [Lambda](./03-lambda-serverless.md), [ECS](./19-ecs-elastic-container-service.md), [EKS](./20-eks-elastic-kubernetes-service.md) |
-| **💾 Storage** | S3, EBS, EFS | [S3](./04-s3-object-storage.md), [EBS & EFS](./05-ebs-efs-storage.md) |
-| **🗄️ Database** | RDS, DynamoDB, ElastiCache | [RDS](./06-rds-databases.md), [DynamoDB](./07-dynamodb-nosql.md) |
-| **🌐 Networking** | VPC, CloudFront, Route 53 | [VPC](./08-vpc-networking.md), [CloudFront](./09-cloudfront-cdn.md) |
-| **🔐 Security** | IAM, encryption, compliance | [IAM](./11-iam-security.md) |
+| **💻 Compute** | EC2, Lambda, containers | [EC2](./02-ec2-compute.md), [Lambda](./03-lambda-serverless.md), [ECS](./04-ecs-elastic-container-service.md), [EKS](./05-eks-elastic-kubernetes-service.md) |
+| **💾 Storage** | S3, EBS, EFS | [S3](./07-s3-object-storage.md), [EBS & EFS](./08-ebs-efs-storage.md) |
+| **🗄️ Database** | RDS, DynamoDB, ElastiCache | [RDS](./09-rds-databases.md), [DynamoDB](./10-dynamodb-nosql.md) |
+| **🌐 Networking** | VPC, CloudFront, Route 53 | [VPC](./11-vpc-networking.md), [CloudFront](./12-cloudfront-cdn.md) |
+| **🔐 Security** | IAM, encryption, compliance | [IAM](./14-iam-security.md) |
 
 </div>
 
