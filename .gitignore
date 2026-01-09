@@ -24,3 +24,15 @@ bin/
 *.tmp
 *.temp
 
+# LeetCode data (contains session tokens)
+leetcode_submissions.json
+
+# Python virtual environment
+venv/
+__pycache__/
+*.pyc
+
+# LeetCode credentials (if stored separately)
+leetcode_credentials.txt
+.env
+
