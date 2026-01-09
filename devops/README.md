@@ -40,9 +40,9 @@
 |:---:|:---:|:---:|
 | **[Docker](./01-docker.md)** | Containerization fundamentals | Images, containers, Dockerfile |
 | **[Kubernetes](./02-kubernetes.md)** | Container orchestration | Pods, services, deployments |
-| **[CI/CD Pipelines](./03-cicd-pipelines.md)** | Continuous integration/deployment | Pipeline design, automation |
-| **[Terraform](./04-terraform.md)** | Infrastructure as code | State management, providers |
-| **[Container Orchestration](./05-container-orchestration.md)** | Orchestration concepts | Why orchestration, alternatives |
+| **[Container Orchestration](./03-container-orchestration.md)** | Orchestration concepts | Why orchestration, alternatives |
+| **[CI/CD Pipelines](./04-cicd-pipelines.md)** | Continuous integration/deployment | Pipeline design, automation |
+| **[Terraform](./05-terraform.md)** | Infrastructure as code | State management, providers |
 | **[DevOps Best Practices](./06-devops-best-practices.md)** | DevOps principles | Culture, automation, monitoring |
 
 </div>
@@ -58,10 +58,10 @@
 | Step | Topic | Why |
 |:---:|:---:|:---:|
 | **1️⃣** | [Docker](./01-docker.md) | Foundation of containers |
-| **2️⃣** | [Container Orchestration](./05-container-orchestration.md) | Understand why orchestration |
-| **3️⃣** | [Kubernetes](./02-kubernetes.md) | Most popular orchestrator |
-| **4️⃣** | [CI/CD Pipelines](./03-cicd-pipelines.md) | Automation essentials |
-| **5️⃣** | [Terraform](./04-terraform.md) | Infrastructure as code |
+| **2️⃣** | [Kubernetes](./02-kubernetes.md) | Most popular orchestrator |
+| **3️⃣** | [Container Orchestration](./03-container-orchestration.md) | Understand why orchestration |
+| **4️⃣** | [CI/CD Pipelines](./04-cicd-pipelines.md) | Automation essentials |
+| **5️⃣** | [Terraform](./05-terraform.md) | Infrastructure as code |
 | **6️⃣** | [DevOps Best Practices](./06-devops-best-practices.md) | Principles and culture |
 
 </div>
@@ -76,8 +76,8 @@
 |:---:|:---:|:---:|
 | **🐳 Containers** | Package applications with dependencies | [Docker](./01-docker.md) |
 | **☸️ Orchestration** | Manage containers at scale | [Kubernetes](./02-kubernetes.md) |
-| **🔄 CI/CD** | Automate build, test, deploy | [CI/CD Pipelines](./03-cicd-pipelines.md) |
-| **🏗️ IaC** | Manage infrastructure as code | [Terraform](./04-terraform.md) |
+| **🔄 CI/CD** | Automate build, test, deploy | [CI/CD Pipelines](./04-cicd-pipelines.md) |
+| **🏗️ IaC** | Manage infrastructure as code | [Terraform](./05-terraform.md) |
 
 </div>
 
