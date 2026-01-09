@@ -100,7 +100,7 @@
 
 **Master programming languages and frameworks! 🚀**
 
-*From fundamentals to expert-level knowledge with comprehensive Q&A for interview preparation.*
+*From fundamentals to expert-level knowledge with comprehensive Q&A for comprehensive learning.*
 
 </div>
 

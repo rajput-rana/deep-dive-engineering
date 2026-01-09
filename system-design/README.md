@@ -108,11 +108,11 @@
 
 ---
 
-## 🎓 Interview Preparation
+## 🎓 Learning Focus Areas
 
 <div align="center">
 
-### 🏆 Ace Your System Design Interviews
+### 🏆 Master System Design Concepts
 
 | Topic | What to Master | Resources |
 |:---:|:---:|:---:|
@@ -122,7 +122,7 @@
 | **Architecture** | Microservices, Event-driven, API Gateway | [02. Architectures](./02-architectures/) |
 | **Performance** | Caching, Load balancing, Rate limiting | [03. Scaling & Reliability](./03-scaling-reliability-availability/) |
 
-### 💡 Common Interview Questions
+### 💡 Common Design Problems
 
 - Design a URL shortener
 - Design a chat system
@@ -131,7 +131,7 @@
 - Design a distributed cache
 - Design a notification system
 
-### ✅ Interview Tips
+### ✅ Learning Tips
 
 - ✅ Start with requirements and constraints
 - ✅ Estimate capacity (users, QPS, storage)
@@ -151,7 +151,7 @@
 | Resource | Description |
 |:---:|:---:|
 | **[References](./references.md)** | Complete index of all topics |
-| **[System Design Template](./system-design-template.md)** | Template for system design interviews |
+| **[System Design Template](./system-design-template.md)** | Template for system design learning |
 | **[Case Studies](./08-real-world/)** | Real-world system designs |
 
 </div>

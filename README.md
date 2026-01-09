@@ -2,7 +2,7 @@
 
 <div align="center">
 
-**🎓 Master System Design, DSA & Engineering Concepts | 📚 180+ Topics | 🎯 Interview Ready**
+**🎓 Master System Design, DSA & Engineering Concepts | 📚 180+ Topics | 🎯 Learning Focused**
 
 [![System Design](https://img.shields.io/badge/System%20Design-Comprehensive-blue?style=for-the-badge)](./system-design/)
 [![DSA](https://img.shields.io/badge/DSA-11%20Topics-green?style=for-the-badge)](./dsa/)
@@ -25,7 +25,7 @@
 📈 **Progressive Learning** - From fundamentals to advanced distributed systems  
 🔒 **Security-First** - Comprehensive coverage of IAM, encryption, compliance, and more  
 🏗️ **Real-World Focus** - Learn from actual system designs and case studies  
-💼 **Interview Ready** - Structured content for system design and DSA interviews  
+💼 **Learning Focused** - Structured content for mastering system design and DSA concepts  
 📝 **Templates Included** - Ready-to-use templates for problem-solving and system design
 
 ---
@@ -260,8 +260,8 @@ Core technical concepts for backend and distributed systems engineers.
 
 | Template | Description | Use Case |
 |:---:|:---:|:---:|
-| **[DSA Problem Template](./dsa/dsa-problem-template.md)** | Structured template for algorithm problems | Problem-solving, interviews |
-| **[System Design Template](./system-design/system-design-template.md)** | Template for system design interviews | System design interviews |
+| **[DSA Problem Template](./dsa/dsa-problem-template.md)** | Structured template for algorithm problems | Problem-solving, learning |
+| **[System Design Template](./system-design/system-design-template.md)** | Template for system design learning | System design concepts |
 
 </div>
 
@@ -402,7 +402,7 @@ Case studies and designs for:
 
 | 🎯 **Goal** | 📍 **Start Here** | 🎓 **Next Steps** |
 |:---:|:---:|:---:|
-| **System Design Interviews** | [Fundamentals](./system-design/01-fundamentals/) | [Real-World Systems](./system-design/08-real-world/) |
+| **System Design Learning** | [Fundamentals](./system-design/01-fundamentals/) | [Real-World Systems](./system-design/08-real-world/) |
 | **DSA Practice** | [Arrays](./dsa/arrays/) or [Strings](./dsa/strings/) | [Dynamic Programming](./dsa/dynamic-programming/) |
 | **Security Deep Dive** | [IAM](./system-design/07-security-compliance/01-iam/) | [Data Security](./system-design/07-security-compliance/03-data-security-privacy/) |
 | **Distributed Systems** | [CAP Theorem](./system-design/01-fundamentals/08-distributed-systems/01-cap-theorem.md) | [Consensus Algorithms](./system-design/03-distributed-systems/03-consensus-algorithms.md) |
@@ -423,19 +423,19 @@ Case studies and designs for:
 
 </div>
 
-## 🎯 Interview Preparation
+## 🎯 Learning Paths
 
 <div align="center">
 
-### 🏆 Ace Your Technical Interviews
+### 🏆 Master Technical Concepts
 
-| Interview Type | Resources | Focus Areas |
+| Learning Area | Resources | Focus Areas |
 |:---:|:---:|:---:|
 | **System Design** | [Complete Guide](./system-design/) | Scalability, Reliability, Security |
 | **DSA** | [11 Topics](./dsa/) | Algorithms, Data Structures, Optimization |
 | **Technical Deep Dives** | [All Sections](./system-design/) | Senior Engineer Level Understanding |
 
-**💡 Pro Tip:** Use the [System Design Template](./system-design/system-design-template.md) to structure your answers!
+**💡 Pro Tip:** Use the [System Design Template](./system-design/system-design-template.md) to structure your learning!
 
 </div>
 
@@ -447,7 +447,7 @@ Case studies and designs for:
 |:---:|:---:|
 | **📚 Comprehensive** | 180+ topics covering all aspects of system design |
 | **🔗 Well-Organized** | Clear structure with easy navigation |
-| **🎯 Interview-Focused** | Content structured for interview preparation |
+| **🎯 Learning-Focused** | Content structured for comprehensive learning |
 | **📝 Templates Included** | Ready-to-use templates for problem-solving |
 | **🔒 Security Deep Dive** | Extensive coverage of security & compliance |
 | **🏗️ Real-World Examples** | Case studies from actual systems |
