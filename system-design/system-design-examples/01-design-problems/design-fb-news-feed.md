@@ -6,6 +6,7 @@ The Facebook News Feed is the central feature of Facebook where users see a pers
 The feed is continuously updated and ranked to show the most relevant content first, rather than displaying posts in simple chronological order.
 Building such a system that delivers this experience to **100 million+ daily active users (DAUs)** is anything but simple.
 It brings up several complex challenges like:
+
 - How do we process and store the massive volume of new posts generated every second?
 - How do we efficiently support rich media like high-quality images and videos?
 - How do we ensure each user's feed updates in near real-time?
@@ -15,10 +16,14 @@ It brings up several complex challenges like:
 
 In this chapter, we’ll start with a **basic version of a news feed system** and evolve it step by step into a **robust, scalable and reliable distributed architecture**.
 Let’s start by clarifying the requirements.
+
 # 1. Requirements
+
 Before we jump into the design, let’s define what our “news feed” system needs to support, both functionally and non-functionally.
 
+
 ## Functional Requirements:
+
 - Users can create posts containing text, images, or videos.
 - Users can follow other users (friends or connections)
 - Users can view a personalized news feed consisting of relevant and recent posts from people they follow
@@ -26,7 +31,9 @@ Before we jump into the design, let’s define what our “news feed” system n
 - New posts should appear in a user’s feed within a few seconds
 - The system must handle users with very large followings, such as celebrities or influencers
 
+
 ## Non-Functional Requirements:
+
 - **Scalability:** Support extremely high read (news feed fetches) and write (post creations, likes, comments). The system should scale horizontally to handle growth.
 - **Availability:** Ensure high availability (99.99% or higher), even under heavy load or partial system failures.
 - **Low Latency:** Serve news feed requests quickly (e.g. under 500ms). New posts should propagate to followers’ feeds within a few seconds.
@@ -34,20 +41,31 @@ Before we jump into the design, let’s define what our “news feed” system n
 - **Reliability:** Guarantee that no posts, likes, or comments are lost.
 
 With these requirements in mind, we’ll now design the system in stages, starting from a naive version and incrementally adding the necessary components and optimizations.
+
 # 2. Step-by-Step Design
 
+
 ## 2.1 Basic Design – Monolithic Feed Generation
+
 Let’s start with the simplest version of a news feed system.
-In this basic design, everything runs through a **single application server**. The same server handles post creation, following, feed generation, likes, and comments. All data is stored in one **relational database**. Users can only post text based content.
+In this basic design, everything runs through a **single application server**. The same server handles post creation, following, feed generation, likes, and comments.
+All data is stored in one **relational database**. Users can only post text based content.
+
 
 ### Architecture Overview
+
 The basic setup includes three main components:
+
 - **Clients: **Mobile apps and web clients talk to the server using REST APIs.
 - **News Feed Service: **A single server handles HTTP requests and serves all APIs.
 - **Relational Database: **A single database (like PostgreSQL or MySQL) that stores all users, posts, follows, likes, and comments.
 
+
 ### Data Model
-To support core functionality of our news feed system, we maintain several key entities (tables) in the database. These form the foundation for features like post creation, following, liking, commenting, and feed generation.
+
+To support core functionality of our news feed system, we maintain several key entities (tables) in the database.
+These form the foundation for features like post creation, following, liking, commenting, and feed generation.
+
 - **Users**: Stores user profile information.
 - **Posts**: Stores individual posts created by users.
 - **Follows**: Represents the social graph, who follows whom.
@@ -57,8 +75,11 @@ To support core functionality of our news feed system, we maintain several key e
 All of this is stored in a relational database such as PostgreSQL or MySQL.
 We add indexes on commonly queried fields like `user_id`, `post_id`, and `timestamp` to support efficient lookups, sorting, and joins.
 
+
 ### API Endpoints
+
 Here are the core APIs that power the system’s basic functionality:
+
 - `POST /posts` – Create a new post
 - `GET /feed` – Fetch a user’s personalized news feed
 - `POST /posts/{id}/like` – Like or unlike a post
@@ -69,38 +90,56 @@ These APIs form the base upon which we will later build more advanced features l
 User information is typically passed to APIs via **authentication tokens**, not raw user IDs in the request.
 **Example Request:**
 
+
 ### Like Flow
+
 When a user likes a post:
+
 1. A record is inserted into the `Likes` table to record the interaction
+
 2. The `like_count` field in the `Posts` table is incremented
+
 3. These updates are done in a **single transaction** for strong consistency.
 
 The feed includes the updated like count when the post is fetched.
 
+
 ### Comment Flow
+
 When a user adds a comment:
+
 1. A record is added to the `Comments` table
+
 2. The `comment_count` field in the `Posts` table is incremented
 
 For simplicity, we assume that comments are text-only and do not support replies or likes.
 Comments are typically **not fetched** as part of the feed. Instead:
+
 - The feed may include one or two recent comments as a preview
 - The full list of comments is retrieved separately via a paginated endpoint
 
 Comments are usually sorted by **timestamp**, with the most recent comments shown first. If needed, we can extend this to support "top" comments based on likes or relevance later.
 
+
 ### Feed Generation: Naive Pull-Based Approach
+
 In this model, the news feed is generated **on-the-fly** every time a user opens the app.
 Here’s how it works:
+
 1. **Lookup followees: **The system first retrieves the list of users that the requesting user follows.
+
 2. **Fetch recent posts: **Then it fetches recent posts from those users, sorted by timestamp. This is done using a SQL query like:
+
 3. **Return feed to client: **The server returns the top 100 most recent posts as a JSON response. The client displays them in the feed UI.
 
 This approach is called **fan-out-on-read**, because the feed is computed at read time by querying posts from all followed users.
 
+
 ### Why This Design Breaks at Scale
+
 This approach is simple and works well for a small number of users, but it quickly becomes inefficient as the system scales.
 Let’s look at the key limitations:
+
 - **High read latency: **If a user follows thousands of people, the system must scan, sort and merge a large number of posts for every feed request. This slows down response times.
 - **Database bottleneck: **At scale, the database cannot keep up with read traffic. For example, with 100 million daily active users, if each user fetches their feed five times a day, that’s over **500 million feed queries daily**, or nearly **6,000 queries per second**. A single database cannot handle this kind of load.
 - **No real-time updates: **In this setup, new posts only appear when the user actively pulls the feed. There is no push mechanism. That means updates may feel delayed and feeds may appear stale.
@@ -108,13 +147,18 @@ Let’s look at the key limitations:
 This monolithic design is a good starting point. It satisfies the basic functionality and is easy to build. But it does not scale.
 As traffic increases and features grow more complex, this architecture will struggle to meet the expectations for speed, reliability, and real-time updates.
 Before we begin evolving the system into a more scalable and distributed architecture, let’s first look at how we can efficiently support **media content** like images and videos—an essential part of any modern social feed.
+
 # 2. Supporting Images and Videos
+
 In modern social platforms, posts are rarely just text. Users frequently upload images and videos. But supporting them introduces new challenges around storage, bandwidth, and delivery speed.
 Let’s explore how to store, serve, and deliver media without overwhelming our core systems.
 
+
 ### Media in the Data Model
+
 We don’t store raw image or video files inside our main database. Instead, we treat media as external assets and store only **references** to them in the post metadata.
 For example:
+
 - A `Post` record includes a field like `media_url` pointing to the uploaded file.
 - If we want to support multiple media files per post, we could introduce a separate `Media` table with fields like `media_id`, `post_id`, `media_url`, and `media_type`.
 
@@ -124,26 +168,36 @@ The actual media files are stored in **external object storage** like Amazon S
 
 ### Updated Architecture
 
+
 ### How Media Upload Works
+
 Let’s walk through what happens when a user creates a post with an image or video.
+
 1. **Client requests upload URL: **The client requests the backend (Post Service) to provide a secure upload URL. The server responds with a [pre-signed URL](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html) from object storage provider and derives a CDN-accessible URL from the storage path.
+
 2. **Client uploads media directly: **Using the pre-signed `upload_url`, the client uploads the file **directly to object storage**. This reduces load on our servers since media never passes through them.
+
 3. **Client creates the post: **After the upload completes, the client sends a `POST /posts` request with the post text, timestamp, and media URL. The **Post Service** saves the new post in the database with the `media_url` included.
 
+
 ### How Media is Delivered
+
 When a user fetches their feed (via `GET /feed`), the server includes the `media_url` for each post in the response. The client then fetches the image or video directly from that location.
 Since images and videos are large and bandwidth-intensive, we deliver them through a **Content Delivery Network (CDN)**.
 A CDN is a network of globally distributed edge servers that cache content close to end users. When a user views their feed:
+
 - Text and metadata come from our backend servers
 - Images and videos are fetched in parallel from the **nearest CDN edge node**
 
 This improves page load time, reduces latency, and takes the pressure off our origin servers.
 To further optimize:
+
 - **Images** can include a thumbnail version for faster loading during scrolling
 - **Videos** can be streamed using protocols like **HLS** or **DASH**, enabling progressive playback and adaptive quality based on the user’s connection
 
 With media support in place, users can now post photos and videos, and see them quickly in their feed.
 Our system now supports:
+
 - **Basis feed generation**
 - **Rich media posts** with images and videos
 
@@ -151,84 +205,119 @@ However, the architecture is still **monolithic**. All logic runs in a single b
 The core system is not yet ready to handle large-scale traffic.
 To scale further, we need to break the system into **independent services** and **distribute our database** across multiple servers.
 
+
 ## 3. Scaling Out – Service Separation and Database Sharding
+
 As our platform grows to support 100 million daily active users and millions of posts, likes, and comments per day, the monolithic architecture quickly hits its limits.
 To support high availability, throughput, and fault tolerance, we need to evolve into a **distributed system**—with multiple microservices, independently scaled databases, and smart caching.
 
+
 ### 3.1 Microservices Architecture
+
 We break down the monolithic application into focused, loosely coupled services.
 Each microservice handles a specific domain and communicates with others via APIs or asynchronous events.
 
+
 #### Load Balancer / API Gateway
+
 Acts as the entry point to the system.
+
 - Accepts and routes incoming HTTP requests
 - Authenticates users (via access tokens)
 - Enforces rate limiting
 - Forwards requests to the appropriate backend services
 
+
 #### User Service
+
 Responsible for user profile data and social connections (followers/followees).
+
 - Stores user data in a **relational database**
 - Maintains **follow graphs** in memory or cache for fast access
 - Provides APIs like:
 
+
 #### Post Service
+
 Manages post creation and retrieval.
+
 - Stores post metadata (text, media_url, timestamps, etc.)
 - On post creation, emits a `PostCreated` event to a **message queue**
 - Supports APIs like `POST /posts`, `GET /posts/{id}`
 
+
 #### Feed Service
+
 Generates and returns a user’s personalized feed.
+
 - Reads from precomputed **feed caches**
 - Merges, ranks, and returns top N posts
 - Fetches post and author metadata as needed
 
 We’ll detail feed generation strategies later.
 
+
 #### Engagement Service
+
 Handles user interactions like likes and comments.
+
 - Writes engagement data (likes, unlikes, comments) to database
 - Updates counters (like_count, comment_count) in the Posts table
 - Provides lightweight read APIs for UI (e.g., `hasLiked(user_id, post_id)`)
 
+
 #### Media Service
+
 Manages upload and access to media files.
+
 - Generates **pre-signed URLs** for direct client upload to cloud storage (e.g., S3)
 - Returns **CDN-accessible URLs** to be saved in posts
 
+
 ### 3.2 Database Design
+
 Each microservice owns its own **dedicated datastore**, optimized for its workload and access patterns.
 
+
 #### User Database
+
 - Relational database (e.g., PostgreSQL)
 - Stores user profiles and follow relationships
 - Follows table indexed and **sharded by **`follower_id` for efficient lookup
 
+
 #### Post Database
+
 - Stores all post content
 - Sharded by `author_id` using **consistent hashing**
 - NoSQL stores like **Cassandra** are a good fit for high write throughput and time-based queries
 
 Example schema in Cassandra:
 
+
 #### Feed Cache
+
 - Stores each user’s precomputed feed (typically a list of `post_ids`)
 - Implemented using **Redis** or another in-memory key-value store
 - Enables O(1) feed fetches for active users
 
+
 #### Likes and Comments Database
+
 Likes are stored in a **sharded key-value store** or a **relational database**, depending on the scale and query needs.
 For a key-value store, keys can be like:
+
 - `post_id → like_count`
 - `user_id:post_id → true/false`
 
 Like counts for **popular posts** are cached in Redis
 Comments are **write-heavy and read-paginated**, so we use:
+
 - **Sharded SQL databases** (e.g., MySQL, Postgres)
 - Or **document stores** (e.g., MongoDB) for flexible schema and high concurrency
 
 Sharding Strategy:
+
 - **Sharded by **`post_id`, so that all comments for a given post are stored together
 - Ensures that:
 
@@ -237,30 +326,42 @@ For posts with **millions of comments**, pagination or splitting comments into�
 
 ### 3.3 Scaling Techniques
 
+
 #### Horizontal Scaling of Services
+
 Each microservice is stateless and **can be scaled independently** by running multiple instances.
+
 - A **service registry** (or the API Gateway) routes requests to healthy instances
 - Services can be autoscaled based on CPU, memory, or QPS
 
+
 #### Database Sharding
+
 We partition large datasets across **multiple database shards** to distribute load and prevent hotspots.
 Examples:
+
 - **Posts**: `shard = hash(author_id) mod N`
 - **Likes/Comments**: sharded by `post_id`
 
 Each shard can have a **primary-replica setup**:
+
 - Writes go to the primary
 - Reads can be offloaded to replicas for scalability and availability
 
+
 #### Caching at Multiple Levels
+
 We use caches to reduce database load and improve performance:
+
 - **Feed Cache**: `user_id → list of post_ids`
 - **Post Cache**: Full content of hot or viral posts
 - **Like Count Cache**: `post_id → like_count` (fast UI rendering)
 
 These are stored in **Redis**, **Memcached**, or similar high-speed in-memory stores.
 
+
 #### Asynchronous Processing
+
 Heavy, non-blocking tasks are offloaded to background workers using **message queues** (e.g., Kafka, RabbitMQ, or AWS SQS).
 **Examples:**
 - When a post is created:
@@ -269,38 +370,58 @@ Heavy, non-blocking tasks are offloaded to background workers using **message q
 
 This ensures user actions are **fast and responsive**, while heavier processing happens in the background.
 
+
 ### 3.4 Example Flow: Fetching the News Feed
+
 Let’s walk through what happens when a user opens the app to view their feed:
+
 1. The client sends `GET /feed` with an authentication token
+
 2. The API Gateway validates the token and forwards the request to the Feed Service
+
 3. The Feed Service looks up the user’s feed in the cache
+
 4. Post metadata (text, author, media URL, like count, etc.) is fetched from the Post Service or cache
+
 5. The response is assembled and sent to the client
+
 6. The client uses the media URLs to fetch images or videos directly from the CDN
 
 Our system has now evolved from a monolith into a **distributed architecture**.
+
 - Each service is focused, scalable, and independently deployable
 - Datastores are sharded to avoid bottlenecks
 - Caches and async processing improve performance and responsiveness
 
 With the infrastructure in place, we’re now ready to tackle one of the most challenging parts—**scalable feed generation**.
 
+
 ## 5. Efficient Feed Generation – Push vs Pull Model
+
 One of the toughest challenge of a social platform is how to generate each user’s feed efficiently specially if they follow thousands of other users and celebrities.
 There are two core strategies for feed generation:
+
 - **Pull-based (fan-out-on-read)**: Compute the feed when the user requests it
 - **Push-based (fan-out-on-write)**: Precompute and store the feed as new posts are created
 
 Both approaches have trade-offs. In practice, a **hybrid model** works best.
 
+
 ### Pull Model (Fan-Out-on-Read)
+
 In the pull model, the feed is generated **on demand**—only when the user opens the app or requests a refresh.
 
+
 #### How It Works:
+
 1. Fetch the list of followees from the User Service
+
 2. Retrieve recent posts from each followee from the Post Service
+
 3. Merge and sort posts (by timestamp or ranking)
+
 4. Return the top N posts to the client
+
 5. Optionally cache the result for short-term duration
 
 This model avoid doing work when a post is created, deferring all computation to read time.
@@ -316,15 +437,24 @@ This model avoid doing work when a post is created, deferring all computation to
 
 Pure pull models are suitable for low-traffic systems or where users follow very few others. But at social media scale, it quickly becomes inefficient.
 
+
 ### Push-Based Feed (Fan-Out-on-Write)
+
 In the push model, we shift the heavy lifting to **write time**. When a user creates a post, the system **proactively distributes** it to followers' feeds.
 
+
 #### How It Works:
+
 1. User A posts new content
+
 2. **Post Service** stores the post in the Posts DB
+
 3. Post Service emits a `PostCreated` event to a **message queue**
+
 4. **Feed Service workers** consume the event
+
 5. The Feed Service retrieves the poster’s follower list
+
 6. For each follower:
 
 Now when a user opens the app, their feed is **already precomputed** and ready to serve.
@@ -340,37 +470,55 @@ Now when a user opens the app, their feed is **already precomputed** and ready
 
 Despite the write costs, push models offer unmatched read speed, making them ideal for highly active users.
 
+
 ### The Celebrity Problem
+
 Celebrities with tens of millions of followers pose a unique challenge.
 When a celebrity posts:
+
 - The system must update **millions of feed caches**
 - This creates **hot shards**, **fan-out spikes**, and excessive **cache storage** for users who might not even read the post
 
+
 ### The Hybrid Model: Best of Both Worlds
+
 To balance efficiency and scalability, most platforms (e.g., Facebook, Twitter) use a **hybrid model**:
+
 - **Push-based fan-out** for regular users (e.g., under 10,000 followers)
 - **Pull-based fetch** for celebrity posts or viral content
 
+
 #### How it works:
+
 - Posts from "normal users" are pushed to followers’ feed caches at write time
 - Posts from celebrities are **not pushed**. Instead, followers fetch these on demand during feed generation
 - The Feed Service applies custom logic:
 
 This reduces fan-out pressure while still offering real-time performance to most users.
 
+
 ### Reading from the Precomputed Feed
+
 When the user opens the app:
+
 1. **Feed Service queries** the feed cache (e.g., `LRANGE feed:<user_id> 0 19`)
+
 2. **Post details are hydrated** with metadata (text, media, author, like count) using bulk fetches from Post Service
+
 3. Feed is optionally **ranked**, sorted, and returned
+
 4. Client renders the posts, fetching media directly from the CDN
 
 To reduce latency:
+
 - **Essential metadata** can be stored directly in the feed cache (e.g., author name, thumbnail url)
 - **Full post content** can be fetched only if needed
 
+
 ### Memory Management at Scale
+
 Storing personalized feeds for 100M users requires smart strategies.
+
 - **Feed size limits**: Store only the latest 300–500 posts per user
 - **Eviction policies**: Use **LRU**, **TTL**, or **time-based expiration**
 - **Prewarming**: For frequent users, precompute and warm feed cache based on usage patterns
@@ -380,44 +528,63 @@ Storing personalized feeds for 100M users requires smart strategies.
 If we store 500 posts per user (1KB each), that’s ~500KB per user.
 Across 100M users, that’s 50TB—requiring a distributed cache cluster.
 
+
 ### Avoiding Duplicate Posts in the Feed
+
 One key UX detail in feed systems is ensuring that users **don’t repeatedly see the same post** especially when:
+
 - Mixing **push** and **pull** models
 - Using **real-time updates**
 - Supporting **infinite scroll** or feed refreshes
 
+
 #### Use a Last Seen Marker (Cursor-Based Paging)
+
 When the client fetches the feed (e.g., top 20 posts), we include a `last_seen_post_id` or timestamp marker.
 On the next request:
+
 - The client sends `?after=<last_seen_post_id>`
 - The Feed Service fetches only **newer or unseen** posts
 
 This ensures forward-only traversal and avoids overlap.
 
+
 #### Client-Side Deduplication
+
 The client maintains a short-term set of displayed `post_ids` during the current session. When refreshing the feed:
+
 - It filters out posts already shown
 - It merges newly received posts with what's already rendered
 
 This is useful for **infinite scroll** and **soft refreshes** (e.g., "Pull to refresh").
 
+
 #### Short-Term Cache on Server
+
 The server may maintain a **session-level or time-window cache** of `seen_post_ids` (e.g., Redis `SET` with expiry). During feed generation:
+
 - It filters out recent posts already returned to the user
 - Helps if users refresh the feed quickly or bounce back and forth between views
 
+
 #### Feed Entry Expiry + Freshness Window
+
 In the Feed Cache, we:
+
 - Limit stored posts (e.g., keep only the last 300–500)
 - Expire older entries after a time window (e.g., 3 days)
 
 This keeps the feed fresh, reduces duplication, and avoids excessive memory use.
 
+
 ## 6. Real-Time Updates and Notifications
+
 While our **push-based feed model** helps pre-populate the feed, we still need a way to **notify clients** that something new is available.
 To push updates from the backend to users’ devices, we use **persistent connections** maintained by a Real-Time Service.
 
+
 #### WebSockets (Preferred Approach)
+
 WebSockets offer a **bi-directional, full-duplex connection** between the client and server, ideal for real-time use cases.
 **How it works:**
 - When the user logs in, the client establishes a **WebSocket connection** to the **Real-Time Gateway**
@@ -426,24 +593,35 @@ WebSockets offer a **bi-directional, full-duplex connection** between the clie
 - The Real-Time Service pushes an event to the appropriate client over WebSocket
 
 **Message Format Examples:**
+
 The client can then show a UI prompt (“Pull to refresh”) or fetch the latest posts directly.
 
+
 #### Server-Sent Events (SSE)
+
 An alternative to WebSockets for **one-way server-to-client updates**. SSE is easier to implement but:
+
 - Only supports server → client communication
 - Not suitable for features requiring two-way messaging or acknowledgment (e.g., typing indicators, presence tracking)
 
+
 #### Long Polling (Fallback)
+
 Used when neither WebSockets nor SSE are supported (e.g., older browsers or networks with firewalls):
+
 - The client sends a request and waits (hangs) for a response
 - Once the server has data, it responds and the client re-initiates the request
 - Much less efficient and introduces latency under load
 
 # Additional Considerations
 
+
 ## 1. Ranking and Personalization
-Once we can efficiently generate and deliver a user’s feed, the next step is to decide **how to order the posts**. A purely chronological feed is easy to implement, but most platforms today personalize the feed using ranking algorithms to boost engagement.
+
+Once we can efficiently generate and deliver a user’s feed, the next step is to decide **how to order the posts**.
+A purely chronological feed is easy to implement, but most platforms today personalize the feed using ranking algorithms to boost engagement.
 To do that, we rank posts based on relevance. For example:
+
 - Posts from close friends often appear higher
 - Popular posts with lots of likes and comments are boosted
 - Older posts gradually decay in priority
@@ -451,15 +629,21 @@ To do that, we rank posts based on relevance. For example:
 
 ### Example Ranking Models
 
+
 #### Heuristic-Based Ranking (EdgeRank)
+
 One of the earliest models used by Facebook was **EdgeRank**, a rule-based scoring formula:
 `Score = Affinity × Weight × Decay`
+
 - **Affinity**: How close the viewer is to the post author (based on past interactions)
 - **Weight**: Importance of the post type (e.g. comment > like) or media (video > text)
 - **Decay**: Newer posts score higher, and older posts gradually lose visibility
 
+
 #### Machine Learning–Based Ranking
+
 Modern social platforms use **machine learning models** trained on historical user behavior to score and rank posts. These models use dozens (or hundreds) of features like:
+
 - User-post interaction history (e.g., how often the user engages with similar content)
 - Engagement signals on the post (likes, reshares, comments)
 - Post metadata (type, length, media presence)
@@ -468,24 +652,37 @@ Modern social platforms use **machine learning models** trained on historical 
 
 The model outputs a **relevance score** per post.
 
+
 ### Where Ranking Fits in the Architecture
+
 Ranking is part of the **Feed Service pipeline** and usually occurs after candidate posts have been fetched from the cache or database.
 
+
 #### The flow:
+
 1. **Feed Request Received: **The user opens their app → `GET /feed` hits the **API Gateway** → routed to the **Feed Service**
+
 2. **Candidate Selection: **The Feed Service fetches a batch of recent posts from the **user’s feed cache** (e.g., last 100 post IDs)
+
 3. **Post Hydration: **It fetches post content, author info, and engagement metrics from the Post Service, User Service, and Like Cache
+
 4. **Ranking Module: **The list of hydrated posts is sent to the **Ranking Module**, which may be:
+
 5. **Ranking Step: **Posts are scored and sorted based on relevance
+
 6. **Feed Response: **The top N ranked posts are returned to the client for display
 
+
 ### Logging and Feedback for Ranking Improvement
+
 To improve the ranking logic over time, we must **log user behavior and feedback**:
+
 - Which posts were clicked or ignored
 - Time spent viewing each post
 - Whether the user liked, commented, shared, or scrolled past
 
 This data helps us:
+
 - Refine ranking algorithms
 - Train machine learning models
 - Run A/B tests to compare different ranking strategies
@@ -493,49 +690,70 @@ This data helps us:
 In production systems, logs are typically sent through a **data pipeline**:
 These logs feed into the **ML training pipeline**, and the improved model is deployed back into the **Inference Service**.
 
+
 ## 2. High Availability and Fault Tolerance
-At the scale of 100 million daily users, failures are inevitable—servers crash, networks partition, entire regions can go offline. To deliver a reliable experience, our system must be resilient, self-healing, and designed to **gracefully degrade** when things go wrong.
+
+At the scale of 100 million daily users, failures are inevitable—servers crash, networks partition, entire regions can go offline.
+To deliver a reliable experience, our system must be resilient, self-healing, and designed to **gracefully degrade** when things go wrong.
 Let’s walk through the key strategies we use to ensure **high availability (HA)** and **fault tolerance**.
 
+
 ### Redundancy Across All Layers
+
 Every critical component, services, databases, caches is deployed with **no single point of failure**.
+
 - **Microservices**: All services (API, Feed, Post, etc.) run with multiple replicas behind load balancers. If one instance fails, traffic is seamlessly rerouted.
 - **Databases**: Data is replicated across nodes. If a primary fails, a replica can be promoted with minimal downtime.
 - **Caches and Queues**: In-memory stores like Redis run in clustered mode with failover support. Queues (e.g. Kafka) replicate logs across brokers.
 
+
 ### Multi-Region Deployment
+
 To achieve **99.99% uptime**, we deploy across multiple geographic regions (e.g., US-East, Europe, Asia):
+
 - **Active-Passive**: A standby region is kept in sync and takes over during outages.
 - **Active-Active**: All regions serve traffic simultaneously. Users are routed to their nearest region for low latency.
 
 In active-active:
+
 - User data may be **sharded by region** (each user has a home region)
 - Cross-region relationships (e.g. following a friend in another country) are supported by **asynchronous replication**
 
 This ensures that even if one data center goes offline, the system stays available.
 
+
 ### Circuit Breakers and Timeouts
+
 Failures in downstream services should not cascade.
+
 - Use **circuit breaker patterns** to detect and isolate failures.Example: If the Ranking Service becomes unresponsive, the Feed Service stops calling it temporarily and serves a default (e.g., unranked) feed.
 - Set **timeouts** for all inter-service calls. A slow service should not block the whole request pipeline.
 
 This allows the system to **degrade gracefully**, rather than fail completely.
 
+
 ### Graceful Degradation
+
 If a non-critical service fails, the rest of the system should continue to function.
 Examples:
+
 - If the **comment service** is down, the feed still loads but may show a message like “Comments temporarily unavailable.”
 - If **real-time updates** fail, users fall back to manual refresh.
 
 This keeps the core experience intact and minimizes user frustration.
 
+
 ### Data Backup and Recovery
+
 Some data can be rebuilt (e.g., feed cache), but core user data must be preserved.
+
 - Backup** Posts, follows, likes, and comments** data regularly to cold storage (e.g., S3 or GCS).
 - Use** Snapshots** and **write-ahead logs **to allow for point-in-time recovery.
 - Use **multi-region replication** to add an additional layer of durability.
 
 # Quiz
 
+
 ## Design FB News Feed Quiz
+
 In the naive, pull-based news feed design, what does "fan-out-on-read" mean?
