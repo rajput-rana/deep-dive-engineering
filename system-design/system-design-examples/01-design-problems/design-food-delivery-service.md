@@ -169,231 +169,6 @@ The system involves three distinct actors (customers, restaurants, delivery part
 **Note:** Instead of presenting the final architecture upfront, we will build it piece by piece. This approach is easier to follow and demonstrates your thought process in an interview.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Delivery Service]
-        S2[throughput Service]
-        S3[Notification Service]
-        S4[ETA Service]
-        S5[Payment Service]
-    end
-
-    subgraph Data Storage
-        DBElasticsearch[Elasticsearch]
-        DBCassandra[Cassandra]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-        Cacheredis[redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBElasticsearch
-    S1 --> DBCassandra
-    S1 --> CacheRedis
-    S1 --> Cacheredis
-    S1 --> QueueKafka
-    S2 --> DBElasticsearch
-    S2 --> DBCassandra
-    S2 --> CacheRedis
-    S2 --> Cacheredis
-    S2 --> QueueKafka
-    S3 --> DBElasticsearch
-    S3 --> DBCassandra
-    S3 --> CacheRedis
-    S3 --> Cacheredis
-    S3 --> QueueKafka
-    S4 --> DBElasticsearch
-    S4 --> DBCassandra
-    S4 --> CacheRedis
-    S4 --> Cacheredis
-    S4 --> QueueKafka
-    S5 --> DBElasticsearch
-    S5 --> DBCassandra
-    S5 --> CacheRedis
-    S5 --> Cacheredis
-    S5 --> QueueKafka
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[ETA Service]
-        S2[each Service]
-        S3[Partner Service]
-        S4[Tracking Service]
-        S5[Application Service]
-    end
-
-    subgraph Data Storage
-        DBCassandra[Cassandra]
-        DBPostgreSQL[PostgreSQL]
-        DBElasticsearch[Elasticsearch]
-    end
-
-    subgraph Caching Layer
-        Cacheredis[redis]
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBCassandra
-    S1 --> DBPostgreSQL
-    S1 --> Cacheredis
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBCassandra
-    S2 --> DBPostgreSQL
-    S2 --> Cacheredis
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBCassandra
-    S3 --> DBPostgreSQL
-    S3 --> Cacheredis
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBCassandra
-    S4 --> DBPostgreSQL
-    S4 --> Cacheredis
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBCassandra
-    S5 --> DBPostgreSQL
-    S5 --> Cacheredis
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageS3
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Order Service]
-        S2[downstream Service]
-        S3[Restaurant Service]
-        S4[separate Service]
-        S5[Delivery Service]
-    end
-
-    subgraph Data Storage
-        DBCassandra[Cassandra]
-        DBElasticsearch[Elasticsearch]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-        Cacheredis[redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBCassandra
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> Cacheredis
-    S1 --> QueueKafka
-    S2 --> DBCassandra
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> Cacheredis
-    S2 --> QueueKafka
-    S3 --> DBCassandra
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> Cacheredis
-    S3 --> QueueKafka
-    S4 --> DBCassandra
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> Cacheredis
-    S4 --> QueueKafka
-    S5 --> DBCassandra
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> Cacheredis
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-```
-
-
-
-## 4.1 Requirement 1: Restaurant Discovery
 When a hungry customer opens the app, the first thing they need is a list of nearby restaurants. This seems simple, but there is interesting complexity: we need to query by geographic location, filter by various attributes, rank results intelligently, and do it all in under 200ms.
 
 ### The Challenge
@@ -421,6 +196,77 @@ Let's walk through what happens when a customer searches for restaurants:
 4. **Enrich with details:** With the list of nearby restaurant IDs, we batch-fetch full details from the Restaurant Service: menus, ratings, current operating status, and average preparation times.
 5. **Calculate ETAs and rank:** For each restaurant, we estimate delivery time based on preparation time, distance, and current partner availability. Results are ranked by relevance (some combination of distance, rating, delivery time, and possibly personalization).
 6. **Cache and return:** Results are cached for a few minutes (restaurant data does not change frequently) and returned to the customer.
+
+
+    S5 --> QueueKafka
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[Payment Service]
+        S2[other Service]
+        S3[This Service]
+        S4[Location Service]
+        S5[The Service]
+    end
+
+    subgraph Data Storage
+        DBPostgreSQL[PostgreSQL]
+        DBCassandra[Cassandra]
+        DBElasticsearch[Elasticsearch]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+        Cacheredis[redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBPostgreSQL
+    S1 --> DBCassandra
+    S1 --> CacheRedis
+    S1 --> Cacheredis
+    S1 --> QueueKafka
+    S2 --> DBPostgreSQL
+    S2 --> DBCassandra
+    S2 --> CacheRedis
+    S2 --> Cacheredis
+    S2 --> QueueKafka
+    S3 --> DBPostgreSQL
+    S3 --> DBCassandra
+    S3 --> CacheRedis
+    S3 --> Cacheredis
+    S3 --> QueueKafka
+    S4 --> DBPostgreSQL
+    S4 --> DBCassandra
+    S4 --> CacheRedis
+    S4 --> Cacheredis
+    S4 --> QueueKafka
+    S5 --> DBPostgreSQL
+    S5 --> DBCassandra
+    S5 --> CacheRedis
+    S5 --> Cacheredis
+    S5 --> QueueKafka
+
+
 
 ## 4.2 Requirement 2: Order Placement and Management
 Once a customer selects items and taps "Place Order," a cascade of events needs to happen: validate the order, authorize payment, notify the restaurant, track the order through preparation, and eventually hand it off for delivery.

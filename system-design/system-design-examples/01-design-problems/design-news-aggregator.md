@@ -170,207 +170,6 @@ The massive asymmetry between these paths shapes our entire design. The write pa
 Let's build each path step by step.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Application Services
-        S1[Processor Service]
-        S2[Preferences Service]
-        S3[Every Service]
-        S4[this Service]
-        S5[Notification Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-        DBElasticsearch[Elasticsearch]
-        DBCassandra[Cassandra]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    S1 --> DBPostgreSQL
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Application Services
-        S1[this Service]
-        S2[Preferences Service]
-        S3[one Service]
-        S4[Feed Service]
-        S5[Detection Service]
-    end
-
-    subgraph Data Storage
-        DBCassandra[Cassandra]
-        DBelasticsearch[elasticsearch]
-        DBDynamoDB[DynamoDB]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    S1 --> DBCassandra
-    S1 --> DBelasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBCassandra
-    S2 --> DBelasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBCassandra
-    S3 --> DBelasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBCassandra
-    S4 --> DBelasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBCassandra
-    S5 --> DBelasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageS3
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[Every Service]
-        S3[this Service]
-        S4[Feed Service]
-        S5[one Service]
-    end
-
-    subgraph Data Storage
-        DBelasticsearch[elasticsearch]
-        DBElasticsearch[Elasticsearch]
-        DBCassandra[Cassandra]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    S1 --> DBelasticsearch
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBelasticsearch
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBelasticsearch
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBelasticsearch
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBelasticsearch
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-## 4.1 Requirement 1: Content Ingestion
 The first challenge is getting articles into our system. With 50,000 sources publishing 1 million articles per day, we need a reliable, scalable ingestion pipeline. Some sources offer clean RSS feeds, others have APIs, and some require HTML scraping. Breaking news needs to surface quickly, while niche blogs can be crawled less frequently.
 
 ### Components for Content Ingestion
@@ -401,6 +200,68 @@ While the database handles structured queries, Elasticsearch powers our full-tex
 Here's how these components work together when a new article is published:
 Let's trace through a specific example. Say TechCrunch publishes an article about a new iPhone:
 The entire process, from TechCrunch publishing to the article being available in feeds, takes about 30 seconds to 2 minutes depending on crawl timing and processing load. For breaking news (which we detect separately), we can reduce this to under 30 seconds.
+
+
+    CDNNode --> Mobile
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Application Services
+        S1[one Service]
+        S2[Feed Service]
+        S3[Every Service]
+        S4[Preferences Service]
+        S5[The Service]
+    end
+
+    subgraph Data Storage
+        DBCassandra[Cassandra]
+        DBPostgreSQL[PostgreSQL]
+        DBelasticsearch[elasticsearch]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+    end
+
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    S1 --> DBCassandra
+    S1 --> DBPostgreSQL
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S2 --> DBCassandra
+    S2 --> DBPostgreSQL
+    S2 --> CacheRedis
+    S2 --> QueueKafka
+    S3 --> DBCassandra
+    S3 --> DBPostgreSQL
+    S3 --> CacheRedis
+    S3 --> QueueKafka
+    S4 --> DBCassandra
+    S4 --> DBPostgreSQL
+    S4 --> CacheRedis
+    S4 --> QueueKafka
+    S5 --> DBCassandra
+    S5 --> DBPostgreSQL
+    S5 --> CacheRedis
+    S5 --> QueueKafka
+    CDNNode --> Web
+    CDNNode --> Mobile
+
+
 
 ## 4.2 Requirement 2: Feed Generation
 Now for the more interesting path: generating personalized feeds for 100 million users. This is where the 1000:1 read-to-write ratio really matters. Every design decision here affects latency for millions of users.

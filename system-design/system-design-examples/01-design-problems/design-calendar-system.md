@@ -203,231 +203,6 @@ The write path is straightforward: requests flow through the API Gateway to the 
 Let's build this architecture step by step.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Background Service]
-        S2[the Service]
-        S3[each Service]
-        S4[stateless Service]
-        S5[push Service]
-    end
-
-    subgraph Data Storage
-        DBDynamoDB[DynamoDB]
-        DBCassandra[Cassandra]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueRabbitMQ[RabbitMQ]
-        QueueKafka[Kafka]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBDynamoDB
-    S1 --> DBCassandra
-    S1 --> CacheRedis
-    S1 --> QueueRabbitMQ
-    S1 --> QueueKafka
-    S2 --> DBDynamoDB
-    S2 --> DBCassandra
-    S2 --> CacheRedis
-    S2 --> QueueRabbitMQ
-    S2 --> QueueKafka
-    S3 --> DBDynamoDB
-    S3 --> DBCassandra
-    S3 --> CacheRedis
-    S3 --> QueueRabbitMQ
-    S3 --> QueueKafka
-    S4 --> DBDynamoDB
-    S4 --> DBCassandra
-    S4 --> CacheRedis
-    S4 --> QueueRabbitMQ
-    S4 --> QueueKafka
-    S5 --> DBDynamoDB
-    S5 --> DBCassandra
-    S5 --> CacheRedis
-    S5 --> QueueRabbitMQ
-    S5 --> QueueKafka
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[this Service]
-        S2[Sharing Service]
-        S3[each Service]
-        S4[the Service]
-        S5[Calendar Service]
-    end
-
-    subgraph Data Storage
-        DBDynamoDB[DynamoDB]
-        DBPostgreSQL[PostgreSQL]
-        DBCassandra[Cassandra]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueRabbitMQ[RabbitMQ]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBDynamoDB
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueRabbitMQ
-    S1 --> QueueKafka
-    S2 --> DBDynamoDB
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueRabbitMQ
-    S2 --> QueueKafka
-    S3 --> DBDynamoDB
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueRabbitMQ
-    S3 --> QueueKafka
-    S4 --> DBDynamoDB
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueRabbitMQ
-    S4 --> QueueKafka
-    S5 --> DBDynamoDB
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueRabbitMQ
-    S5 --> QueueKafka
-    S1 --> StorageS3
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[Background Service]
-        S3[each Service]
-        S4[stateless Service]
-        S5[Calendar Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-        DBCassandra[Cassandra]
-        DBDynamoDB[DynamoDB]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueRabbitMQ[RabbitMQ]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> DBCassandra
-    S1 --> CacheRedis
-    S1 --> QueueRabbitMQ
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> DBCassandra
-    S2 --> CacheRedis
-    S2 --> QueueRabbitMQ
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> DBCassandra
-    S3 --> CacheRedis
-    S3 --> QueueRabbitMQ
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> DBCassandra
-    S4 --> CacheRedis
-    S4 --> QueueRabbitMQ
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> DBCassandra
-    S5 --> CacheRedis
-    S5 --> QueueRabbitMQ
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-```
-
-
-
-## 4.1 Event Management
 The foundation of any calendar system is the ability to manage events. This is the starting point for our design.
 
 ### Components for Event Management
@@ -466,6 +241,77 @@ When the cache does not have the data, we need to query the database. This invol
 
 The tricky part is recurring event expansion. We take each recurring event pattern and compute which instances fall within the requested date range. This computation happens in memory, not in the database. The results are merged with single events and sorted by start time.
 Before returning, we populate the cache with the results so subsequent requests for the same range are fast.
+
+
+    S5 --> QueueKafka
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[Managed Service]
+        S2[push Service]
+        S3[Sharing Service]
+        S4[This Service]
+        S5[the Service]
+    end
+
+    subgraph Data Storage
+        DBPostgreSQL[PostgreSQL]
+        DBDynamoDB[DynamoDB]
+        DBCassandra[Cassandra]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+        QueueRabbitMQ[RabbitMQ]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBPostgreSQL
+    S1 --> DBDynamoDB
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S1 --> QueueRabbitMQ
+    S2 --> DBPostgreSQL
+    S2 --> DBDynamoDB
+    S2 --> CacheRedis
+    S2 --> QueueKafka
+    S2 --> QueueRabbitMQ
+    S3 --> DBPostgreSQL
+    S3 --> DBDynamoDB
+    S3 --> CacheRedis
+    S3 --> QueueKafka
+    S3 --> QueueRabbitMQ
+    S4 --> DBPostgreSQL
+    S4 --> DBDynamoDB
+    S4 --> CacheRedis
+    S4 --> QueueKafka
+    S4 --> QueueRabbitMQ
+    S5 --> DBPostgreSQL
+    S5 --> DBDynamoDB
+    S5 --> CacheRedis
+    S5 --> QueueKafka
+    S5 --> QueueRabbitMQ
+
+
 
 ## 4.2 Notifications and Reminders
 Users need to be reminded of upcoming events. Missing a meeting because you forgot about it is frustrating, so reminders are a core feature of any calendar system.

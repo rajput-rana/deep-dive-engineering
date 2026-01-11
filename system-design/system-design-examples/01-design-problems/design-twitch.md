@@ -181,225 +181,6 @@ The architecture naturally separates into two major subsystems: a **video pipeli
 Let's build each component step by step.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Application Services
-        S1[Auth Service]
-        S2[Transcoding Service]
-        S3[VOD Service]
-        S4[Subscription Service]
-        S5[Chat Service]
-    end
-
-    subgraph Data Storage
-        DBCassandra[Cassandra]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageObjectstorage[Object storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    S1 --> DBCassandra
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBCassandra
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBCassandra
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBCassandra
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBCassandra
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageObjectstorage
-    S1 --> StorageS3
-    StorageObjectStorage --> CDN
-    StorageObjectstorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Application Services
-        S1[VOD Service]
-        S2[Subscription Service]
-        S3[Managed Service]
-        S4[managed Service]
-        S5[This Service]
-    end
-
-    subgraph Data Storage
-        DBCassandra[Cassandra]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-        StorageObjectstorage[Object storage]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    S1 --> DBCassandra
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBCassandra
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBCassandra
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBCassandra
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBCassandra
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    S1 --> StorageObjectstorage
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    StorageObjectstorage --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[managed Service]
-        S3[Managed Service]
-        S4[Transcoding Service]
-        S5[Recording Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-        DBCassandra[Cassandra]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectstorage[Object storage]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    S1 --> DBPostgreSQL
-    S1 --> DBCassandra
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> DBCassandra
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> DBCassandra
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> DBCassandra
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> DBCassandra
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageObjectstorage
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    StorageObjectstorage --> CDN
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-## 4.1 Requirement 1: Video Ingest
 The video pipeline begins when a streamer clicks "Go Live." Their streaming software (OBS, Streamlabs, etc.) establishes a connection to our platform and begins sending video frames. This is the entry point to our entire system.
 
 ### Components for Video Ingest
@@ -427,6 +208,79 @@ Let's trace through what happens when a streamer starts broadcasting:
 5. **Video Forwarding:** Once authenticated, every video frame from the streamer is forwarded to the transcoding pipeline for processing.
 
 The ingest server acts as a bridge between the unpredictable public internet and our controlled internal network.
+
+
+    CDNNode --> Mobile
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Application Services
+        S1[Managed Service]
+        S2[Subscription Service]
+        S3[This Service]
+        S4[Transcoding Service]
+        S5[Recording Service]
+    end
+
+    subgraph Data Storage
+        DBPostgreSQL[PostgreSQL]
+        DBCassandra[Cassandra]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+    end
+
+    subgraph Object Storage
+        StorageS3[S3]
+        StorageObjectStorage[Object Storage]
+        StorageObjectstorage[Object storage]
+    end
+
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    S1 --> DBPostgreSQL
+    S1 --> DBCassandra
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S2 --> DBPostgreSQL
+    S2 --> DBCassandra
+    S2 --> CacheRedis
+    S2 --> QueueKafka
+    S3 --> DBPostgreSQL
+    S3 --> DBCassandra
+    S3 --> CacheRedis
+    S3 --> QueueKafka
+    S4 --> DBPostgreSQL
+    S4 --> DBCassandra
+    S4 --> CacheRedis
+    S4 --> QueueKafka
+    S5 --> DBPostgreSQL
+    S5 --> DBCassandra
+    S5 --> CacheRedis
+    S5 --> QueueKafka
+    S1 --> StorageS3
+    S1 --> StorageObjectStorage
+    S1 --> StorageObjectstorage
+    StorageS3 --> CDNNode
+    StorageObjectStorage --> CDNNode
+    StorageObjectstorage --> CDNNode
+    CDNNode --> Web
+    CDNNode --> Mobile
+
+
 
 ## 4.2 Requirement 2: Video Processing (Transcoding)
 Raw video from streamers arrives in various formats and qualities. One streamer might send 4K at 20 Mbps, another might send 720p at 3 Mbps. Some use modern codecs like H.265, others use H.264. 

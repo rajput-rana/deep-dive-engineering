@@ -157,201 +157,6 @@ Event ingestion is write-heavy, high-throughput, and must be durable. Top K quer
 Let's build the architecture step by step.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Aggregation Service]
-        S2[503 Service]
-        S3[downstream Service]
-        S4[Each Service]
-        S5[more Service]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-        Cacheredis[redis]
-    end
-
-    subgraph Message Queue
-        Queuekafka[kafka]
-        QueueKafka[Kafka]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> CacheRedis
-    S1 --> Cacheredis
-    S1 --> Queuekafka
-    S1 --> QueueKafka
-    S2 --> CacheRedis
-    S2 --> Cacheredis
-    S2 --> Queuekafka
-    S2 --> QueueKafka
-    S3 --> CacheRedis
-    S3 --> Cacheredis
-    S3 --> Queuekafka
-    S3 --> QueueKafka
-    S4 --> CacheRedis
-    S4 --> Cacheredis
-    S4 --> Queuekafka
-    S4 --> QueueKafka
-    S5 --> CacheRedis
-    S5 --> Cacheredis
-    S5 --> Queuekafka
-    S5 --> QueueKafka
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[more Service]
-        S2[like Service]
-        S3[ingestion Service]
-        S4[503 Service]
-        S5[Managed Service]
-    end
-
-    subgraph Caching Layer
-        Cacheredis[redis]
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        Queuekafka[kafka]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> Cacheredis
-    S1 --> CacheRedis
-    S1 --> Queuekafka
-    S1 --> QueueKafka
-    S2 --> Cacheredis
-    S2 --> CacheRedis
-    S2 --> Queuekafka
-    S2 --> QueueKafka
-    S3 --> Cacheredis
-    S3 --> CacheRedis
-    S3 --> Queuekafka
-    S3 --> QueueKafka
-    S4 --> Cacheredis
-    S4 --> CacheRedis
-    S4 --> Queuekafka
-    S4 --> QueueKafka
-    S5 --> Cacheredis
-    S5 --> CacheRedis
-    S5 --> Queuekafka
-    S5 --> QueueKafka
-    S1 --> StorageS3
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[Managed Service]
-        S3[like Service]
-        S4[ingestion Service]
-        S5[503 Service]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-        Cacheredis[redis]
-    end
-
-    subgraph Message Queue
-        Queuekafka[kafka]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> CacheRedis
-    S1 --> Cacheredis
-    S1 --> Queuekafka
-    S1 --> QueueKafka
-    S2 --> CacheRedis
-    S2 --> Cacheredis
-    S2 --> Queuekafka
-    S2 --> QueueKafka
-    S3 --> CacheRedis
-    S3 --> Cacheredis
-    S3 --> Queuekafka
-    S3 --> QueueKafka
-    S4 --> CacheRedis
-    S4 --> Cacheredis
-    S4 --> Queuekafka
-    S4 --> QueueKafka
-    S5 --> CacheRedis
-    S5 --> Cacheredis
-    S5 --> Queuekafka
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-```
-
-
-
-## 4.1 Requirement 1: High-Throughput Event Ingestion
 The first challenge is accepting 100,000+ events per second without losing data or creating bottlenecks. A single server processing events synchronously would fall over immediately. We need a design that buffers, parallelizes, and processes events efficiently.
 
 ### Components Needed
@@ -388,6 +193,67 @@ Where we maintain the frequency counts. This could be Redis, a time-series datab
 Let's trace through what happens when events arrive:
 The key insight is the separation between acknowledgment and processing. The client gets a response in milliseconds (after Kafka ack), but actual counting happens asynchronously. This is acceptable because our results are already expected to have a few seconds of delay.
 **Why batch local counts before flushing?** Updating the central store for every single event would create 100,000 writes per second. By batching locally and flushing every few seconds, we reduce this to a few hundred writes per second while losing only a small amount of freshness.
+
+
+    S5 --> QueueKafka
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[Managed Service]
+        S2[Each Service]
+        S3[Ingestion Service]
+        S4[This Service]
+        S5[Query Service]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+        Cacheredis[redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+        Queuekafka[kafka]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> CacheRedis
+    S1 --> Cacheredis
+    S1 --> QueueKafka
+    S1 --> Queuekafka
+    S2 --> CacheRedis
+    S2 --> Cacheredis
+    S2 --> QueueKafka
+    S2 --> Queuekafka
+    S3 --> CacheRedis
+    S3 --> Cacheredis
+    S3 --> QueueKafka
+    S3 --> Queuekafka
+    S4 --> CacheRedis
+    S4 --> Cacheredis
+    S4 --> QueueKafka
+    S4 --> Queuekafka
+    S5 --> CacheRedis
+    S5 --> Cacheredis
+    S5 --> QueueKafka
+    S5 --> Queuekafka
+
+
 
 ## 4.2 Requirement 2: Top K Computation
 Once events are counted, we need to efficiently identify the K most frequent items. This is where the algorithmic challenges begin.

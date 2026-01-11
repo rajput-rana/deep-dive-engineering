@@ -188,192 +188,6 @@ The key insight is that these three operations have very different performance c
 Let's build this architecture step by step, starting with order management.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[503 Service]
-        S2[Risk Service]
-        S3[Management Service]
-        S4[dedicated Service]
-        S5[core Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[dedicated Service]
-        S2[core Service]
-        S3[503 Service]
-        S4[Management Service]
-        S5[Application Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageS3
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[Management Service]
-        S3[Risk Service]
-        S4[core Service]
-        S5[dedicated Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-```
-
-
-
-## 4.1 Requirement 1: Order Management
 When a trader clicks "Buy" or "Sell" in their trading app, the order begins a journey through several systems before it reaches the matching engine. This path needs to be fast, but more importantly, it needs to be correct. An invalid order that reaches the matching engine could cause serious problems.
 Let's think about what needs to happen:
 1. Verify the trader is who they claim to be (authentication)
@@ -413,6 +227,64 @@ Let's walk through this step by step:
 6. **Response to trader:** The trader receives confirmation that their order was accepted, along with an order ID they can use to track its status.
 
 **Why persist before matching?** If the matching engine crashes after receiving the order but before persisting the trade, we could lose track of the order entirely. By persisting first, we ensure that every order is recorded and can be recovered.
+
+
+    S5 --> QueueKafka
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[503 Service]
+        S2[Risk Service]
+        S3[Management Service]
+        S4[core Service]
+        S5[dedicated Service]
+    end
+
+    subgraph Data Storage
+        DBPostgreSQL[PostgreSQL]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBPostgreSQL
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S2 --> DBPostgreSQL
+    S2 --> CacheRedis
+    S2 --> QueueKafka
+    S3 --> DBPostgreSQL
+    S3 --> CacheRedis
+    S3 --> QueueKafka
+    S4 --> DBPostgreSQL
+    S4 --> CacheRedis
+    S4 --> QueueKafka
+    S5 --> DBPostgreSQL
+    S5 --> CacheRedis
+    S5 --> QueueKafka
+
+
 
 ## 4.2 Requirement 2: Order Matching
 This is the heart of the exchange, the component that actually brings buyers and sellers together. The matching engine must process orders with sub-millisecond latency while maintaining perfect fairness. If two traders submit orders at nearly the same time, the one who submitted first must be processed first. No exceptions.

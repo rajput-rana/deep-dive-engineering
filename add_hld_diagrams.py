@@ -161,8 +161,8 @@ def generate_hld_diagram(content: str, title: str) -> str:
     
     # CDN
     if components['cdn']:
-        diagram += "    subgraph CDN\n"
-        diagram += "        CDN[Content Delivery Network]\n"
+        diagram += "    subgraph CDNLayer\n"
+        diagram += "        CDNNode[Content Delivery Network]\n"
         diagram += "    end\n\n"
     
     # Connections
@@ -178,30 +178,30 @@ def generate_hld_diagram(content: str, title: str) -> str:
         for i in range(1, min(len(components['services']), 5) + 1):
             if components['databases']:
                 for db in components['databases'][:2]:
-                    db_name = db.replace(' ', '')
+                    db_name = db.replace(' ', '').replace('-', '')
                     diagram += f"    S{i} --> DB{db_name}\n"
             if components['caches']:
                 for cache in components['caches']:
-                    cache_name = cache.replace(' ', '')
+                    cache_name = cache.replace(' ', '').replace('-', '')
                     diagram += f"    S{i} --> Cache{cache_name}\n"
             if components['queues']:
                 for queue in components['queues']:
-                    queue_name = queue.replace(' ', '')
+                    queue_name = queue.replace(' ', '').replace('-', '')
                     diagram += f"    S{i} --> Queue{queue_name}\n"
     
     if components['storage']:
         for storage in components['storage']:
-            storage_name = storage.replace(' ', '')
+            storage_name = storage.replace(' ', '').replace('-', '')
             if components['services']:
                 diagram += f"    S1 --> Storage{storage_name}\n"
     
     if components['cdn']:
         if components['storage']:
             for storage in components['storage']:
-                storage_name = storage.replace(' ', '')
-                diagram += f"    Storage{storage_name} --> CDN\n"
-        diagram += "    CDN --> Web\n"
-        diagram += "    CDN --> Mobile\n"
+                storage_name = storage.replace(' ', '').replace('-', '')
+                diagram += f"    Storage{storage_name} --> CDNNode\n"
+        diagram += "    CDNNode --> Web\n"
+        diagram += "    CDNNode --> Mobile\n"
     
     diagram += "```\n"
     
@@ -223,11 +223,28 @@ def add_hld_to_file(filepath: Path):
             # Find the position after HLD header
             hld_pos = hld_match.end()
             
-            # Check if diagram already exists
-            if '```mermaid' in content[hld_pos:hld_pos+500]:
-                print(f"  ⚠️  {filepath.name}: Diagram already exists, skipping")
-                filepath.write_text(content, encoding='utf-8')
-                return
+            # Remove ALL existing mermaid diagrams in the HLD section
+            # Find all mermaid blocks after HLD header
+            section_content = content[hld_pos:]
+            # More precise pattern to match complete mermaid blocks
+            mermaid_pattern = r'```mermaid\n.*?```\n'
+            matches = list(re.finditer(mermaid_pattern, section_content, re.DOTALL))
+            if matches:
+                # Remove all mermaid blocks (in reverse order to maintain positions)
+                for match in reversed(matches):
+                    start = hld_pos + match.start()
+                    end = hld_pos + match.end()
+                    # Check what's before and after to avoid corruption
+                    before_text = content[max(0, start-20):start]
+                    after_text = content[end:min(len(content), end+20)]
+                    # Only remove if it's a proper mermaid block
+                    if '```mermaid' in before_text[-20:] or content[start:start+11] == '```mermaid':
+                        content = content[:start] + content[end:]
+                # Clean up any corrupted remnants
+                content = re.sub(r'```me[^`]*mermai[^`]*', '', content)
+                content = re.sub(r'\n{4,}', '\n\n\n', content)
+                insert_pos = hld_pos + 50  # Insert after header
+                print(f"  🔄 {filepath.name}: Removed {len(matches)} old diagram(s)")
             
             # Find next section (usually starts with ##)
             next_section = re.search(r'\n##\s+\d+\.', content[hld_pos:])

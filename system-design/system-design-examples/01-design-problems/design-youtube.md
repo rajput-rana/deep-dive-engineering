@@ -52,6 +52,7 @@ We can break the architecture of YouTube into two primary components:
 - **Video Upload & Processing** – Manages user uploads, transcoding, and metadata storage.
 
 
+    CDNNode --> Mobile
 ```mermaid
 graph TB
     subgraph Clients
@@ -64,38 +65,38 @@ graph TB
     end
 
     subgraph Application Services
-        S1[Search Service]
-        S2[Transcoding Service]
+        S1[backend Service]
+        S2[based Service]
         S3[indexing Service]
-        S4[lookup Service]
-        S5[Metadata Service]
+        S4[Search Service]
+        S5[Lookup Service]
     end
 
     subgraph Data Storage
         DBPostgreSQL[PostgreSQL]
-        DBElasticsearch[Elasticsearch]
         DBMySQL[MySQL]
+        DBElasticsearch[Elasticsearch]
     end
 
     subgraph Caching Layer
-        CacheMemcached[Memcached]
         CacheRedis[Redis]
+        CacheMemcached[Memcached]
     end
 
     subgraph Message Queue
+        QueueKafka[Kafka]
         QueueRabbitMQ[RabbitMQ]
         QueueSQS[SQS]
-        QueueKafka[Kafka]
     end
 
     subgraph Object Storage
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
         StorageS3[S3]
+        StorageObjectStorage[Object Storage]
+        Storageobjectstorage[object storage]
     end
 
-    subgraph CDN
-        CDN[Content Delivery Network]
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
     end
 
     Web --> LB
@@ -106,49 +107,48 @@ graph TB
     LB --> S4
     LB --> S5
     S1 --> DBPostgreSQL
-    S1 --> DBElasticsearch
-    S1 --> CacheMemcached
+    S1 --> DBMySQL
     S1 --> CacheRedis
+    S1 --> CacheMemcached
+    S1 --> QueueKafka
     S1 --> QueueRabbitMQ
     S1 --> QueueSQS
-    S1 --> QueueKafka
     S2 --> DBPostgreSQL
-    S2 --> DBElasticsearch
-    S2 --> CacheMemcached
+    S2 --> DBMySQL
     S2 --> CacheRedis
+    S2 --> CacheMemcached
+    S2 --> QueueKafka
     S2 --> QueueRabbitMQ
     S2 --> QueueSQS
-    S2 --> QueueKafka
     S3 --> DBPostgreSQL
-    S3 --> DBElasticsearch
-    S3 --> CacheMemcached
+    S3 --> DBMySQL
     S3 --> CacheRedis
+    S3 --> CacheMemcached
+    S3 --> QueueKafka
     S3 --> QueueRabbitMQ
     S3 --> QueueSQS
-    S3 --> QueueKafka
     S4 --> DBPostgreSQL
-    S4 --> DBElasticsearch
-    S4 --> CacheMemcached
+    S4 --> DBMySQL
     S4 --> CacheRedis
+    S4 --> CacheMemcached
+    S4 --> QueueKafka
     S4 --> QueueRabbitMQ
     S4 --> QueueSQS
-    S4 --> QueueKafka
     S5 --> DBPostgreSQL
-    S5 --> DBElasticsearch
-    S5 --> CacheMemcached
+    S5 --> DBMySQL
     S5 --> CacheRedis
+    S5 --> CacheMemcached
+    S5 --> QueueKafka
     S5 --> QueueRabbitMQ
     S5 --> QueueSQS
-    S5 --> QueueKafka
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectStorage
     S1 --> StorageS3
-    Storageobjectstorage --> CDN
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
+    S1 --> StorageObjectStorage
+    S1 --> Storageobjectstorage
+    StorageS3 --> CDNNode
+    StorageObjectStorage --> CDNNode
+    Storageobjectstorage --> CDNNode
+    CDNNode --> Web
+    CDNNode --> Mobile
 
 
 

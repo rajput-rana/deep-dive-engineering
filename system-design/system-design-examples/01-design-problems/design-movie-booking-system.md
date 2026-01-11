@@ -188,231 +188,6 @@ Notice how the read path has multiple caching layers. Most browsing requests wil
 Let's build this architecture step by step, starting with the simplest requirement.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Payment Service]
-        S2[separate Service]
-        S3[Booking Service]
-        S4[customer Service]
-        S5[All Service]
-    end
-
-    subgraph Data Storage
-        DBElasticsearch[Elasticsearch]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBElasticsearch
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBElasticsearch
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBElasticsearch
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBElasticsearch
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBElasticsearch
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Stateless Service]
-        S2[Application Service]
-        S3[separate Service]
-        S4[customer Service]
-        S5[Seat Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-        DBElasticsearch[Elasticsearch]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageS3
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[separate Service]
-        S2[Stateless Service]
-        S3[other Service]
-        S4[Movie Service]
-        S5[customer Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-        DBElasticsearch[Elasticsearch]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-## 4.1 Requirement 1: Browse Movies and Showtimes
 When a user opens the app, they want to quickly find movies playing near them. This is the most common interaction, and it needs to be fast. Let's design for speed by introducing caching at multiple levels.
 
 ### Components Needed
@@ -444,6 +219,76 @@ Let's walk through this step by step:
 5. **Cache and return:** Results are cached with a 15-minute TTL. The same query from another user will hit the cache.
 
 The key insight here is that movie listings are read-heavy and change slowly. We can afford aggressive caching without worrying about showing stale data. A movie added 15 minutes ago appearing slightly delayed is acceptable.
+
+
+    CDNNode --> Mobile
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[Managed Service]
+        S2[Movie Service]
+        S3[Payment Service]
+        S4[Seat Service]
+        S5[other Service]
+    end
+
+    subgraph Data Storage
+        DBElasticsearch[Elasticsearch]
+        DBPostgreSQL[PostgreSQL]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+    end
+
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBElasticsearch
+    S1 --> DBPostgreSQL
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S2 --> DBElasticsearch
+    S2 --> DBPostgreSQL
+    S2 --> CacheRedis
+    S2 --> QueueKafka
+    S3 --> DBElasticsearch
+    S3 --> DBPostgreSQL
+    S3 --> CacheRedis
+    S3 --> QueueKafka
+    S4 --> DBElasticsearch
+    S4 --> DBPostgreSQL
+    S4 --> CacheRedis
+    S4 --> QueueKafka
+    S5 --> DBElasticsearch
+    S5 --> DBPostgreSQL
+    S5 --> CacheRedis
+    S5 --> QueueKafka
+    CDNNode --> Web
+    CDNNode --> Mobile
+
+
 
 ## 4.2 Requirement 2: View Seat Map and Select Seats
 Now for the interesting part. This is where we need to be clever about concurrency.

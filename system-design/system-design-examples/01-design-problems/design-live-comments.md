@@ -136,161 +136,6 @@ At its core, the system revolves around **two primary data flows**:
 Lets first discuss posting comment and then enhance the design to include reading as well.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Comment Service]
-        S2[comment Service]
-    end
-
-    subgraph Data Storage
-        DBDynamoDB[DynamoDB]
-        DBCassandra[Cassandra]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    S1 --> DBDynamoDB
-    S1 --> DBCassandra
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBDynamoDB
-    S2 --> DBCassandra
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[comment Service]
-        S3[Comment Service]
-    end
-
-    subgraph Data Storage
-        DBDynamoDB[DynamoDB]
-        DBCassandra[Cassandra]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    S1 --> DBDynamoDB
-    S1 --> DBCassandra
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBDynamoDB
-    S2 --> DBCassandra
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBDynamoDB
-    S3 --> DBCassandra
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[comment Service]
-        S3[Comment Service]
-    end
-
-    subgraph Data Storage
-        DBCassandra[Cassandra]
-        DBDynamoDB[DynamoDB]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    S1 --> DBCassandra
-    S1 --> DBDynamoDB
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBCassandra
-    S2 --> DBDynamoDB
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBCassandra
-    S3 --> DBDynamoDB
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S1 --> StorageS3
-```
-
-
-
-## 3.1 Posting a Comment
 Posting a comment is relatively straightforward since only **one user** is involved in this operation.
 Let’s walk through the components and flow.
 
@@ -317,6 +162,53 @@ The central hub for real-time distribution of comment stream to SSE gateways.
 3. The Comment Service:
 4. Almost instantly, the Comment Service returns a `202 Accepted` response to the user. This makes the application *feel* instantaneous, as the user gets confirmation before the comment has even been broadcast to other viewers.
 
+
+    S2 --> QueueKafka
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[comment Service]
+        S2[Comment Service]
+    end
+
+    subgraph Data Storage
+        DBDynamoDB[DynamoDB]
+        DBCassandra[Cassandra]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+    end
+
+    subgraph Object Storage
+        StorageS3[S3]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    S1 --> DBDynamoDB
+    S1 --> DBCassandra
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S2 --> DBDynamoDB
+    S2 --> DBCassandra
+    S2 --> CacheRedis
+    S2 --> QueueKafka
 ## 3.2 Receiving a Comment
 The read path is where the **real-time magic** happens.
 When a new comment arrives, it must be **fanned out** to potentially **millions of active viewers** connected to the live stream, all within a fraction of a second.

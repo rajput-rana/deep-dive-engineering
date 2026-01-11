@@ -160,234 +160,6 @@ Our system needs to handle three distinct operations:
 Each of these has very different characteristics. Map tiles are static and highly cacheable. Location search requires text indexing and geospatial queries. Navigation involves complex graph algorithms with real-time data. Let's tackle them one by one.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Geocoding Service]
-        S2[navigation Service]
-        S3[Routing Service]
-        S4[Tile Service]
-        S5[mapping Service]
-    end
-
-    subgraph Data Storage
-        DBElasticsearch[Elasticsearch]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Object Storage
-        StorageObjectstorage[Object storage]
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBElasticsearch
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S2 --> DBElasticsearch
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S3 --> DBElasticsearch
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S4 --> DBElasticsearch
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S5 --> DBElasticsearch
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S1 --> StorageObjectstorage
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    StorageObjectstorage --> CDN
-    Storageobjectstorage --> CDN
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Routing Service]
-        S2[Managed Service]
-        S3[Geocoding Service]
-        S4[The Service]
-        S5[navigation Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-        DBElasticsearch[Elasticsearch]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-        Storageobjectstorage[object storage]
-        StorageObjectstorage[Object storage]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S2 --> DBPostgreSQL
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S3 --> DBPostgreSQL
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S4 --> DBPostgreSQL
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S5 --> DBPostgreSQL
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectstorage
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    Storageobjectstorage --> CDN
-    StorageObjectstorage --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[navigation Service]
-        S3[Managed Service]
-        S4[Geocoding Service]
-        S5[Directions Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-        DBElasticsearch[Elasticsearch]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Object Storage
-        StorageObjectstorage[Object storage]
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S2 --> DBPostgreSQL
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S3 --> DBPostgreSQL
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S4 --> DBPostgreSQL
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S5 --> DBPostgreSQL
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S1 --> StorageObjectstorage
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    StorageObjectstorage --> CDN
-    Storageobjectstorage --> CDN
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-## 4.1 Requirement 1: Map Rendering
 When you open a mapping app and see a detailed street map, you are actually looking at dozens of small images stitched together seamlessly. These images, called tiles, are the fundamental building block of web-based mapping.
 
 ### Why Tiles?
@@ -420,6 +192,82 @@ Object storage is the right choice here because tiles are static binary files wi
 ### The Tile Request Flow
 Let's trace what happens when a user pans to a new area of the map:
 The key insight is that most users see most tiles from cache. When you view San Francisco, millions of other users have already viewed those same tiles, so they are warm in the CDN cache. Only truly obscure areas or fresh data require a trip to origin.
+
+
+    CDNNode --> Mobile
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[Managed Service]
+        S2[Tile Service]
+        S3[Routing Service]
+        S4[Traffic Service]
+        S5[mapping Service]
+    end
+
+    subgraph Data Storage
+        DBElasticsearch[Elasticsearch]
+        DBPostgreSQL[PostgreSQL]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Object Storage
+        StorageObjectStorage[Object Storage]
+        StorageS3[S3]
+        StorageObjectstorage[Object storage]
+        Storageobjectstorage[object storage]
+    end
+
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBElasticsearch
+    S1 --> DBPostgreSQL
+    S1 --> CacheRedis
+    S2 --> DBElasticsearch
+    S2 --> DBPostgreSQL
+    S2 --> CacheRedis
+    S3 --> DBElasticsearch
+    S3 --> DBPostgreSQL
+    S3 --> CacheRedis
+    S4 --> DBElasticsearch
+    S4 --> DBPostgreSQL
+    S4 --> CacheRedis
+    S5 --> DBElasticsearch
+    S5 --> DBPostgreSQL
+    S5 --> CacheRedis
+    S1 --> StorageObjectStorage
+    S1 --> StorageS3
+    S1 --> StorageObjectstorage
+    S1 --> Storageobjectstorage
+    StorageObjectStorage --> CDNNode
+    StorageS3 --> CDNNode
+    StorageObjectstorage --> CDNNode
+    Storageobjectstorage --> CDNNode
+    CDNNode --> Web
+    CDNNode --> Mobile
+
+
 
 ## 4.2 Requirement 2: Location Search
 Users need to find places by name, address, or category. A good search experience handles typos, understands context ("coffee" means coffee shops, not coffee beans), and ranks results by relevance and proximity.

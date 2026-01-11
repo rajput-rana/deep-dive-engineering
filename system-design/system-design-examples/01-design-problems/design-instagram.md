@@ -122,6 +122,21 @@ Typically, you’ll combine multiple database solutions to handle different work
 Given the requirements, we will use a **relational database (e.g., PostgreSQL, MySQL)** for structured data and a **NoSQL database (Cassandra, DynamoDB, or Elasticsearch)** for feed storage and search indexing.
 
 
+``
+```m# 4.1 Relational Database for Structured Data
+Given the structured nature of user profiles and posts metadata, a relational database (like **PostgreSQL** or **MySQL**) is often well-suited.
+- **Users Table: **Stores user account details.
+- **Posts Table: **Stores metadata related to posts.
+- **Media Table: **Stores photo/video metadata, but not the actual files.
+- **Comments Table: **Stores post comments.
+- **Shares Table: **Stores post shares.
+- **Followers Table: **Maintains the follow/unfollow relationship. Stores engagement score from followers to help with ranking posts in the feed.
+    CDNNode --> Mobile
+```
+
+
+
+
 ```mermaid
 graph TB
     subgraph Clients
@@ -135,16 +150,16 @@ graph TB
 
     subgraph Application Services
         S1[Decouples Service]
-        S2[independent Service]
-        S3[degrade Service]
-        S4[Feed Service]
-        S5[Engagement Service]
+        S2[Feed Service]
+        S3[independent Service]
+        S4[backend Service]
+        S5[Search Service]
     end
 
     subgraph Data Storage
         DBCassandra[Cassandra]
+        DBPostgreSQL[PostgreSQL]
         DBMySQL[MySQL]
-        DBDynamoDB[DynamoDB]
     end
 
     subgraph Caching Layer
@@ -153,19 +168,19 @@ graph TB
     end
 
     subgraph Message Queue
-        QueueRabbitMQ[RabbitMQ]
         QueueKafka[Kafka]
+        QueueRabbitMQ[RabbitMQ]
     end
 
     subgraph Object Storage
         StorageObjectStorage[Object Storage]
         StorageS3[S3]
-        Storageobjectstorage[object storage]
         StorageobjectStorage[object Storage]
+        Storageobjectstorage[object storage]
     end
 
-    subgraph CDN
-        CDN[Content Delivery Network]
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
     end
 
     Web --> LB
@@ -176,155 +191,47 @@ graph TB
     LB --> S4
     LB --> S5
     S1 --> DBCassandra
-    S1 --> DBMySQL
+    S1 --> DBPostgreSQL
     S1 --> CacheRedis
     S1 --> CacheMemcached
-    S1 --> QueueRabbitMQ
     S1 --> QueueKafka
+    S1 --> QueueRabbitMQ
     S2 --> DBCassandra
-    S2 --> DBMySQL
+    S2 --> DBPostgreSQL
     S2 --> CacheRedis
     S2 --> CacheMemcached
-    S2 --> QueueRabbitMQ
     S2 --> QueueKafka
+    S2 --> QueueRabbitMQ
     S3 --> DBCassandra
-    S3 --> DBMySQL
+    S3 --> DBPostgreSQL
     S3 --> CacheRedis
     S3 --> CacheMemcached
-    S3 --> QueueRabbitMQ
     S3 --> QueueKafka
+    S3 --> QueueRabbitMQ
     S4 --> DBCassandra
-    S4 --> DBMySQL
+    S4 --> DBPostgreSQL
     S4 --> CacheRedis
     S4 --> CacheMemcached
-    S4 --> QueueRabbitMQ
     S4 --> QueueKafka
+    S4 --> QueueRabbitMQ
     S5 --> DBCassandra
-    S5 --> DBMySQL
+    S5 --> DBPostgreSQL
     S5 --> CacheRedis
     S5 --> CacheMemcached
-    S5 --> QueueRabbitMQ
     S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    S1 --> Storageobjectstorage
-    S1 --> StorageobjectStorage
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    Storageobjectstorage --> CDN
-    StorageobjectStorage --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[Search Service]
-        S3[Engagement Service]
-        S4[Feed Service]
-        S5[degrade Service]
-    end
-
-    subgraph Data Storage
-        DBMySQL[MySQL]
-        DBElasticsearch[Elasticsearch]
-        DBCassandra[Cassandra]
-    end
-
-    subgraph Caching Layer
-        CacheMemcached[Memcached]
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueRabbitMQ[RabbitMQ]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-        StorageobjectStorage[object Storage]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBMySQL
-    S1 --> DBElasticsearch
-    S1 --> CacheMemcached
-    S1 --> CacheRedis
-    S1 --> QueueRabbitMQ
-    S1 --> QueueKafka
-    S2 --> DBMySQL
-    S2 --> DBElasticsearch
-    S2 --> CacheMemcached
-    S2 --> CacheRedis
-    S2 --> QueueRabbitMQ
-    S2 --> QueueKafka
-    S3 --> DBMySQL
-    S3 --> DBElasticsearch
-    S3 --> CacheMemcached
-    S3 --> CacheRedis
-    S3 --> QueueRabbitMQ
-    S3 --> QueueKafka
-    S4 --> DBMySQL
-    S4 --> DBElasticsearch
-    S4 --> CacheMemcached
-    S4 --> CacheRedis
-    S4 --> QueueRabbitMQ
-    S4 --> QueueKafka
-    S5 --> DBMySQL
-    S5 --> DBElasticsearch
-    S5 --> CacheMemcached
-    S5 --> CacheRedis
     S5 --> QueueRabbitMQ
-    S5 --> QueueKafka
-    S1 --> Storageobjectstorage
     S1 --> StorageObjectStorage
     S1 --> StorageS3
     S1 --> StorageobjectStorage
-    Storageobjectstorage --> CDN
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    StorageobjectStorage --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
+    S1 --> Storageobjectstorage
+    StorageObjectStorage --> CDNNode
+    StorageS3 --> CDNNode
+    StorageobjectStorage --> CDNNode
+    Storageobjectstorage --> CDNNode
+    CDNNode --> Web
+    CDNNode --> Mobile
 
 
-
-## 4.1 Relational Database for Structured Data
-Given the structured nature of user profiles and posts metadata, a relational database (like **PostgreSQL** or **MySQL**) is often well-suited.
-- **Users Table: **Stores user account details.
-- **Posts Table: **Stores metadata related to posts.
-- **Media Table: **Stores photo/video metadata, but not the actual files.
-- **Comments Table: **Stores post comments.
-- **Shares Table: **Stores post shares.
-- **Followers Table: **Maintains the follow/unfollow relationship. Stores engagement score from followers to help with ranking posts in the feed.
 
 ## 4.2 NoSQL Databases for High-Volume Data
 While relational databases are ideal for structured data, they struggle with high-velocity writes and large scale distributed workloads. NoSQL databases like **Cassandra, DynamoDB, or Redis** provide horizontal scalability and high availability.

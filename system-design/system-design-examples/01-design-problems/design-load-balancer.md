@@ -164,186 +164,6 @@ The data plane must be fast since every request flows through it. The control pl
 Let's build this architecture step by step, starting with the most basic requirement: getting traffic from clients to backends.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[some Service]
-        S2[required Service]
-        S3[different Service]
-        S4[the Service]
-        S5[scale Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[the Service]
-        S2[some Service]
-        S3[Application Service]
-        S4[entire Service]
-        S5[scale Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Object Storage
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S1 --> StorageS3
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[scale Service]
-        S3[required Service]
-        S4[different Service]
-        S5[some Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-## 4.1 Requirement 1: Traffic Distribution
 The most basic job of a load balancer is accepting connections from clients and forwarding them to backend servers. This sounds simple, but there are several components involved, and understanding how they work together is key to designing a good system.
 
 ### Components for Traffic Distribution
@@ -386,6 +206,57 @@ Let's trace a request through the system:
 
 At this point, we have basic load balancing working. But what happens when Backend 2 crashes? Without health checking, the load balancer would keep sending traffic to it, and users would see errors. Let's address that next.
 
+
+    CDNNode --> Mobile
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[entire Service]
+        S2[scale Service]
+        S3[some Service]
+        S4[the Service]
+        S5[different Service]
+    end
+
+    subgraph Data Storage
+        DBPostgreSQL[PostgreSQL]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBPostgreSQL
+    S1 --> CacheRedis
+    S2 --> DBPostgreSQL
+    S2 --> CacheRedis
+    S3 --> DBPostgreSQL
+    S3 --> CacheRedis
+    S4 --> DBPostgreSQL
+    S4 --> CacheRedis
+    S5 --> DBPostgreSQL
+    S5 --> CacheRedis
+    CDNNode --> Web
 ## 4.2 Requirement 2: Health Monitoring
 Servers fail. It is not a matter of if, but when. A process might crash, a disk might fill up, or a network partition might isolate a server. Without health checking, the load balancer would blindly keep sending traffic to dead servers, and users would see errors.
 Health monitoring solves this by continuously checking each backend and automatically routing around failures.

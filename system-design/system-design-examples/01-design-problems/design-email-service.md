@@ -203,243 +203,6 @@ Unlike typical web applications that only use HTTP, email systems rely on specia
 Let's build this architecture step by step, starting with sending emails.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Indexing Service]
-        S2[Application Service]
-        S3[sync Service]
-        S4[Email Service]
-        S5[Stateless Service]
-    end
-
-    subgraph Data Storage
-        DBElasticsearch[Elasticsearch]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectstorage[Object storage]
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageObjectstorage
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    StorageObjectstorage --> CDN
-    Storageobjectstorage --> CDN
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Stateless Service]
-        S2[Managed Service]
-        S3[application Service]
-        S4[Email Service]
-        S5[sync Service]
-    end
-
-    subgraph Data Storage
-        DBElasticsearch[Elasticsearch]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-        Storageobjectstorage[object storage]
-        StorageObjectstorage[Object storage]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectstorage
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    Storageobjectstorage --> CDN
-    StorageObjectstorage --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[Indexing Service]
-        S3[Managed Service]
-        S4[sync Service]
-        S5[email Service]
-    end
-
-    subgraph Data Storage
-        DBElasticsearch[Elasticsearch]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectstorage[Object storage]
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageObjectstorage
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    StorageObjectstorage --> CDN
-    Storageobjectstorage --> CDN
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-## 4.1 Requirement 1: Sending Emails
 When a user clicks "Send" on an email, several things need to happen. The message needs to be validated, stored in the sender's "Sent" folder, and then delivered to the recipient. The recipient could be another user on our platform (internal) or someone using a different provider like Yahoo or Outlook (external).
 
 ### Understanding SMTP
@@ -475,6 +238,85 @@ Let me walk through this flow:
 6. **Handling failures:** If delivery fails temporarily (server busy), the job is re-queued with exponential backoff. If it fails permanently (user does not exist), we generate a bounce notification to inform the sender.
 
 **Why store before queueing?** If queueing fails, we have the email stored and can retry. If storage fails, we tell the user immediately. This ordering makes the system more resilient to partial failures.
+
+
+    CDNNode --> Mobile
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[Managed Service]
+        S2[This Service]
+        S3[Email Service]
+        S4[Indexing Service]
+        S5[against Service]
+    end
+
+    subgraph Data Storage
+        DBElasticsearch[Elasticsearch]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+    end
+
+    subgraph Object Storage
+        StorageObjectStorage[Object Storage]
+        StorageS3[S3]
+        StorageObjectstorage[Object storage]
+        Storageobjectstorage[object storage]
+    end
+
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBElasticsearch
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S2 --> DBElasticsearch
+    S2 --> CacheRedis
+    S2 --> QueueKafka
+    S3 --> DBElasticsearch
+    S3 --> CacheRedis
+    S3 --> QueueKafka
+    S4 --> DBElasticsearch
+    S4 --> CacheRedis
+    S4 --> QueueKafka
+    S5 --> DBElasticsearch
+    S5 --> CacheRedis
+    S5 --> QueueKafka
+    S1 --> StorageObjectStorage
+    S1 --> StorageS3
+    S1 --> StorageObjectstorage
+    S1 --> Storageobjectstorage
+    StorageObjectStorage --> CDNNode
+    StorageS3 --> CDNNode
+    StorageObjectstorage --> CDNNode
+    Storageobjectstorage --> CDNNode
+    CDNNode --> Web
+    CDNNode --> Mobile
+
+
 
 ## 4.2 Requirement 2: Receiving Emails
 Our system needs to accept emails from external senders. When someone from Yahoo or Outlook sends an email to a user on our platform, their mail server connects to ours and delivers the message via SMTP.

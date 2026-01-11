@@ -201,229 +201,6 @@ The extreme write-to-read ratio (10,000:1) tells us something important: we are 
 Let's build this architecture step by step, starting with click ingestion.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Receiver Service]
-        S2[stateless Service]
-        S3[Query Service]
-        S4[REST Service]
-        S5[this Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        Queuekafka[kafka]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        Storageobjectstorage[object storage]
-        StorageObjectstorage[Object storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> Queuekafka
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> Queuekafka
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> Queuekafka
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> Queuekafka
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> Queuekafka
-    S5 --> QueueKafka
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectstorage
-    S1 --> StorageS3
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[this Service]
-        S2[Receiver Service]
-        S3[API Service]
-        S4[Stateless Service]
-        S5[The Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        Queuekafka[kafka]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-        Storageobjectstorage[object storage]
-        StorageObjectstorage[Object storage]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> Queuekafka
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> Queuekafka
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> Queuekafka
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> Queuekafka
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> Queuekafka
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectstorage
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[Receiver Service]
-        S3[stateless Service]
-        S4[this Service]
-        S5[API Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        Queuekafka[kafka]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectstorage[Object storage]
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> Queuekafka
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> Queuekafka
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> Queuekafka
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> Queuekafka
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> Queuekafka
-    S5 --> QueueKafka
-    S1 --> StorageObjectstorage
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-```
-
-
-
-## 4.1 Requirement 1: Click Ingestion
 When a user clicks an ad on a website or mobile app, we need to capture that event reliably. The key word here is "reliably." At 350K clicks per second during peak times, we cannot afford to drop events. Every missed click is lost revenue for someone.
 The challenge is that we cannot process clicks synchronously at this volume. If we tried to validate, deduplicate, and aggregate each click before responding to the client, our latency would be unacceptable, and any hiccup in downstream processing would cause requests to pile up. Instead, we need to decouple ingestion from processing.
 
@@ -458,6 +235,79 @@ Let's trace through what happens when a user clicks an ad:
 **Step 5:** Once Kafka acknowledges, the receiver returns `202 Accepted` to the client immediately. The SDK knows the click was received; it does not need to wait for processing.
 **Step 6:** A separate consumer reads from Kafka and writes raw clicks to the Data Lake in batches (for efficiency).
 The 202 status code means "Accepted for processing." It signals to the client that the request was received but has not been fully processed yet. This is more accurate than 200, which implies the operation is complete.
+
+
+    S1 --> StorageS3
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[API Service]
+        S2[Receiver Service]
+        S3[stateless Service]
+        S4[Query Service]
+        S5[Stateless Service]
+    end
+
+    subgraph Data Storage
+        DBPostgreSQL[PostgreSQL]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+        Queuekafka[kafka]
+    end
+
+    subgraph Object Storage
+        StorageS3[S3]
+        StorageObjectstorage[Object storage]
+        Storageobjectstorage[object storage]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBPostgreSQL
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S1 --> Queuekafka
+    S2 --> DBPostgreSQL
+    S2 --> CacheRedis
+    S2 --> QueueKafka
+    S2 --> Queuekafka
+    S3 --> DBPostgreSQL
+    S3 --> CacheRedis
+    S3 --> QueueKafka
+    S3 --> Queuekafka
+    S4 --> DBPostgreSQL
+    S4 --> CacheRedis
+    S4 --> QueueKafka
+    S4 --> Queuekafka
+    S5 --> DBPostgreSQL
+    S5 --> CacheRedis
+    S5 --> QueueKafka
+    S5 --> Queuekafka
+    S1 --> StorageS3
+    S1 --> StorageObjectstorage
+    S1 --> Storageobjectstorage
+
+
 
 ## 4.2 Requirement 2: Click Aggregation
 Raw clicks sitting in Kafka are not useful for dashboards. Advertisers do not want to query 10 billion individual events to answer "how many clicks did my campaign get today?" We need to aggregate these clicks in real-time, rolling them up by time windows and dimensions.

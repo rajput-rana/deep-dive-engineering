@@ -226,198 +226,6 @@ Notice the order: on writes, we store data before metadata. On reads, we fetch m
 Let's build the architecture step by step, starting with the basic upload and download flows.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[storage Service]
-        S2[These Service]
-        S3[Data Service]
-        S4[Bucket Service]
-        S5[the Service]
-    end
-
-    subgraph Data Storage
-        DBDynamoDB[DynamoDB]
-    end
-
-    subgraph Object Storage
-        Storages3[s3]
-        StorageObjectstorage[Object storage]
-        StorageS3[S3]
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBDynamoDB
-    S2 --> DBDynamoDB
-    S3 --> DBDynamoDB
-    S4 --> DBDynamoDB
-    S5 --> DBDynamoDB
-    S1 --> Storages3
-    S1 --> StorageObjectstorage
-    S1 --> StorageS3
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectStorage
-    Storages3 --> CDN
-    StorageObjectstorage --> CDN
-    StorageS3 --> CDN
-    Storageobjectstorage --> CDN
-    StorageObjectStorage --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Data Service]
-        S2[Bucket Service]
-        S3[appropriate Service]
-        S4[the Service]
-        S5[application Service]
-    end
-
-    subgraph Data Storage
-        DBDynamoDB[DynamoDB]
-    end
-
-    subgraph Object Storage
-        Storages3[s3]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-        Storageobjectstorage[object storage]
-        StorageObjectstorage[Object storage]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBDynamoDB
-    S2 --> DBDynamoDB
-    S3 --> DBDynamoDB
-    S4 --> DBDynamoDB
-    S5 --> DBDynamoDB
-    S1 --> Storages3
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectstorage
-    Storages3 --> CDN
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    Storageobjectstorage --> CDN
-    StorageObjectstorage --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[storage Service]
-        S2[Application Service]
-        S3[These Service]
-        S4[Bucket Service]
-        S5[Metadata Service]
-    end
-
-    subgraph Data Storage
-        DBDynamoDB[DynamoDB]
-    end
-
-    subgraph Object Storage
-        Storageobjectstorage[object storage]
-        Storages3[s3]
-        StorageS3[S3]
-        StorageObjectStorage[Object Storage]
-        StorageObjectstorage[Object storage]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBDynamoDB
-    S2 --> DBDynamoDB
-    S3 --> DBDynamoDB
-    S4 --> DBDynamoDB
-    S5 --> DBDynamoDB
-    S1 --> Storageobjectstorage
-    S1 --> Storages3
-    S1 --> StorageS3
-    S1 --> StorageObjectStorage
-    S1 --> StorageObjectstorage
-    Storageobjectstorage --> CDN
-    Storages3 --> CDN
-    StorageS3 --> CDN
-    StorageObjectStorage --> CDN
-    StorageObjectstorage --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-## 4.1 Requirement 1: Storing and Retrieving Objects
 The most basic requirement is simple: store an object and get it back later. When a user uploads a file, we need to put the bytes somewhere safe. When they request it later, we need to find those bytes and return them. Let's introduce the components that make this work.
 
 ### Components for Basic Operations
@@ -455,6 +263,70 @@ Reading an object follows the reverse path:
 2. **Metadata lookup:** The Metadata Service queries its database with the bucket and key. It finds the record showing this object exists, is 2.5 MB, and has copies on storage nodes 7, 23, and 41.
 3. **Fetch data:** The Data Service picks one of the healthy storage nodes (typically the closest or least loaded) and requests the object data.
 4. **Stream response:** The data is streamed back through the gateway to the client. For large objects, this streaming approach avoids buffering the entire object in memory.
+
+
+    CDNNode --> Mobile
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[This Service]
+        S2[Bucket Service]
+        S3[the Service]
+        S4[storage Service]
+        S5[These Service]
+    end
+
+    subgraph Data Storage
+        DBDynamoDB[DynamoDB]
+    end
+
+    subgraph Object Storage
+        StorageS3[S3]
+        Storageobjectstorage[object storage]
+        StorageObjectstorage[Object storage]
+        Storages3[s3]
+        StorageObjectStorage[Object Storage]
+    end
+
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBDynamoDB
+    S2 --> DBDynamoDB
+    S3 --> DBDynamoDB
+    S4 --> DBDynamoDB
+    S5 --> DBDynamoDB
+    S1 --> StorageS3
+    S1 --> Storageobjectstorage
+    S1 --> StorageObjectstorage
+    S1 --> Storages3
+    S1 --> StorageObjectStorage
+    StorageS3 --> CDNNode
+    Storageobjectstorage --> CDNNode
+    StorageObjectstorage --> CDNNode
+    Storages3 --> CDNNode
+    StorageObjectStorage --> CDNNode
+    CDNNode --> Web
+    CDNNode --> Mobile
+
+
 
 ## 4.2 Requirement 2: Organizing Objects into Buckets
 With billions of objects in the system, users need a way to organize their data. This is where buckets come in. A bucket is a logical container that groups related objects and provides a namespace for their keys. But buckets do more than just organization. They are also where we apply access policies, versioning settings, and lifecycle rules.

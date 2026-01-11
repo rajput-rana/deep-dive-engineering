@@ -148,210 +148,6 @@ Our gateway needs to handle four core responsibilities:
 Let's tackle each one, building up the architecture as we go.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[internal Service]
-        S2[Internal Service]
-        S3[and Service]
-        S4[failing Service]
-        S5[your Service]
-    end
-
-    subgraph Data Storage
-        DBElasticsearch[Elasticsearch]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBElasticsearch
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBElasticsearch
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBElasticsearch
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBElasticsearch
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBElasticsearch
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[each Service]
-        S2[Application Service]
-        S3[User Service]
-        S4[Target Service]
-        S5[and Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-        DBElasticsearch[Elasticsearch]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageS3
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[per Service]
-        S2[failing Service]
-        S3[503 Service]
-        S4[other Service]
-        S5[The Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-        DBElasticsearch[Elasticsearch]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-```
-
-
-
-## 4.1 Requirement 1: Request Routing
 The most fundamental job of an API Gateway is receiving requests from clients and forwarding them to the right backend service. This sounds simple, but there are several moving parts.
 
 ### Components Needed
@@ -379,6 +175,70 @@ Let's trace a request through the routing flow:
 7. The gateway forwards the response back to the client.
 
 Notice that the gateway might modify the request path before forwarding. If the route is configured with `strip_prefix: true`, the gateway removes `/api/v1` before sending to the backend. The User Service just sees `/users/123`.
+
+
+    S5 --> QueueKafka
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[other Service]
+        S2[The Service]
+        S3[Internal Service]
+        S4[User Service]
+        S5[and Service]
+    end
+
+    subgraph Data Storage
+        DBPostgreSQL[PostgreSQL]
+        DBElasticsearch[Elasticsearch]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBPostgreSQL
+    S1 --> DBElasticsearch
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S2 --> DBPostgreSQL
+    S2 --> DBElasticsearch
+    S2 --> CacheRedis
+    S2 --> QueueKafka
+    S3 --> DBPostgreSQL
+    S3 --> DBElasticsearch
+    S3 --> CacheRedis
+    S3 --> QueueKafka
+    S4 --> DBPostgreSQL
+    S4 --> DBElasticsearch
+    S4 --> CacheRedis
+    S4 --> QueueKafka
+    S5 --> DBPostgreSQL
+    S5 --> DBElasticsearch
+    S5 --> CacheRedis
+    S5 --> QueueKafka
+
+
 
 ## 4.2 Requirement 2: Security (Authentication and Authorization)
 Routing requests is useless if anyone can access any API. The gateway must verify that clients are who they claim to be and have permission to access the requested resources.

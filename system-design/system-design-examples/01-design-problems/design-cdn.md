@@ -164,90 +164,6 @@ Our CDN needs to accomplish three core objectives:
 The first challenge is fundamental: when a user types a URL, how do we get their request to a server close to them rather than our origin server on another continent?
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-## 4.1 Requirement 1: Route Users to the Nearest Edge Server
 This is the foundation of CDN performance. If we cannot get users to nearby servers, nothing else matters. Let's explore how this works.
 When a user's browser requests , the first step is DNS resolution. The browser needs to convert `cdn.example.com` into an IP address. This is our opportunity to direct the user to an optimal edge server.
 
@@ -281,6 +197,30 @@ The downside is complexity. Running BGP requires expertise and coordination with
 In practice, major CDN providers use both. Cloudflare, for example, uses anycast for their edge servers (fast failover) and DNS-based routing for their origin shield layer (more control). This hybrid approach gives us the best of both worlds.
 For our design, we will use anycast for edge servers and DNS for regional shields.
 
+
+    CDNNode --> Mobile
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+    end
+
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    CDNNode --> Web
 ## 4.2 Requirement 2: Serve Content from Cache
 Once users reach an edge server, we need to serve their requested content quickly. This is where the caching architecture becomes critical.
 An edge server is essentially a high-performance caching proxy. When a request arrives, the server checks if the requested content exists in its cache. If it does (a "cache hit"), the response is immediate. If not (a "cache miss"), we need to fetch the content from upstream.

@@ -110,139 +110,6 @@ At the highest level, a web crawler is a loop: fetch a URL, parse the content, e
 Let's design each component by addressing the requirements one at a time.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Application Services
-        S1[fetcher Service]
-        S2[Coordinator Service]
-        S3[Fetcher Service]
-    end
-
-    subgraph Data Storage
-        DBCassandra[Cassandra]
-        DBMySQL[MySQL]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Object Storage
-        Storageobjectstorage[object storage]
-        StorageObjectstorage[Object storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    S1 --> DBCassandra
-    S1 --> DBMySQL
-    S2 --> DBCassandra
-    S2 --> DBMySQL
-    S3 --> DBCassandra
-    S3 --> DBMySQL
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectstorage
-    S1 --> StorageS3
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[Coordinator Service]
-        S3[fetcher Service]
-        S4[Fetcher Service]
-    end
-
-    subgraph Data Storage
-        DBMySQL[MySQL]
-        DBCassandra[Cassandra]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-        Storageobjectstorage[object storage]
-        StorageObjectstorage[Object storage]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    S1 --> DBMySQL
-    S1 --> DBCassandra
-    S2 --> DBMySQL
-    S2 --> DBCassandra
-    S3 --> DBMySQL
-    S3 --> DBCassandra
-    S4 --> DBMySQL
-    S4 --> DBCassandra
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectstorage
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[fetcher Service]
-        S3[Fetcher Service]
-        S4[Coordinator Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-        DBCassandra[Cassandra]
-        DBMySQL[MySQL]
-    end
-
-    subgraph Object Storage
-        StorageObjectstorage[Object storage]
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    S1 --> DBPostgreSQL
-    S1 --> DBCassandra
-    S2 --> DBPostgreSQL
-    S2 --> DBCassandra
-    S3 --> DBPostgreSQL
-    S3 --> DBCassandra
-    S4 --> DBPostgreSQL
-    S4 --> DBCassandra
-    S1 --> StorageObjectstorage
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-```
-
-
-
-## 4.1 URL Management: The URL Frontier
 The first thing we need is a way to manage which URLs to crawl and in what order. This component is called the URL Frontier, and it is far more sophisticated than a simple queue.
 
 ### The Problem
@@ -284,6 +151,43 @@ At our scale (10 billion URLs), the frontier cannot fit entirely in memory on a 
 - **Persistent Storage:** Use RocksDB or similar for on-disk storage of the URL queues.
 - **Coordination:** A central scheduler assigns hosts to workers and tracks rate limits.
 
+
+    S1 --> StorageS3
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Application Services
+        S1[Coordinator Service]
+        S2[Fetcher Service]
+        S3[fetcher Service]
+    end
+
+    subgraph Data Storage
+        DBPostgreSQL[PostgreSQL]
+        DBCassandra[Cassandra]
+        DBMySQL[MySQL]
+    end
+
+    subgraph Object Storage
+        StorageS3[S3]
+        StorageObjectstorage[Object storage]
+        Storageobjectstorage[object storage]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    S1 --> DBPostgreSQL
+    S1 --> DBCassandra
+    S2 --> DBPostgreSQL
+    S2 --> DBCassandra
+    S3 --> DBPostgreSQL
+    S3 --> DBCassandra
+    S1 --> StorageS3
+    S1 --> StorageObjectstorage
 ## 4.2 Content Fetching: The Fetcher Service
 With URLs ready to crawl, we need workers to actually download the pages. The fetcher service is the workhorse of the crawler.
 

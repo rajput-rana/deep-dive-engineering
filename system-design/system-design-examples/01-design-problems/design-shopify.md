@@ -216,264 +216,6 @@ Notice how the read path has multiple caching layers. Most requests should be se
 Let's build this architecture step by step.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Reconciliation Service]
-        S2[dedicated Service]
-        S3[Inventory Service]
-        S4[the Service]
-        S5[core Service]
-    end
-
-    subgraph Data Storage
-        DBelasticsearch[elasticsearch]
-        DBElasticsearch[Elasticsearch]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
-        StorageObjectstorage[Object storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBelasticsearch
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBelasticsearch
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBelasticsearch
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBelasticsearch
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBelasticsearch
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectStorage
-    S1 --> StorageObjectstorage
-    S1 --> StorageS3
-    Storageobjectstorage --> CDN
-    StorageObjectStorage --> CDN
-    StorageObjectstorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[dedicated Service]
-        S2[External Service]
-        S3[Stateless Service]
-        S4[Product Service]
-        S5[Application Service]
-    end
-
-    subgraph Data Storage
-        DBelasticsearch[elasticsearch]
-        DBPostgreSQL[PostgreSQL]
-        DBElasticsearch[Elasticsearch]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-        Storageobjectstorage[object storage]
-        StorageObjectstorage[Object storage]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBelasticsearch
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBelasticsearch
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBelasticsearch
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBelasticsearch
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBelasticsearch
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectstorage
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    Storageobjectstorage --> CDN
-    StorageObjectstorage --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Order Service]
-        S2[Cart Service]
-        S3[these Service]
-        S4[the Service]
-        S5[Stateless Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-        DBElasticsearch[Elasticsearch]
-        DBelasticsearch[elasticsearch]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        Storageobjectstorage[object storage]
-        StorageObjectstorage[Object storage]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectstorage
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    Storageobjectstorage --> CDN
-    StorageObjectstorage --> CDN
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-## 4.1 Requirement 1: Serving Storefronts
 When a customer visits a store, they browse product catalogs, view product details, search for items, and compare options. This is the highest traffic component of our system. We need sub-200ms response times and near-perfect availability since every slow page load costs sales.
 
 ### Components for the Storefront
@@ -508,6 +250,92 @@ Let's walk through each step:
 6. **Response sent:** The product JSON is returned to the customer's browser, which renders the page.
 
 The beauty of this setup is that popular products stay in cache, and most requests never touch the database. During a flash sale, the same product might be viewed by thousands of customers, but the database only sees a handful of requests.
+
+
+    CDNNode --> Mobile
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[complex Service]
+        S2[Storefront Service]
+        S3[Product Service]
+        S4[The Service]
+        S5[Reconciliation Service]
+    end
+
+    subgraph Data Storage
+        DBPostgreSQL[PostgreSQL]
+        DBelasticsearch[elasticsearch]
+        DBElasticsearch[Elasticsearch]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+    end
+
+    subgraph Object Storage
+        StorageS3[S3]
+        StorageObjectStorage[Object Storage]
+        StorageObjectstorage[Object storage]
+        Storageobjectstorage[object storage]
+    end
+
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBPostgreSQL
+    S1 --> DBelasticsearch
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S2 --> DBPostgreSQL
+    S2 --> DBelasticsearch
+    S2 --> CacheRedis
+    S2 --> QueueKafka
+    S3 --> DBPostgreSQL
+    S3 --> DBelasticsearch
+    S3 --> CacheRedis
+    S3 --> QueueKafka
+    S4 --> DBPostgreSQL
+    S4 --> DBelasticsearch
+    S4 --> CacheRedis
+    S4 --> QueueKafka
+    S5 --> DBPostgreSQL
+    S5 --> DBelasticsearch
+    S5 --> CacheRedis
+    S5 --> QueueKafka
+    S1 --> StorageS3
+    S1 --> StorageObjectStorage
+    S1 --> StorageObjectstorage
+    S1 --> Storageobjectstorage
+    StorageS3 --> CDNNode
+    StorageObjectStorage --> CDNNode
+    StorageObjectstorage --> CDNNode
+    Storageobjectstorage --> CDNNode
+    CDNNode --> Web
+    CDNNode --> Mobile
+
+
 
 ## 4.2 Requirement 2: Managing Inventory
 Now we get to one of the trickiest parts of e-commerce: inventory management. When a customer adds items to their cart or completes checkout, we must ensure the inventory count is accurate. Selling an item that is out of stock (overselling) is one of the worst customer experiences in e-commerce.

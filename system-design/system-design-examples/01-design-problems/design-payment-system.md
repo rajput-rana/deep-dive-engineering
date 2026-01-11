@@ -186,213 +186,6 @@ Payment systems have **zero tolerance for errors**. This means we need to design
 Let's build this architecture step by step, starting with payment creation.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Payment Service]
-        S2[Webhook Service]
-        S3[503 Service]
-        S4[Refund Service]
-        S5[and Service]
-    end
-
-    subgraph Data Storage
-        DBDynamoDB[DynamoDB]
-        DBCassandra[Cassandra]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBDynamoDB
-    S1 --> DBCassandra
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBDynamoDB
-    S2 --> DBCassandra
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBDynamoDB
-    S3 --> DBCassandra
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBDynamoDB
-    S4 --> DBCassandra
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBDynamoDB
-    S5 --> DBCassandra
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[and Service]
-        S2[503 Service]
-        S3[Webhook Service]
-        S4[This Service]
-        S5[Refund Service]
-    end
-
-    subgraph Data Storage
-        DBDynamoDB[DynamoDB]
-        DBPostgreSQL[PostgreSQL]
-        DBCassandra[Cassandra]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBDynamoDB
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBDynamoDB
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBDynamoDB
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBDynamoDB
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBDynamoDB
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageS3
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[Refund Service]
-        S3[backend Service]
-        S4[Webhook Service]
-        S5[and Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-        DBCassandra[Cassandra]
-        DBDynamoDB[DynamoDB]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> DBCassandra
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> DBCassandra
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> DBCassandra
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> DBCassandra
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> DBCassandra
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-```
-
-
-
-## 4.1 Requirement 1: Processing Payments
 When a merchant sends a payment request, several things need to happen:
 1. Validate the request (amount positive, currency valid, API key authorized)
 2. Check if we have seen this idempotency key before (duplicate detection)
@@ -472,6 +265,71 @@ An abstraction layer that integrates with external payment processors like Strip
 ### The Create Payment Flow in Action
 Let's trace through what happens when a merchant creates a payment:
 The key insight here is the separation between the synchronous response (steps 1-7) and asynchronous processing (steps 8-12). The merchant receives a response in under 500ms, while the actual payment processing happens in the background.
+
+
+    S5 --> QueueKafka
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[Payment Service]
+        S2[This Service]
+        S3[Refund Service]
+        S4[503 Service]
+        S5[and Service]
+    end
+
+    subgraph Data Storage
+        DBPostgreSQL[PostgreSQL]
+        DBDynamoDB[DynamoDB]
+        DBCassandra[Cassandra]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBPostgreSQL
+    S1 --> DBDynamoDB
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S2 --> DBPostgreSQL
+    S2 --> DBDynamoDB
+    S2 --> CacheRedis
+    S2 --> QueueKafka
+    S3 --> DBPostgreSQL
+    S3 --> DBDynamoDB
+    S3 --> CacheRedis
+    S3 --> QueueKafka
+    S4 --> DBPostgreSQL
+    S4 --> DBDynamoDB
+    S4 --> CacheRedis
+    S4 --> QueueKafka
+    S5 --> DBPostgreSQL
+    S5 --> DBDynamoDB
+    S5 --> CacheRedis
+    S5 --> QueueKafka
+
+
 
 ## 4.2 Requirement 2: Ensuring Exactly-Once Processing
 Payment systems must guarantee that each payment is processed exactly once. Network failures, timeouts, and client retries are inevitable, and without proper handling, these can cause duplicate charges or lost payments.

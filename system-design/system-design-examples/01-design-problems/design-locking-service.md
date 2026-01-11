@@ -96,9 +96,9 @@ graph TB
 
     subgraph Application Services
         S1[locking Service]
-        S2[The Service]
-        S3[Locking Service]
-        S4[Coordination Service]
+        S2[the Service]
+        S3[Coordination Service]
+        S4[The Service]
         S5[lock Service]
     end
 
@@ -135,6 +135,7 @@ graph TB
     S4 --> QueueKafka
     S5 --> DBElasticsearch
     S5 --> CacheRedis
+    S5 --> QueueKafka
     S5 --> QueueKafka
 ```
 

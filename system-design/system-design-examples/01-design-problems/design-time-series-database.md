@@ -203,121 +203,6 @@ The key insight is that time-series data has predictable patterns we can exploit
 Let's build the architecture step by step, starting with the write path.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[503 Service]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Object Storage
-        Storageobjectstorage[object storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    S1 --> CacheRedis
-    S1 --> Storageobjectstorage
-    S1 --> StorageS3
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[503 Service]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-        Storageobjectstorage[object storage]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    S1 --> CacheRedis
-    S2 --> CacheRedis
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    S1 --> Storageobjectstorage
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[503 Service]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Object Storage
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    S1 --> CacheRedis
-    S2 --> CacheRedis
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-```
-
-
-
-## 4.1 Requirement 1: High-Throughput Ingestion
 The first challenge is handling 10 million data points per second. To put this in perspective, a typical SSD can handle around 100,000 random IOPS. If we tried to write each data point directly to disk as a separate operation, we would need 100 SSDs just for writes. That is not practical.
 The solution is to convert random writes into sequential writes through buffering and batching. Instead of writing each point individually, we accumulate points in memory and flush them to disk in large batches. Sequential writes are an order of magnitude faster than random writes.
 Let's introduce the components we need.
@@ -347,6 +232,37 @@ Let's trace through this:
 
 **Why this two-phase approach?** It separates durability (fast, must happen synchronously) from storage optimization (can happen asynchronously). We acknowledge writes quickly while still organizing data efficiently for queries.
 
+
+    S1 --> StorageS3
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[503 Service]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Object Storage
+        StorageS3[S3]
+        Storageobjectstorage[object storage]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    S1 --> CacheRedis
+    S1 --> StorageS3
 ## 4.2 Requirement 2: Efficient Storage
 With data ingested, we need to store it efficiently. Our back-of-envelope calculations showed we are dealing with roughly 78 TB of compressed data for 30 days. How do we organize this data for both fast writes and fast queries?
 The answer lies in a storage pattern that has become standard for time-series databases: **time-based partitioning** with **LSM-tree inspired storage**.

@@ -68,6 +68,7 @@ At a high level, the system can be divided into two main components:
 Let's explore each one.
 
 
+    S1 --> StorageS3
 ```mermaid
 graph TB
     subgraph Clients
@@ -76,11 +77,11 @@ graph TB
     end
 
     subgraph Application Services
-        S1[stateless Service]
-        S2[AND Service]
-        S3[ingestion Service]
-        S4[Requires Service]
-        S5[and Service]
+        S1[scalable Service]
+        S2[Ingestion Service]
+        S3[This Service]
+        S4[for Service]
+        S5[Query Service]
     end
 
     subgraph Data Storage
@@ -96,8 +97,8 @@ graph TB
     end
 
     subgraph Object Storage
-        Storageobjectstorage[object storage]
         StorageS3[S3]
+        Storageobjectstorage[object storage]
     end
 
     Web --> LB
@@ -117,9 +118,8 @@ graph TB
     S5 --> DBPostgreSQL
     S5 --> CacheRedis
     S5 --> QueueKafka
-    S1 --> Storageobjectstorage
     S1 --> StorageS3
-```
+    S1 --> Storageobjectstorage
 
 
 

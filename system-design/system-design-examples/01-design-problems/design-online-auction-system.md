@@ -185,273 +185,6 @@ Before we dive in, let's recognize an important characteristic of our workload. 
 This asymmetry suggests we should optimize these paths differently. Let's build the architecture piece by piece.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[internal Service]
-        S2[Auction Service]
-        S3[Media Service]
-        S4[Search Service]
-        S5[dedicated Service]
-    end
-
-    subgraph Data Storage
-        DBMongoDB[MongoDB]
-        DBElasticsearch[Elasticsearch]
-        DBDynamoDB[DynamoDB]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueSQS[SQS]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBMongoDB
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueSQS
-    S1 --> QueueKafka
-    S2 --> DBMongoDB
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueSQS
-    S2 --> QueueKafka
-    S3 --> DBMongoDB
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueSQS
-    S3 --> QueueKafka
-    S4 --> DBMongoDB
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueSQS
-    S4 --> QueueKafka
-    S5 --> DBMongoDB
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueSQS
-    S5 --> QueueKafka
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    Storageobjectstorage --> CDN
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[dedicated Service]
-        S2[core Service]
-        S3[Media Service]
-        S4[Managed Service]
-        S5[media Service]
-    end
-
-    subgraph Data Storage
-        DBMongoDB[MongoDB]
-        DBDynamoDB[DynamoDB]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueSQS[SQS]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-        Storageobjectstorage[object storage]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBMongoDB
-    S1 --> DBDynamoDB
-    S1 --> CacheRedis
-    S1 --> QueueSQS
-    S1 --> QueueKafka
-    S2 --> DBMongoDB
-    S2 --> DBDynamoDB
-    S2 --> CacheRedis
-    S2 --> QueueSQS
-    S2 --> QueueKafka
-    S3 --> DBMongoDB
-    S3 --> DBDynamoDB
-    S3 --> CacheRedis
-    S3 --> QueueSQS
-    S3 --> QueueKafka
-    S4 --> DBMongoDB
-    S4 --> DBDynamoDB
-    S4 --> CacheRedis
-    S4 --> QueueSQS
-    S4 --> QueueKafka
-    S5 --> DBMongoDB
-    S5 --> DBDynamoDB
-    S5 --> CacheRedis
-    S5 --> QueueSQS
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    S1 --> Storageobjectstorage
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    Storageobjectstorage --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[Search Service]
-        S3[Managed Service]
-        S4[critical Service]
-        S5[separate Service]
-    end
-
-    subgraph Data Storage
-        DBMongoDB[MongoDB]
-        DBElasticsearch[Elasticsearch]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueSQS[SQS]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBMongoDB
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueSQS
-    S1 --> QueueKafka
-    S2 --> DBMongoDB
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueSQS
-    S2 --> QueueKafka
-    S3 --> DBMongoDB
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueSQS
-    S3 --> QueueKafka
-    S4 --> DBMongoDB
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueSQS
-    S4 --> QueueKafka
-    S5 --> DBMongoDB
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueSQS
-    S5 --> QueueKafka
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    Storageobjectstorage --> CDN
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-## 4.1 Requirement 1: Item Listing
 Let's start with the simplest flow: a seller creating an auction listing. This is a straightforward CRUD operation, but it sets up the foundation that other components will build on.
 When a seller wants to list an item, they need to provide details about the item, set pricing rules (starting price, optional reserve, optional buy-now), upload photos, and specify when the auction ends. Our system needs to validate this information, store it durably, and make it discoverable to potential buyers.
 
@@ -485,6 +218,95 @@ Let's walk through this step by step:
 6. **Return to seller:** The response includes the auction ID and URL. The seller can now share this link.
 
 This is a clean, straightforward flow. The interesting complexity comes when we add bidding.
+
+
+    CDNNode --> Mobile
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[Media Service]
+        S2[media Service]
+        S3[Managed Service]
+        S4[Scheduler Service]
+        S5[dedicated Service]
+    end
+
+    subgraph Data Storage
+        DBElasticsearch[Elasticsearch]
+        DBPostgreSQL[PostgreSQL]
+        DBDynamoDB[DynamoDB]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+        QueueSQS[SQS]
+    end
+
+    subgraph Object Storage
+        StorageObjectStorage[Object Storage]
+        StorageS3[S3]
+        Storageobjectstorage[object storage]
+    end
+
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBElasticsearch
+    S1 --> DBPostgreSQL
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S1 --> QueueSQS
+    S2 --> DBElasticsearch
+    S2 --> DBPostgreSQL
+    S2 --> CacheRedis
+    S2 --> QueueKafka
+    S2 --> QueueSQS
+    S3 --> DBElasticsearch
+    S3 --> DBPostgreSQL
+    S3 --> CacheRedis
+    S3 --> QueueKafka
+    S3 --> QueueSQS
+    S4 --> DBElasticsearch
+    S4 --> DBPostgreSQL
+    S4 --> CacheRedis
+    S4 --> QueueKafka
+    S4 --> QueueSQS
+    S5 --> DBElasticsearch
+    S5 --> DBPostgreSQL
+    S5 --> CacheRedis
+    S5 --> QueueKafka
+    S5 --> QueueSQS
+    S1 --> StorageObjectStorage
+    S1 --> StorageS3
+    S1 --> Storageobjectstorage
+    StorageObjectStorage --> CDNNode
+    StorageS3 --> CDNNode
+    Storageobjectstorage --> CDNNode
+    CDNNode --> Web
+    CDNNode --> Mobile
+
+
 
 ## 4.2 Requirement 2: Bid Processing
 Now we reach the heart of the system. Bid processing is where auctions get interesting and where most of the complexity lives. This is not just about saving a record to a database. We need to:

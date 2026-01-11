@@ -72,6 +72,25 @@ Let's break down the main parts:
 # 4. Design Deep Dive
 
 
+The ideal choice must allow rapid retrieval of all words that begin with a given sequence of characters. For instance, retrieving `"new york"`, `"new delhi"`, and `"new balance"` when the prefix `"new"` is typed.
+
+### The Trie (Prefix Tree)
+A **Trie** (pronounced “try”), or **Prefix Tree**, is the natural fit for this problem. It’s a tree-based data structure optimized for prefix matching.
+
+#### How It Works
+Each node in a Trie represents a **character**, and the path from the **root** to a **node** represents a prefix. When a path spells out a complete word, that node is marked as an **end of word**.
+For example, consider inserting `"new york"`, `"new delhi"`, and `"new balance"`:
+
+##### Key characteristics:
+- **Efficient Prefix Search:** To find all words starting with "new", you traverse the Trie along the "n" path, then the "e" path, then the "w" path. From the 'w' node, you can traverse all its children to find "new york", "new delhi", and "new balance".
+- **Time Complexity:** Lookups take O(m) time, where 'm' is the length of the prefix. This is incredibly fast, as it doesn't depend on the total number of words.
+- **Space Efficiency:** Common prefixes share nodes, significantly reducing redundancy compared to storing entire words independently. The worst-case space complexity is **O(ALPHABET_SIZE × N × M)**, but with compression techniques like **radix trees** or **path compression**, this becomes manageable.
+- **Metadata Storage:** Each node can also store metadata useful for ranking and personalization:
+
+##### Code Representation:
+
+
+    S1 --> StorageS3
 ```mermaid
 graph TB
     subgraph Clients
@@ -84,11 +103,11 @@ graph TB
     end
 
     subgraph Application Services
-        S1[Indexing Service]
-        S2[autocomplete Service]
-        S3[Autocomplete Service]
-        S4[backend Service]
-        S5[Federation Service]
+        S1[This Service]
+        S2[Indexing Service]
+        S3[the Service]
+        S4[Federation Service]
+        S5[Autocomplete Service]
     end
 
     subgraph Data Storage
@@ -96,8 +115,8 @@ graph TB
     end
 
     subgraph Caching Layer
-        CacheMemcached[Memcached]
         CacheRedis[Redis]
+        CacheMemcached[Memcached]
     end
 
     subgraph Message Queue
@@ -116,48 +135,28 @@ graph TB
     LB --> S4
     LB --> S5
     S1 --> DBCassandra
-    S1 --> CacheMemcached
     S1 --> CacheRedis
+    S1 --> CacheMemcached
     S1 --> QueueKafka
     S2 --> DBCassandra
-    S2 --> CacheMemcached
     S2 --> CacheRedis
+    S2 --> CacheMemcached
     S2 --> QueueKafka
     S3 --> DBCassandra
-    S3 --> CacheMemcached
     S3 --> CacheRedis
+    S3 --> CacheMemcached
     S3 --> QueueKafka
     S4 --> DBCassandra
-    S4 --> CacheMemcached
     S4 --> CacheRedis
+    S4 --> CacheMemcached
     S4 --> QueueKafka
     S5 --> DBCassandra
-    S5 --> CacheMemcached
     S5 --> CacheRedis
+    S5 --> CacheMemcached
     S5 --> QueueKafka
     S1 --> StorageS3
-```
 
 
-
-## 4.1 Data Model and Storage Design
-Designing an efficient autocomplete or search-suggestion system begins with choosing the right **data structure** for prefix lookups.
-The ideal choice must allow rapid retrieval of all words that begin with a given sequence of characters. For instance, retrieving `"new york"`, `"new delhi"`, and `"new balance"` when the prefix `"new"` is typed.
-
-### The Trie (Prefix Tree)
-A **Trie** (pronounced “try”), or **Prefix Tree**, is the natural fit for this problem. It’s a tree-based data structure optimized for prefix matching.
-
-#### How It Works
-Each node in a Trie represents a **character**, and the path from the **root** to a **node** represents a prefix. When a path spells out a complete word, that node is marked as an **end of word**.
-For example, consider inserting `"new york"`, `"new delhi"`, and `"new balance"`:
-
-##### Key characteristics:
-- **Efficient Prefix Search:** To find all words starting with "new", you traverse the Trie along the "n" path, then the "e" path, then the "w" path. From the 'w' node, you can traverse all its children to find "new york", "new delhi", and "new balance".
-- **Time Complexity:** Lookups take O(m) time, where 'm' is the length of the prefix. This is incredibly fast, as it doesn't depend on the total number of words.
-- **Space Efficiency:** Common prefixes share nodes, significantly reducing redundancy compared to storing entire words independently. The worst-case space complexity is **O(ALPHABET_SIZE × N × M)**, but with compression techniques like **radix trees** or **path compression**, this becomes manageable.
-- **Metadata Storage:** Each node can also store metadata useful for ranking and personalization:
-
-##### Code Representation:
 
 ## 4.2 Scaling Trie in a Distributed Environment
 While a single-machine Trie works for small datasets, large-scale systems like Google Search or YouTube Autocomplete must manage **billions of entries**.

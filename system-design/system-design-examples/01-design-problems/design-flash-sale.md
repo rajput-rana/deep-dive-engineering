@@ -195,267 +195,6 @@ This changes how we think about the architecture. Instead of optimizing for succ
 Each layer in this funnel filters out requests, so only legitimate purchase attempts that have a chance of succeeding reach our database. Let us build this architecture step by step.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Payment Service]
-        S2[fun Service]
-        S3[your Service]
-        S4[Order Service]
-        S5[each Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-        Cacheredis[redis]
-    end
-
-    subgraph Message Queue
-        QueueSQS[SQS]
-        QueueRabbitMQ[RabbitMQ]
-        QueueKafka[Kafka]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> Cacheredis
-    S1 --> QueueSQS
-    S1 --> QueueRabbitMQ
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> Cacheredis
-    S2 --> QueueSQS
-    S2 --> QueueRabbitMQ
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> Cacheredis
-    S3 --> QueueSQS
-    S3 --> QueueRabbitMQ
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> Cacheredis
-    S4 --> QueueSQS
-    S4 --> QueueRabbitMQ
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> Cacheredis
-    S5 --> QueueSQS
-    S5 --> QueueRabbitMQ
-    S5 --> QueueKafka
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[your Service]
-        S2[each Service]
-        S3[Inventory Service]
-        S4[Managed Service]
-        S5[Notification Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        Cacheredis[redis]
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueSQS[SQS]
-        QueueRabbitMQ[RabbitMQ]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> Cacheredis
-    S1 --> CacheRedis
-    S1 --> QueueSQS
-    S1 --> QueueRabbitMQ
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> Cacheredis
-    S2 --> CacheRedis
-    S2 --> QueueSQS
-    S2 --> QueueRabbitMQ
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> Cacheredis
-    S3 --> CacheRedis
-    S3 --> QueueSQS
-    S3 --> QueueRabbitMQ
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> Cacheredis
-    S4 --> CacheRedis
-    S4 --> QueueSQS
-    S4 --> QueueRabbitMQ
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> Cacheredis
-    S5 --> CacheRedis
-    S5 --> QueueSQS
-    S5 --> QueueRabbitMQ
-    S5 --> QueueKafka
-    S1 --> StorageS3
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[each Service]
-        S3[Managed Service]
-        S4[Order Service]
-        S5[processing Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-        Cacheredis[redis]
-    end
-
-    subgraph Message Queue
-        QueueRabbitMQ[RabbitMQ]
-        QueueSQS[SQS]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> Cacheredis
-    S1 --> QueueRabbitMQ
-    S1 --> QueueSQS
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> Cacheredis
-    S2 --> QueueRabbitMQ
-    S2 --> QueueSQS
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> Cacheredis
-    S3 --> QueueRabbitMQ
-    S3 --> QueueSQS
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> Cacheredis
-    S4 --> QueueRabbitMQ
-    S4 --> QueueSQS
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> Cacheredis
-    S5 --> QueueRabbitMQ
-    S5 --> QueueSQS
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-## 4.1 Handling Traffic Spikes
 The first challenge is absorbing the initial traffic spike without overwhelming our backend systems. When 5 million users click "Buy Now" within 10 seconds, we cannot simply forward all those requests to our order processing service. That would be 500,000 QPS hitting a system that can probably handle 10,000 QPS at best.
 The solution is to build multiple layers of protection, each designed to filter out traffic before it reaches the critical path.
 Let us walk through each component and understand why it exists.
@@ -492,6 +231,88 @@ Here is what happens step by step:
 5. **Order Processing:** The Order Service pulls requests from the queue at a controlled rate, say 10,000 per second. This is the rate our inventory system can handle reliably.
 
 This design means the thundering herd never directly hits our database. Most requests are either served from cache, rejected by rate limiting, or buffered in the queue. Only a controlled stream reaches the Order Service.
+
+
+    CDNNode --> Mobile
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[Managed Service]
+        S2[your Service]
+        S3[Payment Service]
+        S4[Inventory Service]
+        S5[Order Service]
+    end
+
+    subgraph Data Storage
+        DBPostgreSQL[PostgreSQL]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+        Cacheredis[redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+        QueueSQS[SQS]
+        QueueRabbitMQ[RabbitMQ]
+    end
+
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBPostgreSQL
+    S1 --> CacheRedis
+    S1 --> Cacheredis
+    S1 --> QueueKafka
+    S1 --> QueueSQS
+    S1 --> QueueRabbitMQ
+    S2 --> DBPostgreSQL
+    S2 --> CacheRedis
+    S2 --> Cacheredis
+    S2 --> QueueKafka
+    S2 --> QueueSQS
+    S2 --> QueueRabbitMQ
+    S3 --> DBPostgreSQL
+    S3 --> CacheRedis
+    S3 --> Cacheredis
+    S3 --> QueueKafka
+    S3 --> QueueSQS
+    S3 --> QueueRabbitMQ
+    S4 --> DBPostgreSQL
+    S4 --> CacheRedis
+    S4 --> Cacheredis
+    S4 --> QueueKafka
+    S4 --> QueueSQS
+    S4 --> QueueRabbitMQ
+    S5 --> DBPostgreSQL
+    S5 --> CacheRedis
+    S5 --> Cacheredis
+    S5 --> QueueKafka
+    S5 --> QueueSQS
+    S5 --> QueueRabbitMQ
+    CDNNode --> Web
+    CDNNode --> Mobile
+
+
 
 ## 4.2 Preventing Overselling
 Now we arrive at the most critical requirement: ensuring we never sell more items than we have. This sounds simple, but it is surprisingly difficult when thousands of concurrent requests are trying to decrement the same inventory counter.

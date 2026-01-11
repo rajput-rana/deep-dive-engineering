@@ -176,220 +176,6 @@ The key architectural insight is that Slack's channel model creates a **variabl
 Instead of presenting the full architecture at once, we'll build it incrementally by addressing one requirement at a time.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Search Service]
-        S2[Message Service]
-        S3[User Service]
-        S4[Notification Service]
-        S5[File Service]
-    end
-
-    subgraph Data Storage
-        DBElasticsearch[Elasticsearch]
-        DBCassandra[Cassandra]
-        DBMySQL[MySQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBElasticsearch
-    S1 --> DBCassandra
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBElasticsearch
-    S2 --> DBCassandra
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBElasticsearch
-    S3 --> DBCassandra
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBElasticsearch
-    S4 --> DBCassandra
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBElasticsearch
-    S5 --> DBCassandra
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageS3
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[File Service]
-        S2[Message Service]
-        S3[Channel Service]
-        S4[Application Service]
-        S5[User Service]
-    end
-
-    subgraph Data Storage
-        DBMySQL[MySQL]
-        DBCassandra[Cassandra]
-        DBElasticsearch[Elasticsearch]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBMySQL
-    S1 --> DBCassandra
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBMySQL
-    S2 --> DBCassandra
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBMySQL
-    S3 --> DBCassandra
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBMySQL
-    S4 --> DBCassandra
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBMySQL
-    S5 --> DBCassandra
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[Message Service]
-        S3[Search Service]
-        S4[File Service]
-        S5[User Service]
-    end
-
-    subgraph Data Storage
-        DBCassandra[Cassandra]
-        DBElasticsearch[Elasticsearch]
-        DBMySQL[MySQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBCassandra
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueKafka
-    S2 --> DBCassandra
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueKafka
-    S3 --> DBCassandra
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueKafka
-    S4 --> DBCassandra
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueKafka
-    S5 --> DBCassandra
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-```
-
-
-
-## 4.1 Requirement 1: Real-time Channel Messaging
 Let's start with the core use case: User A posts a message to a channel, and all online channel members receive it instantly.
 
 ### Components Needed
@@ -439,6 +225,76 @@ When a user connects:
 2. Server fetches user's channel memberships from Channel Service
 3. Server subscribes to Redis pub/sub topics for each channel
 4. When user joins/leaves channels, subscriptions are updated dynamically
+
+
+    S1 --> StorageS3
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[Message Service]
+        S2[Search Service]
+        S3[Channel Service]
+        S4[Notification Service]
+        S5[User Service]
+    end
+
+    subgraph Data Storage
+        DBElasticsearch[Elasticsearch]
+        DBCassandra[Cassandra]
+        DBMySQL[MySQL]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+    end
+
+    subgraph Object Storage
+        StorageS3[S3]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBElasticsearch
+    S1 --> DBCassandra
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S2 --> DBElasticsearch
+    S2 --> DBCassandra
+    S2 --> CacheRedis
+    S2 --> QueueKafka
+    S3 --> DBElasticsearch
+    S3 --> DBCassandra
+    S3 --> CacheRedis
+    S3 --> QueueKafka
+    S4 --> DBElasticsearch
+    S4 --> DBCassandra
+    S4 --> CacheRedis
+    S4 --> QueueKafka
+    S5 --> DBElasticsearch
+    S5 --> DBCassandra
+    S5 --> CacheRedis
+    S5 --> QueueKafka
+    S1 --> StorageS3
+
+
 
 ## 4.2 Requirement 2: Handling Large Channels
 Small channels (10-100 members) work well with direct pub/sub fanout. But what about channels with 10,000+ members?

@@ -182,270 +182,6 @@ This asymmetry suggests we should **separate read and write paths** and optimize
 Let's build out the architecture one requirement at a time.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[dedicated Service]
-        S2[Inventory Service]
-        S3[indexer Service]
-        S4[Notification Service]
-        S5[Payment Service]
-    end
-
-    subgraph Data Storage
-        DBMongoDB[MongoDB]
-        DBElasticsearch[Elasticsearch]
-        DBDynamoDB[DynamoDB]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueSQS[SQS]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        Storageobjectstorage[object storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBMongoDB
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueSQS
-    S1 --> QueueKafka
-    S2 --> DBMongoDB
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueSQS
-    S2 --> QueueKafka
-    S3 --> DBMongoDB
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueSQS
-    S3 --> QueueKafka
-    S4 --> DBMongoDB
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueSQS
-    S4 --> QueueKafka
-    S5 --> DBMongoDB
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueSQS
-    S5 --> QueueKafka
-    S1 --> Storageobjectstorage
-    S1 --> StorageS3
-    Storageobjectstorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[dedicated Service]
-        S2[Product Service]
-        S3[application Service]
-        S4[Application Service]
-        S5[Notification Service]
-    end
-
-    subgraph Data Storage
-        DBMongoDB[MongoDB]
-        DBDynamoDB[DynamoDB]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueSQS[SQS]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-        Storageobjectstorage[object storage]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBMongoDB
-    S1 --> DBDynamoDB
-    S1 --> CacheRedis
-    S1 --> QueueSQS
-    S1 --> QueueKafka
-    S2 --> DBMongoDB
-    S2 --> DBDynamoDB
-    S2 --> CacheRedis
-    S2 --> QueueSQS
-    S2 --> QueueKafka
-    S3 --> DBMongoDB
-    S3 --> DBDynamoDB
-    S3 --> CacheRedis
-    S3 --> QueueSQS
-    S3 --> QueueKafka
-    S4 --> DBMongoDB
-    S4 --> DBDynamoDB
-    S4 --> CacheRedis
-    S4 --> QueueSQS
-    S4 --> QueueKafka
-    S5 --> DBMongoDB
-    S5 --> DBDynamoDB
-    S5 --> CacheRedis
-    S5 --> QueueSQS
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    S1 --> Storageobjectstorage
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    Storageobjectstorage --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[stateless Service]
-        S2[Search Service]
-        S3[Order Service]
-        S4[recommendation Service]
-        S5[application Service]
-    end
-
-    subgraph Data Storage
-        DBMongoDB[MongoDB]
-        DBElasticsearch[Elasticsearch]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueSQS[SQS]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBMongoDB
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueSQS
-    S1 --> QueueKafka
-    S2 --> DBMongoDB
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueSQS
-    S2 --> QueueKafka
-    S3 --> DBMongoDB
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueSQS
-    S3 --> QueueKafka
-    S4 --> DBMongoDB
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueSQS
-    S4 --> QueueKafka
-    S5 --> DBMongoDB
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueSQS
-    S5 --> QueueKafka
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    Storageobjectstorage --> CDN
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-## 4.1 Requirement 1: Product Discovery
 Users need to search for products and view product details. This is the highest-traffic operation, handling over 23,000 requests per second. The vast majority of users are browsing, not buying, so optimizing this path has the biggest impact on user experience.
 
 ### Components Needed
@@ -490,6 +226,92 @@ The flow is straightforward:
 4. **Images from CDN:** Product images load separately from the CDN. They are usually cached at edge nodes, so latency is minimal.
 
 **Why separate the metadata and image requests?** Images are large (hundreds of KB each) and change rarely. Product metadata is small (a few KB) but includes dynamic data like price and availability. Separating them lets us cache each optimally.
+
+
+    CDNNode --> Mobile
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[Payment Service]
+        S2[other Service]
+        S3[recommendation Service]
+        S4[This Service]
+        S5[Search Service]
+    end
+
+    subgraph Data Storage
+        DBElasticsearch[Elasticsearch]
+        DBPostgreSQL[PostgreSQL]
+        DBDynamoDB[DynamoDB]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+        QueueSQS[SQS]
+    end
+
+    subgraph Object Storage
+        StorageS3[S3]
+        Storageobjectstorage[object storage]
+    end
+
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBElasticsearch
+    S1 --> DBPostgreSQL
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S1 --> QueueSQS
+    S2 --> DBElasticsearch
+    S2 --> DBPostgreSQL
+    S2 --> CacheRedis
+    S2 --> QueueKafka
+    S2 --> QueueSQS
+    S3 --> DBElasticsearch
+    S3 --> DBPostgreSQL
+    S3 --> CacheRedis
+    S3 --> QueueKafka
+    S3 --> QueueSQS
+    S4 --> DBElasticsearch
+    S4 --> DBPostgreSQL
+    S4 --> CacheRedis
+    S4 --> QueueKafka
+    S4 --> QueueSQS
+    S5 --> DBElasticsearch
+    S5 --> DBPostgreSQL
+    S5 --> CacheRedis
+    S5 --> QueueKafka
+    S5 --> QueueSQS
+    S1 --> StorageS3
+    S1 --> Storageobjectstorage
+    StorageS3 --> CDNNode
+    Storageobjectstorage --> CDNNode
+    CDNNode --> Web
+    CDNNode --> Mobile
+
+
 
 ## 4.2 Requirement 2: Cart Management
 The shopping cart is where browsing becomes buying intent. Users add items, change quantities, and remove products as they shop. This happens at around 5,800 QPS, placing cart management between the high-volume read path and the low-volume order path.

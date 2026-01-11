@@ -191,249 +191,6 @@ The most challenging aspect is secure code execution. We are essentially running
 Let's build the architecture step by step, starting with the simplest requirement.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Problem Service]
-        S2[Leaderboard Service]
-        S3[stateless Service]
-        S4[Submission Service]
-        S5[this Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueSQS[SQS]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        Storageobjectstorage[object storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueSQS
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueSQS
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueSQS
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueSQS
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueSQS
-    S5 --> QueueKafka
-    S1 --> Storageobjectstorage
-    S1 --> StorageS3
-    Storageobjectstorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[this Service]
-        S2[Problem Service]
-        S3[submission Service]
-        S4[Leaderboard Service]
-        S5[Managed Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueSQS[SQS]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-        Storageobjectstorage[object storage]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueSQS
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueSQS
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueSQS
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueSQS
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueSQS
-    S5 --> QueueKafka
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    S1 --> Storageobjectstorage
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    Storageobjectstorage --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[stateless Service]
-        S3[this Service]
-        S4[submission Service]
-        S5[Managed Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueSQS[SQS]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueSQS
-    S1 --> QueueKafka
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueSQS
-    S2 --> QueueKafka
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueSQS
-    S3 --> QueueKafka
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueSQS
-    S4 --> QueueKafka
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueSQS
-    S5 --> QueueKafka
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    Storageobjectstorage --> CDN
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-## 4.1 Requirement 1: Problem Browsing
 Users spend most of their time reading problems, searching for specific topics, and reviewing solutions. This is a read-heavy workload that lends itself well to caching.
 A typical browsing session might look like:
 - Filter problems by "Medium" difficulty and "Dynamic Programming" tag
@@ -463,6 +220,85 @@ Let's trace through what happens when a user opens a problem:
 6. **Response flows back:** The response propagates back through the CDN (which caches it) to the user.
 
 ### Sequence Diagram: Viewing a Problem
+
+
+    CDNNode --> Mobile
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[Managed Service]
+        S2[Submission Service]
+        S3[This Service]
+        S4[Leaderboard Service]
+        S5[Problem Service]
+    end
+
+    subgraph Data Storage
+        DBPostgreSQL[PostgreSQL]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+        QueueSQS[SQS]
+    end
+
+    subgraph Object Storage
+        StorageS3[S3]
+        Storageobjectstorage[object storage]
+    end
+
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBPostgreSQL
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S1 --> QueueSQS
+    S2 --> DBPostgreSQL
+    S2 --> CacheRedis
+    S2 --> QueueKafka
+    S2 --> QueueSQS
+    S3 --> DBPostgreSQL
+    S3 --> CacheRedis
+    S3 --> QueueKafka
+    S3 --> QueueSQS
+    S4 --> DBPostgreSQL
+    S4 --> CacheRedis
+    S4 --> QueueKafka
+    S4 --> QueueSQS
+    S5 --> DBPostgreSQL
+    S5 --> CacheRedis
+    S5 --> QueueKafka
+    S5 --> QueueSQS
+    S1 --> StorageS3
+    S1 --> Storageobjectstorage
+    StorageS3 --> CDNNode
+    Storageobjectstorage --> CDNNode
+    CDNNode --> Web
+    CDNNode --> Mobile
+
+
 
 ## 4.2 Requirement 2: Code Submission and Execution
 Now for the hard part. When a user clicks "Submit", their code needs to be compiled, executed against dozens of test cases, and judged, all within a few seconds. And it must be done safely, since we are running arbitrary code from strangers on the internet.

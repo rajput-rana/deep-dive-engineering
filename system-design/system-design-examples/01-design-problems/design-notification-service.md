@@ -54,17 +54,17 @@ graph TB
     end
 
     subgraph Application Services
-        S1[similar Service]
+        S1[Scheduler Service]
         S2[the Service]
-        S3[Uses Service]
-        S4[The Service]
-        S5[Preference Service]
+        S3[notification Service]
+        S4[critical Service]
+        S5[The Service]
     end
 
     subgraph Data Storage
-        DBMySQL[MySQL]
-        DBMongoDB[MongoDB]
+        DBPostgreSQL[PostgreSQL]
         DBDynamoDB[DynamoDB]
+        DBMongoDB[MongoDB]
     end
 
     subgraph Caching Layer
@@ -73,9 +73,9 @@ graph TB
     end
 
     subgraph Message Queue
-        QueueSQS[SQS]
-        QueueRabbitMQ[RabbitMQ]
         QueueKafka[Kafka]
+        QueueRabbitMQ[RabbitMQ]
+        QueueSQS[SQS]
     end
 
     subgraph Object Storage
@@ -89,41 +89,42 @@ graph TB
     LB --> S3
     LB --> S4
     LB --> S5
-    S1 --> DBMySQL
-    S1 --> DBMongoDB
+    S1 --> DBPostgreSQL
+    S1 --> DBDynamoDB
     S1 --> CacheRedis
     S1 --> CacheMemcached
-    S1 --> QueueSQS
-    S1 --> QueueRabbitMQ
     S1 --> QueueKafka
-    S2 --> DBMySQL
-    S2 --> DBMongoDB
+    S1 --> QueueRabbitMQ
+    S1 --> QueueSQS
+    S2 --> DBPostgreSQL
+    S2 --> DBDynamoDB
     S2 --> CacheRedis
     S2 --> CacheMemcached
-    S2 --> QueueSQS
-    S2 --> QueueRabbitMQ
     S2 --> QueueKafka
-    S3 --> DBMySQL
-    S3 --> DBMongoDB
+    S2 --> QueueRabbitMQ
+    S2 --> QueueSQS
+    S3 --> DBPostgreSQL
+    S3 --> DBDynamoDB
     S3 --> CacheRedis
     S3 --> CacheMemcached
-    S3 --> QueueSQS
-    S3 --> QueueRabbitMQ
     S3 --> QueueKafka
-    S4 --> DBMySQL
-    S4 --> DBMongoDB
+    S3 --> QueueRabbitMQ
+    S3 --> QueueSQS
+    S4 --> DBPostgreSQL
+    S4 --> DBDynamoDB
     S4 --> CacheRedis
     S4 --> CacheMemcached
-    S4 --> QueueSQS
-    S4 --> QueueRabbitMQ
     S4 --> QueueKafka
-    S5 --> DBMySQL
-    S5 --> DBMongoDB
+    S4 --> QueueRabbitMQ
+    S4 --> QueueSQS
+    S5 --> DBPostgreSQL
+    S5 --> DBDynamoDB
     S5 --> CacheRedis
     S5 --> CacheMemcached
-    S5 --> QueueSQS
-    S5 --> QueueRabbitMQ
     S5 --> QueueKafka
+    S5 --> QueueRabbitMQ
+    S5 --> QueueSQS
+    S1 --> StorageS3
     S1 --> StorageS3
 ```
 

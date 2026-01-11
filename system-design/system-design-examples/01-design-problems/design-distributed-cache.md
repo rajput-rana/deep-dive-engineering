@@ -161,6 +161,20 @@ Our cache needs to do three things well:
 Let us tackle these one at a time.
 
 
+Before we distribute anything, let us understand what happens on a single cache node. The simplest cache is just a hash table in memory.
+
+#### Cache Client Library
+The cache client is a library embedded in your application. When you call `cache.get("user:123")`, the client library handles all the complexity of talking to the cache cluster. It manages connection pools, handles retries on failures, and (as we will see) routes requests to the correct node.
+For now, with just one node, the client simply opens a TCP connection and sends the request.
+
+#### Cache Node
+The cache node is where data actually lives. At its core, it is a hash table in memory. When a PUT request arrives, the node computes a hash of the key, stores the key-value pair at that hash slot, and returns success. GET requests look up the key in the hash table and return the value (or a miss indicator if not found).
+Modern in-memory stores like Redis can handle 100,000+ operations per second on a single node. The bottleneck is usually network I/O, not CPU or memory lookups.
+**The flow for a single node is straightforward:**
+This works great until you need to store more data than fits in one machine's memory. That is our next challenge.
+
+
+    S3 --> CacheMemcached
 ```mermaid
 graph TB
     subgraph Clients
@@ -175,50 +189,10 @@ graph TB
     end
 
     subgraph Caching Layer
-        CacheMemcached[Memcached]
         CacheRedis[Redis]
+        Cacheredis[redis]
         Cachememcached[memcached]
-        Cacheredis[redis]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    S1 --> CacheMemcached
-    S1 --> CacheRedis
-    S1 --> Cachememcached
-    S1 --> Cacheredis
-    S2 --> CacheMemcached
-    S2 --> CacheRedis
-    S2 --> Cachememcached
-    S2 --> Cacheredis
-    S3 --> CacheMemcached
-    S3 --> CacheRedis
-    S3 --> Cachememcached
-    S3 --> Cacheredis
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[analytics Service]
-        S3[API Service]
-        S4[503 Service]
-    end
-
-    subgraph Caching Layer
-        Cacheredis[redis]
-        CacheRedis[Redis]
         CacheMemcached[Memcached]
-        Cachememcached[memcached]
     end
 
     subgraph Object Storage
@@ -227,91 +201,18 @@ graph TB
 
     Web --> LB
     Mobile --> LB
-    S1 --> Cacheredis
-    S1 --> CacheRedis
-    S1 --> CacheMemcached
-    S1 --> Cachememcached
-    S2 --> Cacheredis
-    S2 --> CacheRedis
-    S2 --> CacheMemcached
-    S2 --> Cachememcached
-    S3 --> Cacheredis
-    S3 --> CacheRedis
-    S3 --> CacheMemcached
-    S3 --> Cachememcached
-    S4 --> Cacheredis
-    S4 --> CacheRedis
-    S4 --> CacheMemcached
-    S4 --> Cachememcached
-    S1 --> StorageS3
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[API Service]
-        S3[analytics Service]
-        S4[503 Service]
-    end
-
-    subgraph Caching Layer
-        CacheMemcached[Memcached]
-        Cachememcached[memcached]
-        CacheRedis[Redis]
-        Cacheredis[redis]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    S1 --> CacheMemcached
-    S1 --> Cachememcached
     S1 --> CacheRedis
     S1 --> Cacheredis
-    S2 --> CacheMemcached
-    S2 --> Cachememcached
+    S1 --> Cachememcached
+    S1 --> CacheMemcached
     S2 --> CacheRedis
     S2 --> Cacheredis
-    S3 --> CacheMemcached
-    S3 --> Cachememcached
+    S2 --> Cachememcached
+    S2 --> CacheMemcached
     S3 --> CacheRedis
     S3 --> Cacheredis
-    S4 --> CacheMemcached
-    S4 --> Cachememcached
-    S4 --> CacheRedis
-    S4 --> Cacheredis
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-```
-
-
-
-## 4.1 Starting Simple: A Single Cache Node
-Before we distribute anything, let us understand what happens on a single cache node. The simplest cache is just a hash table in memory.
-
-#### Cache Client Library
-The cache client is a library embedded in your application. When you call `cache.get("user:123")`, the client library handles all the complexity of talking to the cache cluster. It manages connection pools, handles retries on failures, and (as we will see) routes requests to the correct node.
-For now, with just one node, the client simply opens a TCP connection and sends the request.
-
-#### Cache Node
-The cache node is where data actually lives. At its core, it is a hash table in memory. When a PUT request arrives, the node computes a hash of the key, stores the key-value pair at that hash slot, and returns success. GET requests look up the key in the hash table and return the value (or a miss indicator if not found).
-Modern in-memory stores like Redis can handle 100,000+ operations per second on a single node. The bottleneck is usually network I/O, not CPU or memory lookups.
-**The flow for a single node is straightforward:**
-This works great until you need to store more data than fits in one machine's memory. That is our next challenge.
-
+    S3 --> Cachememcached
+    S3 --> CacheMemcached
 ## 4.2 Distributing Data Across Nodes
 With 100 TB of data and 64 GB per node, we need about 1,600 nodes. But now we have a problem: when a request comes in for key "user:123", how do we know which of the 1,600 nodes has it?
 The naive approach would be simple modular hashing:

@@ -127,204 +127,6 @@ The key insight is that rate limiting must happen **before** requests reach th
 Instead of presenting the full architecture at once, we will build it incrementally by addressing one requirement at a time. This approach is easier to follow and mirrors how you would explain the design in an interview.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[internal Service]
-        S2[redeploying Service]
-        S3[management Service]
-        S4[downstream Service]
-        S5[Limiter Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-        Cacheredis[redis]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> Cacheredis
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> Cacheredis
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> Cacheredis
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> Cacheredis
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> Cacheredis
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[redeploying Service]
-        S2[The Service]
-        S3[Application Service]
-        S4[Limiter Service]
-        S5[downstream Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        Cacheredis[redis]
-        CacheRedis[Redis]
-    end
-
-    subgraph Object Storage
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> Cacheredis
-    S1 --> CacheRedis
-    S2 --> DBPostgreSQL
-    S2 --> Cacheredis
-    S2 --> CacheRedis
-    S3 --> DBPostgreSQL
-    S3 --> Cacheredis
-    S3 --> CacheRedis
-    S4 --> DBPostgreSQL
-    S4 --> Cacheredis
-    S4 --> CacheRedis
-    S5 --> DBPostgreSQL
-    S5 --> Cacheredis
-    S5 --> CacheRedis
-    S1 --> StorageS3
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[Rules Service]
-        S3[Limiter Service]
-        S4[lightweight Service]
-        S5[downstream Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-        Cacheredis[redis]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    subgraph CDN
-        CDN[Content Delivery Network]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> Cacheredis
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> Cacheredis
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> Cacheredis
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> Cacheredis
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> Cacheredis
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    StorageObjectStorage --> CDN
-    StorageS3 --> CDN
-    CDN --> Web
-    CDN --> Mobile
-```
-
-
-
-## 4.1 Requirement 1: Rate Limit Checking
 The most fundamental requirement is checking whether a request should be allowed based on the client's recent activity.
 
 ### Components Needed
@@ -357,6 +159,67 @@ A distributed in-memory store that tracks request counts per client.
 3. The **Rate Limiter Service**:
 4. The service returns an allow/deny decision with metadata (remaining requests, reset time).
 5. If allowed, the Gateway forwards the request to the backend. If blocked, it returns HTTP 429.
+
+
+    CDNNode --> Mobile
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[Rules Service]
+        S2[lightweight Service]
+        S3[management Service]
+        S4[The Service]
+        S5[internal Service]
+    end
+
+    subgraph Data Storage
+        DBPostgreSQL[PostgreSQL]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+        Cacheredis[redis]
+    end
+
+    subgraph CDNLayer
+        CDNNode[Content Delivery Network]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBPostgreSQL
+    S1 --> CacheRedis
+    S1 --> Cacheredis
+    S2 --> DBPostgreSQL
+    S2 --> CacheRedis
+    S2 --> Cacheredis
+    S3 --> DBPostgreSQL
+    S3 --> CacheRedis
+    S3 --> Cacheredis
+    S4 --> DBPostgreSQL
+    S4 --> CacheRedis
+    S4 --> Cacheredis
+    S5 --> DBPostgreSQL
+    S5 --> CacheRedis
+    S5 --> Cacheredis
+    CDNNode --> Web
+    CDNNode --> Mobile
+
+
 
 ## 4.2 Requirement 2: Distributed Rate Limiting
 In a distributed system with multiple API Gateway instances and Rate Limiter replicas, we need consistent counting across all nodes.

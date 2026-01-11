@@ -132,143 +132,6 @@ At a high level, our distributed key-value store must satisfy several core requi
 Instead of presenting the full architecture at once, we'll build it incrementally by addressing one requirement at a time. This approach is easier to follow and mirrors how you would explain the design in an interview.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Application Services
-        S1[and Service]
-        S2[503 Service]
-        S3[coordination Service]
-    end
-
-    subgraph Data Storage
-        DBcassandra[cassandra]
-        DBDynamoDB[DynamoDB]
-        DBCassandra[Cassandra]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    S1 --> DBcassandra
-    S1 --> DBDynamoDB
-    S1 --> CacheRedis
-    S2 --> DBcassandra
-    S2 --> DBDynamoDB
-    S2 --> CacheRedis
-    S3 --> DBcassandra
-    S3 --> DBDynamoDB
-    S3 --> CacheRedis
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[and Service]
-        S3[coordination Service]
-        S4[503 Service]
-    end
-
-    subgraph Data Storage
-        DBDynamoDB[DynamoDB]
-        DBCassandra[Cassandra]
-        DBcassandra[cassandra]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Object Storage
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    S1 --> DBDynamoDB
-    S1 --> DBCassandra
-    S1 --> CacheRedis
-    S2 --> DBDynamoDB
-    S2 --> DBCassandra
-    S2 --> CacheRedis
-    S3 --> DBDynamoDB
-    S3 --> DBCassandra
-    S3 --> CacheRedis
-    S4 --> DBDynamoDB
-    S4 --> DBCassandra
-    S4 --> CacheRedis
-    S1 --> StorageS3
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[and Service]
-        S3[coordination Service]
-        S4[503 Service]
-    end
-
-    subgraph Data Storage
-        DBCassandra[Cassandra]
-        DBcassandra[cassandra]
-        DBDynamoDB[DynamoDB]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    S1 --> DBCassandra
-    S1 --> DBcassandra
-    S1 --> CacheRedis
-    S2 --> DBCassandra
-    S2 --> DBcassandra
-    S2 --> CacheRedis
-    S3 --> DBCassandra
-    S3 --> DBcassandra
-    S3 --> CacheRedis
-    S4 --> DBCassandra
-    S4 --> DBcassandra
-    S4 --> CacheRedis
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-```
-
-
-
-## 4.1 Requirement 1: Data Distribution
 With 10 TB of data, we cannot store everything on a single node. We need to partition (shard) the data across multiple nodes.
 
 ### Components Needed
@@ -294,6 +157,46 @@ Storage nodes hold the actual key-value data for their assigned partition.
 4. The request is forwarded to those **Storage Nodes**.
 5. Once enough replicas acknowledge the write, the Coordinator returns success to the client.
 
+
+    S3 --> CacheRedis
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Application Services
+        S1[coordination Service]
+        S2[503 Service]
+        S3[and Service]
+    end
+
+    subgraph Data Storage
+        DBDynamoDB[DynamoDB]
+        DBCassandra[Cassandra]
+        DBcassandra[cassandra]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Object Storage
+        StorageS3[S3]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    S1 --> DBDynamoDB
+    S1 --> DBCassandra
+    S1 --> CacheRedis
+    S2 --> DBDynamoDB
+    S2 --> DBCassandra
+    S2 --> CacheRedis
+    S3 --> DBDynamoDB
+    S3 --> DBCassandra
+    S3 --> CacheRedis
 ## 4.2 Requirement 2: Fault Tolerance via Replication
 A single copy of data is vulnerable to node failures. We need to replicate each key-value pair across multiple nodes.
 

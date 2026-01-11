@@ -178,276 +178,6 @@ Let's visualize the overall flow before diving into each piece:
 Let's build this architecture step by step, starting with pipeline triggering and orchestration.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[deployment Service]
-        S2[Pipeline Service]
-        S3[traffic Service]
-        S4[Core Service]
-        S5[the Service]
-    end
-
-    subgraph Data Storage
-        DBMongoDB[MongoDB]
-        DBElasticsearch[Elasticsearch]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueSQS[SQS]
-        QueueRabbitMQ[RabbitMQ]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        Storages3[s3]
-        StorageObjectstorage[Object storage]
-        StorageS3[S3]
-        Storageobjectstorage[object storage]
-        StorageObjectStorage[Object Storage]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBMongoDB
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueSQS
-    S1 --> QueueRabbitMQ
-    S1 --> QueueKafka
-    S2 --> DBMongoDB
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueSQS
-    S2 --> QueueRabbitMQ
-    S2 --> QueueKafka
-    S3 --> DBMongoDB
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueSQS
-    S3 --> QueueRabbitMQ
-    S3 --> QueueKafka
-    S4 --> DBMongoDB
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueSQS
-    S4 --> QueueRabbitMQ
-    S4 --> QueueKafka
-    S5 --> DBMongoDB
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueSQS
-    S5 --> QueueRabbitMQ
-    S5 --> QueueKafka
-    S1 --> Storages3
-    S1 --> StorageObjectstorage
-    S1 --> StorageS3
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectStorage
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[for Service]
-        S2[cloud Service]
-        S3[Most Service]
-        S4[application Service]
-        S5[managed Service]
-    end
-
-    subgraph Data Storage
-        DBMongoDB[MongoDB]
-        DBPostgreSQL[PostgreSQL]
-        DBElasticsearch[Elasticsearch]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueSQS[SQS]
-        QueueRabbitMQ[RabbitMQ]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        Storages3[s3]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-        Storageobjectstorage[object storage]
-        StorageObjectstorage[Object storage]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBMongoDB
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueSQS
-    S1 --> QueueRabbitMQ
-    S1 --> QueueKafka
-    S2 --> DBMongoDB
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueSQS
-    S2 --> QueueRabbitMQ
-    S2 --> QueueKafka
-    S3 --> DBMongoDB
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueSQS
-    S3 --> QueueRabbitMQ
-    S3 --> QueueKafka
-    S4 --> DBMongoDB
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueSQS
-    S4 --> QueueRabbitMQ
-    S4 --> QueueKafka
-    S5 --> DBMongoDB
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueSQS
-    S5 --> QueueRabbitMQ
-    S5 --> QueueKafka
-    S1 --> Storages3
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    S1 --> Storageobjectstorage
-    S1 --> StorageObjectstorage
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[stateless Service]
-        S2[managed Service]
-        S3[Critical Service]
-        S4[Log Service]
-        S5[Most Service]
-    end
-
-    subgraph Data Storage
-        DBMongoDB[MongoDB]
-        DBElasticsearch[Elasticsearch]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueRabbitMQ[RabbitMQ]
-        QueueSQS[SQS]
-        QueueKafka[Kafka]
-    end
-
-    subgraph Object Storage
-        Storageobjectstorage[object storage]
-        Storages3[s3]
-        StorageS3[S3]
-        StorageObjectStorage[Object Storage]
-        StorageObjectstorage[Object storage]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBMongoDB
-    S1 --> DBElasticsearch
-    S1 --> CacheRedis
-    S1 --> QueueRabbitMQ
-    S1 --> QueueSQS
-    S1 --> QueueKafka
-    S2 --> DBMongoDB
-    S2 --> DBElasticsearch
-    S2 --> CacheRedis
-    S2 --> QueueRabbitMQ
-    S2 --> QueueSQS
-    S2 --> QueueKafka
-    S3 --> DBMongoDB
-    S3 --> DBElasticsearch
-    S3 --> CacheRedis
-    S3 --> QueueRabbitMQ
-    S3 --> QueueSQS
-    S3 --> QueueKafka
-    S4 --> DBMongoDB
-    S4 --> DBElasticsearch
-    S4 --> CacheRedis
-    S4 --> QueueRabbitMQ
-    S4 --> QueueSQS
-    S4 --> QueueKafka
-    S5 --> DBMongoDB
-    S5 --> DBElasticsearch
-    S5 --> CacheRedis
-    S5 --> QueueRabbitMQ
-    S5 --> QueueSQS
-    S5 --> QueueKafka
-    S1 --> Storageobjectstorage
-    S1 --> Storages3
-    S1 --> StorageS3
-    S1 --> StorageObjectStorage
-    S1 --> StorageObjectstorage
-```
-
-
-
-## 4.1 Requirement 1: Triggering and Orchestrating Pipelines
 When a developer pushes code or manually triggers a build, several things need to happen behind the scenes:
 1. Authenticate the request and check permissions
 2. Fetch the pipeline configuration from the repository
@@ -484,6 +214,96 @@ Let's walk through this step by step:
 6. **Return immediately:** The developer gets back a run ID immediately. They do not wait for the build to complete, just for it to be queued.
 
 By putting stages in a queue, we decouple orchestration from execution. The Pipeline Service does not need to know how many workers are available or which one is free. The queue handles distribution, retries, and load balancing. This separation of concerns makes both components simpler and more scalable.
+
+
+    S1 --> Storageobjectstorage
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[degraded Service]
+        S2[deployment Service]
+        S3[web Service]
+        S4[Log Service]
+        S5[managed Service]
+    end
+
+    subgraph Data Storage
+        DBElasticsearch[Elasticsearch]
+        DBPostgreSQL[PostgreSQL]
+        DBMongoDB[MongoDB]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueKafka[Kafka]
+        QueueRabbitMQ[RabbitMQ]
+        QueueSQS[SQS]
+    end
+
+    subgraph Object Storage
+        StorageS3[S3]
+        StorageObjectstorage[Object storage]
+        Storageobjectstorage[object storage]
+        Storages3[s3]
+        StorageObjectStorage[Object Storage]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBElasticsearch
+    S1 --> DBPostgreSQL
+    S1 --> CacheRedis
+    S1 --> QueueKafka
+    S1 --> QueueRabbitMQ
+    S1 --> QueueSQS
+    S2 --> DBElasticsearch
+    S2 --> DBPostgreSQL
+    S2 --> CacheRedis
+    S2 --> QueueKafka
+    S2 --> QueueRabbitMQ
+    S2 --> QueueSQS
+    S3 --> DBElasticsearch
+    S3 --> DBPostgreSQL
+    S3 --> CacheRedis
+    S3 --> QueueKafka
+    S3 --> QueueRabbitMQ
+    S3 --> QueueSQS
+    S4 --> DBElasticsearch
+    S4 --> DBPostgreSQL
+    S4 --> CacheRedis
+    S4 --> QueueKafka
+    S4 --> QueueRabbitMQ
+    S4 --> QueueSQS
+    S5 --> DBElasticsearch
+    S5 --> DBPostgreSQL
+    S5 --> CacheRedis
+    S5 --> QueueKafka
+    S5 --> QueueRabbitMQ
+    S5 --> QueueSQS
+    S1 --> StorageS3
+    S1 --> StorageObjectstorage
+    S1 --> Storageobjectstorage
+    S1 --> Storages3
+    S1 --> StorageObjectStorage
+
+
 
 ## 4.2 Requirement 2: Executing Build Jobs
 Now for the compute-intensive part. Jobs are sitting in the queue, waiting to be executed. We need workers to pick them up, run them in isolated environments, and report results back to the Pipeline Service so it can queue the next stages.

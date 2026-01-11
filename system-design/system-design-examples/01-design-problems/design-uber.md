@@ -186,135 +186,8 @@ Calculates fare estimates, including surge pricing or dynamic pricing based on s
 Lets dive into the core use cases that the system need to support.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Rider Service]
-        S2[Routing Service]
-        S3[major Service]
-        S4[Ride Service]
-        S5[Pricing Service]
-    end
-
-    subgraph Data Storage
-        DBCassandra[Cassandra]
-        DBMongoDB[MongoDB]
-        DBMySQL[MySQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-        CacheMemcached[Memcached]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBCassandra
-    S1 --> DBMongoDB
-    S1 --> CacheRedis
-    S1 --> CacheMemcached
-    S2 --> DBCassandra
-    S2 --> DBMongoDB
-    S2 --> CacheRedis
-    S2 --> CacheMemcached
-    S3 --> DBCassandra
-    S3 --> DBMongoDB
-    S3 --> CacheRedis
-    S3 --> CacheMemcached
-    S4 --> DBCassandra
-    S4 --> DBMongoDB
-    S4 --> CacheRedis
-    S4 --> CacheMemcached
-    S5 --> DBCassandra
-    S5 --> DBMongoDB
-    S5 --> CacheRedis
-    S5 --> CacheMemcached
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Matching Service]
-        S2[Application Service]
-        S3[major Service]
-        S4[Driver Service]
-        S5[Rider Service]
-    end
-
-    subgraph Data Storage
-        DBMySQL[MySQL]
-        DBMongoDB[MongoDB]
-        DBCassandra[Cassandra]
-    end
-
-    subgraph Caching Layer
-        CacheMemcached[Memcached]
-        CacheRedis[Redis]
-    end
-
-    subgraph Object Storage
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBMySQL
-    S1 --> DBMongoDB
-    S1 --> CacheMemcached
-    S1 --> CacheRedis
-    S2 --> DBMySQL
-    S2 --> DBMongoDB
-    S2 --> CacheMemcached
-    S2 --> CacheRedis
-    S3 --> DBMySQL
-    S3 --> DBMongoDB
-    S3 --> CacheMemcached
-    S3 --> CacheRedis
-    S4 --> DBMySQL
-    S4 --> DBMongoDB
-    S4 --> CacheMemcached
-    S4 --> CacheRedis
-    S5 --> DBMySQL
-    S5 --> DBMongoDB
-    S5 --> CacheMemcached
-    S5 --> CacheRedis
-    S1 --> StorageS3
-```
-
-
-
-## 6.1 Booking a Ride
+``
+```m# 6.1 Booking a Ride
 
 #### Rider Initiates a Ride Request
 - The rider opens the app, enters pickup and destination locations, and taps a “Request Ride” button.
@@ -342,6 +215,71 @@ graph TB
 #### Rider Receives Confirmation
 - The Ride Service notifies the rider (via an app push message) that a driver is assigned.
 - The app displays the driver’s name, vehicle details, and **real-time ETA** (calculated via the **Routing Service**).
+    S1 --> StorageS3
+```
+
+
+
+
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[Pricing Service]
+        S2[Payment Service]
+        S3[Ride Service]
+        S4[Routing Service]
+        S5[major Service]
+    end
+
+    subgraph Data Storage
+        DBCassandra[Cassandra]
+        DBPostgreSQL[PostgreSQL]
+        DBMySQL[MySQL]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+        CacheMemcached[Memcached]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBCassandra
+    S1 --> DBPostgreSQL
+    S1 --> CacheRedis
+    S1 --> CacheMemcached
+    S2 --> DBCassandra
+    S2 --> DBPostgreSQL
+    S2 --> CacheRedis
+    S2 --> CacheMemcached
+    S3 --> DBCassandra
+    S3 --> DBPostgreSQL
+    S3 --> CacheRedis
+    S3 --> CacheMemcached
+    S4 --> DBCassandra
+    S4 --> DBPostgreSQL
+    S4 --> CacheRedis
+    S4 --> CacheMemcached
+    S5 --> DBCassandra
+    S5 --> DBPostgreSQL
+    S5 --> CacheRedis
+    S5 --> CacheMemcached
+
+
 
 ## 6.2 Finding Nearby Drivers
 Finding nearby drivers is a **core use case** in any ride-hailing system. It must be **fast, accurate, and scalable** to handle **millions of concurrent ride requests** efficiently.

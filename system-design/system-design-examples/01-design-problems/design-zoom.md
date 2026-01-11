@@ -195,241 +195,6 @@ Rather than dropping a complex architecture diagram on you all at once, let us b
 This approach mirrors how you would actually design such a system: starting with the basics and layering complexity as needed.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[streaming Service]
-        S2[financial Service]
-        S3[Custom Service]
-        S4[cloud Service]
-        S5[Recording Service]
-    end
-
-    subgraph Data Storage
-        DBCassandra[Cassandra]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueSQS[SQS]
-        QueueRabbitMQ[RabbitMQ]
-    end
-
-    subgraph Object Storage
-        StorageObjectstorage[Object storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBCassandra
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueSQS
-    S1 --> QueueRabbitMQ
-    S2 --> DBCassandra
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueSQS
-    S2 --> QueueRabbitMQ
-    S3 --> DBCassandra
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueSQS
-    S3 --> QueueRabbitMQ
-    S4 --> DBCassandra
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueSQS
-    S4 --> QueueRabbitMQ
-    S5 --> DBCassandra
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueSQS
-    S5 --> QueueRabbitMQ
-    S1 --> StorageObjectstorage
-    S1 --> StorageS3
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[cloud Service]
-        S2[streaming Service]
-        S3[Custom Service]
-        S4[financial Service]
-        S5[Meeting Service]
-    end
-
-    subgraph Data Storage
-        DBCassandra[Cassandra]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueSQS[SQS]
-        QueueRabbitMQ[RabbitMQ]
-    end
-
-    subgraph Object Storage
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-        StorageObjectstorage[Object storage]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBCassandra
-    S1 --> DBPostgreSQL
-    S1 --> CacheRedis
-    S1 --> QueueSQS
-    S1 --> QueueRabbitMQ
-    S2 --> DBCassandra
-    S2 --> DBPostgreSQL
-    S2 --> CacheRedis
-    S2 --> QueueSQS
-    S2 --> QueueRabbitMQ
-    S3 --> DBCassandra
-    S3 --> DBPostgreSQL
-    S3 --> CacheRedis
-    S3 --> QueueSQS
-    S3 --> QueueRabbitMQ
-    S4 --> DBCassandra
-    S4 --> DBPostgreSQL
-    S4 --> CacheRedis
-    S4 --> QueueSQS
-    S4 --> QueueRabbitMQ
-    S5 --> DBCassandra
-    S5 --> DBPostgreSQL
-    S5 --> CacheRedis
-    S5 --> QueueSQS
-    S5 --> QueueRabbitMQ
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-    S1 --> StorageObjectstorage
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[financial Service]
-        S3[streaming Service]
-        S4[Recording Service]
-        S5[Presence Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-        DBCassandra[Cassandra]
-    end
-
-    subgraph Caching Layer
-        CacheRedis[Redis]
-    end
-
-    subgraph Message Queue
-        QueueRabbitMQ[RabbitMQ]
-        QueueSQS[SQS]
-    end
-
-    subgraph Object Storage
-        StorageObjectstorage[Object storage]
-        StorageObjectStorage[Object Storage]
-        StorageS3[S3]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    LB --> S3
-    LB --> S4
-    LB --> S5
-    S1 --> DBPostgreSQL
-    S1 --> DBCassandra
-    S1 --> CacheRedis
-    S1 --> QueueRabbitMQ
-    S1 --> QueueSQS
-    S2 --> DBPostgreSQL
-    S2 --> DBCassandra
-    S2 --> CacheRedis
-    S2 --> QueueRabbitMQ
-    S2 --> QueueSQS
-    S3 --> DBPostgreSQL
-    S3 --> DBCassandra
-    S3 --> CacheRedis
-    S3 --> QueueRabbitMQ
-    S3 --> QueueSQS
-    S4 --> DBPostgreSQL
-    S4 --> DBCassandra
-    S4 --> CacheRedis
-    S4 --> QueueRabbitMQ
-    S4 --> QueueSQS
-    S5 --> DBPostgreSQL
-    S5 --> DBCassandra
-    S5 --> CacheRedis
-    S5 --> QueueRabbitMQ
-    S5 --> QueueSQS
-    S1 --> StorageObjectstorage
-    S1 --> StorageObjectStorage
-    S1 --> StorageS3
-```
-
-
-
-## 4.1 Meeting Management
 Before any video streams flow, we need the infrastructure to create and manage meetings. This is the "boring" CRUD part of the system, but it is essential.
 Without it, users cannot schedule meetings, cannot share meeting links, and cannot configure settings. Every video call starts here.
 
@@ -449,6 +214,83 @@ The flow is straightforward:
 5. **Response:** Host receives the meeting ID, a shareable join URL, and a host key for elevated privileges
 
 This is a simple architecture that you would find in any CRUD application. If this were all we needed to build, the system design would be over in 10 minutes. The complexity comes next, when we need to actually connect people with video.
+
+
+    S1 --> StorageS3
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[presence Service]
+        S2[backend Service]
+        S3[Meeting Service]
+        S4[Presence Service]
+        S5[Recording Service]
+    end
+
+    subgraph Data Storage
+        DBPostgreSQL[PostgreSQL]
+        DBCassandra[Cassandra]
+    end
+
+    subgraph Caching Layer
+        CacheRedis[Redis]
+    end
+
+    subgraph Message Queue
+        QueueSQS[SQS]
+        QueueRabbitMQ[RabbitMQ]
+    end
+
+    subgraph Object Storage
+        StorageS3[S3]
+        StorageObjectstorage[Object storage]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    LB --> S2
+    LB --> S3
+    LB --> S4
+    LB --> S5
+    S1 --> DBPostgreSQL
+    S1 --> DBCassandra
+    S1 --> CacheRedis
+    S1 --> QueueSQS
+    S1 --> QueueRabbitMQ
+    S2 --> DBPostgreSQL
+    S2 --> DBCassandra
+    S2 --> CacheRedis
+    S2 --> QueueSQS
+    S2 --> QueueRabbitMQ
+    S3 --> DBPostgreSQL
+    S3 --> DBCassandra
+    S3 --> CacheRedis
+    S3 --> QueueSQS
+    S3 --> QueueRabbitMQ
+    S4 --> DBPostgreSQL
+    S4 --> DBCassandra
+    S4 --> CacheRedis
+    S4 --> QueueSQS
+    S4 --> QueueRabbitMQ
+    S5 --> DBPostgreSQL
+    S5 --> DBCassandra
+    S5 --> CacheRedis
+    S5 --> QueueSQS
+    S5 --> QueueRabbitMQ
+    S1 --> StorageS3
+    S1 --> StorageObjectstorage
+
+
 
 ## 4.2 Real-Time Media Streaming
 This is where video conferencing gets interesting, and where the real engineering challenges begin. Unlike traditional request-response APIs where a few hundred milliseconds of latency is perfectly acceptable, video calls become unusable the moment latency exceeds 200-300ms.

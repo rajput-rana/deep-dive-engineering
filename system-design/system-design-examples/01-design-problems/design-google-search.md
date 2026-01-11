@@ -150,104 +150,6 @@ At the highest level, a search engine consists of three major subsystems:
 These subsystems operate somewhat independently but are connected through data pipelines. The crawler feeds pages to the indexer, and the indexer produces the data structures that the serving layer uses. Let's design each one.
 
 
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[503 Service]
-    end
-
-    subgraph Data Storage
-        DBMySQL[MySQL]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    S1 --> DBMySQL
-    S1 --> DBPostgreSQL
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[503 Service]
-    end
-
-    subgraph Data Storage
-        DBMySQL[MySQL]
-        DBPostgreSQL[PostgreSQL]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    S1 --> DBMySQL
-    S1 --> DBPostgreSQL
-    S2 --> DBMySQL
-    S2 --> DBPostgreSQL
-```
-
-
-
-
-```mermaid
-graph TB
-    subgraph Clients
-        Web[Web Browser]
-        Mobile[Mobile App]
-    end
-
-    subgraph Load Balancing
-        LB[Load Balancer]
-    end
-
-    subgraph Application Services
-        S1[Application Service]
-        S2[503 Service]
-    end
-
-    subgraph Data Storage
-        DBPostgreSQL[PostgreSQL]
-        DBMySQL[MySQL]
-    end
-
-    Web --> LB
-    Mobile --> LB
-    LB --> S1
-    LB --> S2
-    S1 --> DBPostgreSQL
-    S1 --> DBMySQL
-    S2 --> DBPostgreSQL
-    S2 --> DBMySQL
-```
-
-
-
-## 4.1 Subsystem 1: Web Crawling
 The crawler's job seems simple: download web pages. But at the scale of the entire web, this becomes a fascinating engineering challenge. How do you politely crawl billions of pages without overwhelming individual websites? How do you decide which pages to crawl first? How do you discover new pages?
 
 ### Components Needed
@@ -284,6 +186,32 @@ Crawlers must be "polite" to avoid overwhelming web servers. Imagine if we sent 
 The URL frontier enforces politeness by grouping URLs by domain and maintaining a minimum delay between requests to the same host. If we last crawled example.com at 10:00:00, we wait until at least 10:00:01 before crawling another page from that domain.
 This means we cannot just pull URLs from a single queue. We need separate queues per domain, and we select the next URL from whichever domain's delay has expired and has the highest priority URL waiting.
 
+
+    S1 --> DBPostgreSQL
+```mermaid
+graph TB
+    subgraph Clients
+        Web[Web Browser]
+        Mobile[Mobile App]
+    end
+
+    subgraph Load Balancing
+        LB[Load Balancer]
+    end
+
+    subgraph Application Services
+        S1[503 Service]
+    end
+
+    subgraph Data Storage
+        DBPostgreSQL[PostgreSQL]
+        DBMySQL[MySQL]
+    end
+
+    Web --> LB
+    Mobile --> LB
+    LB --> S1
+    S1 --> DBPostgreSQL
 ## 4.2 Subsystem 2: Indexing Pipeline
 The crawling system gives us raw HTML. Now we need to transform that into something we can search. The indexing pipeline is where the magic of information retrieval happens.
 Think about what we need to do: take billions of web pages full of HTML tags, advertisements, and navigation menus, and extract the meaningful content. Then organize that content so we can find relevant pages for any query in milliseconds.

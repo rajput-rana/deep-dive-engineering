@@ -118,6 +118,9 @@ A system like Google Docs manages multiple types of data, each with distinct str
 To ensure performance and scalability, it’s critical to use the right **data model** and **storage engine** for each use case.
 
 
+``
+
+    S1 --> StorageS3
 ```mermaid
 graph TB
     subgraph Clients
@@ -126,15 +129,15 @@ graph TB
     end
 
     subgraph Application Services
-        S1[Collaboration Service]
+        S1[collaboration Service]
         S2[backend Service]
-        S3[collaboration Service]
+        S3[Collaboration Service]
     end
 
     subgraph Data Storage
         DBPostgreSQL[PostgreSQL]
-        DBCassandra[Cassandra]
         DBMongoDB[MongoDB]
+        DBCassandra[Cassandra]
     end
 
     subgraph Caching Layer
@@ -152,22 +155,17 @@ graph TB
     Web --> LB
     Mobile --> LB
     S1 --> DBPostgreSQL
-    S1 --> DBCassandra
+    S1 --> DBMongoDB
     S1 --> CacheRedis
     S1 --> QueueKafka
     S2 --> DBPostgreSQL
-    S2 --> DBCassandra
+    S2 --> DBMongoDB
     S2 --> CacheRedis
     S2 --> QueueKafka
     S3 --> DBPostgreSQL
-    S3 --> DBCassandra
+    S3 --> DBMongoDB
     S3 --> CacheRedis
     S3 --> QueueKafka
-    S1 --> StorageS3
-```
-
-
-
 ## 4.1 User & Document Metadata
 These tables manage structured, relational data that benefits from ACID guarantees.
 **Recommended Database: Relational Database (e.g., PostgreSQL, MySQL)**
