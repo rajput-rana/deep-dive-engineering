@@ -87,46 +87,66 @@ class LeetCodeFetcher:
         return all_submissions
     
     def get_problem_details(self, problem_slug: str) -> Dict:
-        """Get problem details including tags and difficulty"""
+        """Get full problem details including description, constraints, examples"""
         query = """
-        query problemsetQuestionList($categorySlug: String, $limit: Int, $skip: Int, $filters: QuestionListFilterInput) {
-            problemsetQuestionList: questionList(
-                categorySlug: $categorySlug
-                limit: $limit
-                skip: $skip
-                filters: $filters
-            ) {
-                total: totalNum
-                questions: data {
-                    acRate
-                    difficulty
-                    freqBar
-                    frontendQuestionId: questionFrontendId
-                    isFavor
-                    paidOnly: isPaidOnly
-                    status
-                    title
-                    titleSlug
-                    topicTags {
-                        name
-                        id
-                        slug
-                    }
-                    hasSolution
-                    hasVideoSolution
+        query questionContent($titleSlug: String!) {
+            question(titleSlug: $titleSlug) {
+                questionId
+                questionFrontendId
+                title
+                titleSlug
+                content
+                difficulty
+                likes
+                dislikes
+                isLiked
+                similarQuestions
+                contributors {
+                    username
+                    profileUrl
+                    avatarUrl
                 }
+                topicTags {
+                    name
+                    slug
+                    translatedName
+                }
+                companyTagStats
+                codeSnippets {
+                    lang
+                    langSlug
+                    code
+                }
+                stats
+                hints
+                solution {
+                    id
+                    canSeeDetail
+                    paidOnly
+                    hasVideoSolution
+                    paidOnlyVideo
+                }
+                status
+                sampleTestCase
+                metaData
+                judgerAvailable
+                judgeType
+                mysqlSchemas
+                enableRunCode
+                enableTestMode
+                enableDebugger
+                envInfo
+                libraryUrl
+                adminUrl
+                challengeType
+                acRate
             }
         }
         """
         
         url = f"{self.base_url}/graphql/"
         variables = {
-            "categorySlug": "",
-            "skip": 0,
-            "limit": 1,
-            "filters": {
-                "searchKeywords": problem_slug
-            }
+            "titleSlug": problem_slug
         }
         
         payload = {
@@ -139,9 +159,9 @@ class LeetCodeFetcher:
             response.raise_for_status()
             data = response.json()
             
-            questions = data.get("data", {}).get("problemsetQuestionList", {}).get("questions", [])
-            if questions:
-                return questions[0]
+            question = data.get("data", {}).get("question", {})
+            if question:
+                return question
         except Exception as e:
             print(f"Error fetching problem details for {problem_slug}: {e}")
         

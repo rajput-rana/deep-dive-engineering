@@ -4,7 +4,7 @@
  * Problem Link: https://leetcode.com/problems/non-decreasing-subsequences/
  * 
  * Difficulty: Medium
- * Tags: Array, Hash Table, Backtracking, Bit Manipulation
+ * Tags: N/A
  * 
  * Runtime: 6 ms
  * Memory: 53.3 MB

@@ -4,7 +4,7 @@
  * Problem Link: https://leetcode.com/problems/find-the-minimum-area-to-cover-all-ones-i/
  * 
  * Difficulty: Medium
- * Tags: Array, Matrix
+ * Tags: N/A
  * 
  * Runtime: 5 ms
  * Memory: 239.8 MB

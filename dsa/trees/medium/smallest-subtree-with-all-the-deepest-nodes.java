@@ -4,7 +4,7 @@
  * Problem Link: https://leetcode.com/problems/smallest-subtree-with-all-the-deepest-nodes/
  * 
  * Difficulty: Medium
- * Tags: Hash Table, Tree, Depth-First Search, Breadth-First Search, Binary Tree
+ * Tags: N/A
  * 
  * Runtime: 0 ms
  * Memory: 43.7 MB

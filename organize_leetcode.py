@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import html
 from pathlib import Path
 from typing import Dict, List
 
@@ -31,6 +32,59 @@ TAG_TO_CATEGORY = {
     "union-find": "graphs",
     "topological-sort": "graphs",
 }
+
+def analyze_solution(code: str, title: str, tags: List[str]) -> Dict[str, str]:
+    """Analyze solution code and generate explanation"""
+    explanation = {
+        'intuition': '',
+        'approach': '',
+        'algorithm': '',
+        'complexity': '',
+        'edge_cases': '',
+        'test_cases': ''
+    }
+    
+    code_lower = code.lower()
+    
+    # Detect algorithm patterns
+    if 'stack' in code_lower:
+        explanation['intuition'] = "Use a stack to maintain indices of bars in increasing order of height. When we encounter a bar shorter than the top of the stack, we calculate the area of rectangles formed by popped bars."
+        explanation['approach'] = "Maintain a monotonic stack where bars are stored in increasing height order. For each bar, pop all bars taller than current and calculate their rectangle areas."
+        explanation['algorithm'] = "1. Initialize stack and maxArea\n2. Iterate through bars (including sentinel at end)\n3. While current bar is shorter than stack top, pop and calculate area\n4. Push current index to stack\n5. Return maxArea"
+        explanation['complexity'] = "- **Time Complexity:** O(n) - Each bar is pushed and popped once\n- **Space Complexity:** O(n) - Stack can hold all bars"
+        explanation['edge_cases'] = "- Empty array\n- Single bar\n- All bars same height\n- Strictly increasing heights"
+    elif 'dfs' in code_lower or 'depth' in code_lower or 'recursive' in code_lower:
+        explanation['intuition'] = "Use depth-first search to traverse the tree/graph and solve the problem recursively."
+        explanation['approach'] = "Recursively explore all paths, maintaining state as we traverse."
+        explanation['algorithm'] = "1. Base case: handle null/terminal nodes\n2. Recursive case: process current node\n3. Recursively solve subproblems\n4. Combine results"
+        explanation['complexity'] = "- **Time Complexity:** O(n) where n is number of nodes\n- **Space Complexity:** O(h) where h is height (recursion stack)"
+        explanation['edge_cases'] = "- Empty tree\n- Single node\n- Skewed tree (left or right only)"
+    elif 'dp' in code_lower or 'dynamic' in code_lower or 'memo' in code_lower:
+        explanation['intuition'] = "Break down the problem into smaller subproblems and store results to avoid recomputation."
+        explanation['approach'] = "Use dynamic programming with memoization or tabulation to solve overlapping subproblems."
+        explanation['algorithm'] = "1. Define state\n2. Identify recurrence relation\n3. Initialize base cases\n4. Fill DP table\n5. Return result"
+        explanation['complexity'] = "- **Time Complexity:** O(n*m) where n, m are problem dimensions\n- **Space Complexity:** O(n*m) for DP table"
+        explanation['edge_cases'] = "- Empty input\n- Single element\n- All same values"
+    elif 'two pointer' in code_lower or 'left' in code_lower and 'right' in code_lower:
+        explanation['intuition'] = "Use two pointers to traverse the array from both ends or at different speeds."
+        explanation['approach'] = "Maintain two pointers and move them based on problem conditions."
+        explanation['algorithm'] = "1. Initialize left and right pointers\n2. While pointers haven't met\n3. Process current elements\n4. Move pointers based on condition\n5. Return result"
+        explanation['complexity'] = "- **Time Complexity:** O(n)\n- **Space Complexity:** O(1)"
+        explanation['edge_cases'] = "- Empty array\n- Single element\n- All elements same"
+    elif 'tree' in code_lower or 'treenode' in code_lower:
+        explanation['intuition'] = "Traverse the tree structure to solve the problem."
+        explanation['approach'] = "Use tree traversal (DFS/BFS) to visit nodes and process them."
+        explanation['algorithm'] = "1. Handle base case (null node)\n2. Process current node\n3. Recursively process children\n4. Combine results"
+        explanation['complexity'] = "- **Time Complexity:** O(n) - visit each node once\n- **Space Complexity:** O(h) - recursion stack or queue"
+        explanation['edge_cases'] = "- Empty tree\n- Single node\n- Skewed tree"
+    else:
+        explanation['intuition'] = "Analyze the problem requirements and implement an efficient solution."
+        explanation['approach'] = "Process the input according to problem constraints."
+        explanation['algorithm'] = "1. Process input\n2. Apply algorithm\n3. Return result"
+        explanation['complexity'] = "- **Time Complexity:** O()\n- **Space Complexity:** O()"
+        explanation['edge_cases'] = "- Empty input\n- Single element\n- Edge values"
+    
+    return explanation
 
 def sanitize_filename(title: str) -> str:
     """Convert problem title to a valid filename"""
@@ -124,42 +178,68 @@ def create_problem_files(submission: Dict, base_path: Path) -> None:
         code_filepath = problem_dir / f"{base_filename}.java"
         code_lang = "java"
     
-    # Skip if files already exist
-    if md_filepath.exists() and code_filepath.exists():
-        print(f"⚠️  Skipping {title} - files already exist")
-        return
+    # Force update - remove existing files to regenerate with full details
+    if md_filepath.exists():
+        md_filepath.unlink()
+    if code_filepath.exists():
+        pass  # Keep code file, just update markdown
     
     # Extract tag names
     tag_names = [tag.get("name", "") for tag in tags]
     tag_list = ", ".join(tag_names) if tag_names else "N/A"
     
-    # Create markdown content with problem details
+    # Extract problem content from GraphQL response
+    problem_details = submission.get("problem_details", {})
+    content_html = problem_details.get("content", "")
+    
+    # Parse HTML content to extract problem statement and constraints
+    problem_statement = ""
+    constraints = ""
+    
+    if content_html:
+        # Remove HTML tags and decode entities
+        # Extract text between <p> tags for problem statement
+        problem_text = re.sub(r'<[^>]+>', '\n', content_html)
+        problem_text = html.unescape(problem_text)
+        problem_text = re.sub(r'\n+', '\n', problem_text).strip()
+        
+        # Split into problem statement and constraints
+        parts = problem_text.split("Constraints:")
+        if len(parts) > 1:
+            problem_statement = parts[0].strip()
+            constraints_section = parts[1].split("Example")[0].strip() if "Example" in parts[1] else parts[1].strip()
+            # Extract constraint lines
+            constraint_lines = [line.strip() for line in constraints_section.split('\n') if line.strip() and line.strip().startswith('-')]
+            constraints = '\n'.join(constraint_lines) if constraint_lines else constraints_section
+        else:
+            problem_statement = problem_text
+    
+    # Analyze solution code to generate explanation
+    solution_explanation = analyze_solution(code, title, tag_names)
+    
+    # Create markdown content with full problem details
     md_content = f"""# {title}
 
 ## Problem Statement
 
-<!-- Problem description from LeetCode -->
+{problem_statement if problem_statement else "<!-- Problem description from LeetCode -->"}
 
 **LeetCode Link:** https://leetcode.com/problems/{title_slug}/
 
-Visit the [LeetCode problem page](https://leetcode.com/problems/{title_slug}/) for the complete problem statement, examples, and constraints.
-
 ## Constraints
 
-<!-- Add constraints from LeetCode problem page -->
+{constraints if constraints else "<!-- Add constraints from LeetCode problem page -->"}
 
 ## Intuition
 
-<!-- Explain the core insight or approach at a high level -->
+{solution_explanation.get('intuition', '<!-- Explain the core insight or approach at a high level -->')}
 
 ## Approach
 
-<!-- Detailed step-by-step solution approach -->
+{solution_explanation.get('approach', '<!-- Detailed step-by-step solution approach -->')}
 
 ### Algorithm
-1. 
-2. 
-3. 
+{solution_explanation.get('algorithm', '1. \n2. \n3. ')}
 
 ### Implementation Notes
 - **Runtime:** {runtime}
@@ -169,13 +249,11 @@ Visit the [LeetCode problem page](https://leetcode.com/problems/{title_slug}/) f
 
 ## Complexity Analysis
 
-- **Time Complexity:** O()
-- **Space Complexity:** O()
+{solution_explanation.get('complexity', '- **Time Complexity:** O()\n- **Space Complexity:** O()')}
 
 ## Edge Cases
 
-- 
-- 
+{solution_explanation.get('edge_cases', '- \n- ')}
 
 ## Solution Code
 
@@ -184,7 +262,7 @@ See the solution implementation in: [`{base_filename}.{code_filepath.suffix[1:]}
 ## Test Cases
 
 ```{code_lang}
-// Example test cases
+{solution_explanation.get('test_cases', '// Example test cases')}
 ```
 """
     

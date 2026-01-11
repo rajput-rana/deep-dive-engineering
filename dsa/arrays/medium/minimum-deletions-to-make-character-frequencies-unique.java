@@ -4,7 +4,7 @@
  * Problem Link: https://leetcode.com/problems/minimum-deletions-to-make-character-frequencies-unique/
  * 
  * Difficulty: Medium
- * Tags: Hash Table, String, Greedy, Sorting
+ * Tags: N/A
  * 
  * Runtime: 7 ms
  * Memory: 47.7 MB

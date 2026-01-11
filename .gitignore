@@ -36,3 +36,18 @@ __pycache__/
 leetcode_credentials.txt
 .env
 
+# Fetching scripts and related files
+fetch_algomaster.py
+fetch_algomaster_selenium.py
+fix_algomaster_content.py
+organize_algomaster_content.py
+cleanup_algomaster_markdown.py
+algomaster_cookies.txt
+algomaster_urls.txt
+run_algomaster_fetch.sh
+extract_cookies_helper.py
+ALGOMASTER_*.md
+fetch_leetcode.py
+organize_leetcode.py
+fetch_problem_details.py
+enhance_problem_files.py

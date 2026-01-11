@@ -4,7 +4,7 @@
  * Problem Link: https://leetcode.com/problems/minimum-number-of-steps-to-make-two-strings-anagram/
  * 
  * Difficulty: Medium
- * Tags: Hash Table, String, Counting
+ * Tags: N/A
  * 
  * Runtime: 9 ms
  * Memory: 47.8 MB

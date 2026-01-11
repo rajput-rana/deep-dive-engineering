@@ -4,7 +4,7 @@
  * Problem Link: https://leetcode.com/problems/count-bowl-subarrays/
  * 
  * Difficulty: Medium
- * Tags: Array, Stack, Monotonic Stack
+ * Tags: N/A
  * 
  * Runtime: 19 ms
  * Memory: 126.2 MB
