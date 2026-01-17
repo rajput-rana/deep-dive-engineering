@@ -11,6 +11,7 @@
 [![AWS](https://img.shields.io/badge/AWS-Cloud-yellow?style=for-the-badge)](./aws/)
 [![Languages](https://img.shields.io/badge/Languages-Expert-pink?style=for-the-badge)](./languages/)
 [![Data Engineering](https://img.shields.io/badge/Data%20Engineering-Big%20Data-teal?style=for-the-badge)](./data-engineering/)
+[![SQL](https://img.shields.io/badge/SQL-Specialist-orange?style=for-the-badge)](./sql/)
 [![Security](https://img.shields.io/badge/Security-Deep%20Dive-red?style=for-the-badge)](./system-design/06-security-compliance/)
 
 *A curated knowledge base for engineers who want to go beyond the basics*
@@ -91,11 +92,11 @@
 
 <div align="center">
 
-| 📊 **System Design** | 💻 **DSA** | 🤖 **AI Engineering** | 🚀 **DevOps** | ☁️ **AWS Cloud** | 💻 **Languages** | 📈 **Data Engineering** |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| Complete knowledge base | 11 Topics × 3 Levels | LLMs, RAG, Prompting | Docker, K8s, CI/CD | EC2, S3, Lambda | Java, Spring, Node, React | Data Lakes, Spark, BigQuery |
-| 180+ Topics | Easy → Medium → Hard | Vector DBs, Embeddings | Terraform, IaC | RDS, DynamoDB, VPC | OOP, Hooks, Async | Big Data, MapReduce, Warehouses |
-| [Explore →](./system-design/) | [Explore →](./dsa/) | [Explore →](./ai/) | [Explore →](./devops/) | [Explore →](./aws/) | [Explore →](./languages/) | [Explore →](./data-engineering/) |
+| 📊 **System Design** | 💻 **DSA** | 🤖 **AI Engineering** | 🚀 **DevOps** | ☁️ **AWS Cloud** | 💻 **Languages** | 📈 **Data Engineering** | 🗄️ **SQL** |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Complete knowledge base | 11 Topics × 3 Levels | LLMs, RAG, Prompting | Docker, K8s, CI/CD | EC2, S3, Lambda | Java, Spring, Node, React | Data Lakes, Spark, BigQuery | Query Execution, Indexes |
+| 180+ Topics | Easy → Medium → Hard | Vector DBs, Embeddings | Terraform, IaC | RDS, DynamoDB, VPC | OOP, Hooks, Async | Big Data, MapReduce, Warehouses | Optimization, Transactions |
+| [Explore →](./system-design/) | [Explore →](./dsa/) | [Explore →](./ai/) | [Explore →](./devops/) | [Explore →](./cloud/aws/) | [Explore →](./languages/) | [Explore →](./data-engineering/) | [Explore →](./sql/) |
 
 </div>
 
@@ -237,6 +238,18 @@
 | **[BigQuery](./data-engineering/04-big-query.md)** | Google's serverless data warehouse | SQL, partitioning, clustering |
 | **[Spark](./data-engineering/05-spark.md)** | In-memory distributed processing | RDDs, DataFrames, streaming, MLlib |
 | **[MapReduce](./data-engineering/06-map-reduce.md)** | Distributed processing algorithm | Map phase, reduce phase, shuffle |
+
+</div>
+
+### 🗄️ [SQL Specialist](./sql/)
+
+> *Staff+ / Principal-level understanding of SQL and relational database systems*
+
+<div align="center">
+
+| Topic | Description | Key Concepts |
+|:---:|:---:|:---:|
+| **[SQL Specialist Deep Dive](./sql/01-sql-specialist-deep-dive.md)** 🔥 | Complete specialist guide to SQL systems | Query execution, indexes, optimization, transactions, scaling |
 
 </div>
 

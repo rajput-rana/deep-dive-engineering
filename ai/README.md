@@ -30,6 +30,7 @@
 | **🎯 Architecture** | MoE, efficient scaling, model design | Advanced model architectures |
 | **🏗️ System Design** | AI system design, patterns, integration | Production AI systems |
 | **💰 Cost & Performance** | Optimization, caching, token management | Efficient AI systems |
+| **🎓 Specialist Level** | First-principles, systems judgment, failure modes | Deep understanding for Staff+ engineers |
 
 </div>
 
@@ -55,6 +56,8 @@
 | **[Large Reasoning Models](./10-large-reasoning-models.md)** ⭐ | Advanced reasoning, CoT, problem-solving | Chain-of-thought, tree-of-thoughts, verification |
 | **[MCP (Model Context Protocol)](./11-mcp-model-context-protocol.md)** ⭐ | Standardized AI integration protocol | Tools, resources, prompt templates |
 | **[MoE (Mixture of Experts)](./12-moe-mixture-of-experts.md)** ⭐ | Efficient model scaling architecture | Sparse activation, routing, load balancing |
+| **[Machine Learning](./13-machine-learning.md)** | ML fundamentals, algorithms, training | Supervised learning, neural networks, optimization |
+| **[AI Specialist Deep Dive](./14-ai-specialist-deep-dive.md)** 🔥 | Staff+ level understanding of AI systems | First-principles, systems judgment, failure modes |
 
 </div>
 
@@ -94,6 +97,7 @@
 | **🔌 MCP** | Integration protocol | [MCP](./11-mcp-model-context-protocol.md) |
 | **🎯 MoE** | Efficient scaling | [MoE](./12-moe-mixture-of-experts.md) |
 | **🏗️ Architecture** | Production AI systems | [AI System Design](./05-ai-system-design.md) |
+| **🎓 Specialist** | Deep understanding | [AI Specialist Deep Dive](./14-ai-specialist-deep-dive.md) |
 
 </div>
 
